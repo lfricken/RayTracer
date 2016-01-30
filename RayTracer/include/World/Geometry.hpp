@@ -11,7 +11,7 @@ namespace leon
 		Geometry();
 		virtual ~Geometry();
 
-		virtual bool intersects(Ray& rRay) const = 0;
+		virtual Vector intersects(Ray& rRay) const = 0;
 
 	};
 }

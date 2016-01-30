@@ -70,7 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="src\World\Plane.cpp" />
     <ClCompile Include="src\World\Sphere.cpp" />
     <ClCompile Include="src\World\Geometry.cpp" />
     <ClCompile Include="src\World\Ray.cpp" />
@@ -87,7 +87,7 @@
     <ClInclude Include="include\World\Vector.hpp" />
     <ClInclude Include="include\World\Triangle.hpp" />
     <ClInclude Include="include\World\Sphere.hpp" />
-    <ClInclude Include="Plane.hpp" />
+    <ClInclude Include="include\World\Plane.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

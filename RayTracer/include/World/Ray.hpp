@@ -14,6 +14,7 @@ namespace leon
 		virtual ~Ray();
 
 		void cast(const World& rWorld);
+		Vector getFuture(double t) const;//get a point in the future of the ray
 
 		Vector pos;//start position
 		Vector dir;//direction

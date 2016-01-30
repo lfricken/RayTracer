@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Geometry.hpp"
 
 namespace leon
