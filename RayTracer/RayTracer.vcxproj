@@ -38,15 +38,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>include\World;include;include\API;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -64,6 +70,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="src\World\Sphere.cpp" />
+    <ClCompile Include="src\World\Geometry.cpp" />
+    <ClCompile Include="src\World\Ray.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\World\World.cpp" />
+    <ClCompile Include="src\World\Vector.cpp" />
+    <ClCompile Include="src\World\Triangle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\World\Geometry.hpp" />
+    <ClInclude Include="include\stdafx.hpp" />
+    <ClInclude Include="include\World\World.hpp" />
+    <ClInclude Include="include\World\Ray.hpp" />
+    <ClInclude Include="include\World\Vector.hpp" />
+    <ClInclude Include="include\World\Triangle.hpp" />
+    <ClInclude Include="include\World\Sphere.hpp" />
+    <ClInclude Include="Plane.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
