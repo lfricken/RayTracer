@@ -2,28 +2,25 @@
 #include "World.hpp"
 #include "Ray.hpp"
 #include "Triangle.hpp"
+#include "Sphere.hpp"
 
 using namespace leon;
 using namespace std;
 
 int main()
 {
-
-	Ray r(Vector(0,0,0), Vector(1, 0, 0));
-
-	Triangle t(Vector(4, 1, 1), Vector(4, 1, -1), Vector(4, -2, 0));
-
-	Vector right(1, 0, 0);
-	Vector up(0, 1, 0);
-	Vector o(0, 0, 0);
-
-	double dot = o.area((o.to(up)), o.to(right));
-
-	Vector b = t.intersects(r);
-	bool HIT = b.init;
 	sptr<World> spWorld(new World());
-	spWorld->render();
-	spWorld->setPixel(1);
-	spWorld->save(content + "frame.png");
+	World& world = *spWorld;
+
+	Geometry* t = new Triangle(Vector(10, 10, 0), Vector(10, -10, 0), Vector(20, 0, 0));
+	Geometry* s = new Sphere(Vector(0, 0, 0), 10);
+
+	world.addGeometry(sptr<Geometry>(t));
+	world.addGeometry(sptr<Geometry>(s));
+
+	world.camera.position = Vector(0, 0, 1024);
+	world.camera.direction = Vector(0, 0, -1);
+	world.render(100, 100, RenderMode::Orthographic);
+	world.save(content + "frame.png");
 	return 0;
 }

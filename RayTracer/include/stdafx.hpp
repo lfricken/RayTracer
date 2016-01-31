@@ -34,5 +34,5 @@ const std::string content = "../content/";
 template<typename T>/**Smart pointers**/
 using sptr = std::shared_ptr<T>;
 
-
+using std::vector;
 

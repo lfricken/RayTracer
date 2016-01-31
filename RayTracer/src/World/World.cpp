@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "Ray.hpp"
 
 using namespace std;
 using namespace leon;
@@ -14,9 +15,26 @@ World::~World()
 {
 
 }
-void World::render()
+void World::render(int resX, int resY, RenderMode mode)
 {
 	sf::RenderWindow& window = *spWindow;
+
+	Ray r(camera.position, camera.direction);
+
+	for(int x = 0; x < (signed)resX; ++x)
+	{
+		for(int y = 0; y < (signed)resY; ++y)
+		{
+			for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
+			{
+				r.pos.x = camera.position.x + x - (float)resX * 0.5;//center screen on coordinates
+				r.pos.y = camera.position.y + y - (float)resY * 0.5;
+				if((**it).intersects(r).init)
+					setPixel(x, y);
+			}
+		}
+	}
+
 
 	window.clear();
 	window.draw(sprite);
@@ -26,8 +44,15 @@ void World::save(const std::string& rName)
 {
 	image.saveToFile(rName);
 }
-void World::setPixel(unsigned x, unsigned y, sf::Color c)
+void World::setPixel(int x, int y, sf::Color c)
 {
+	if(x < 0 || x >= image.getSize().x || y < 0 || y >= image.getSize().y)
+		return;
+
 	image.setPixel(x, y, c);
 	texture.loadFromImage(image);
+}
+void World::addGeometry(sptr<Geometry> spGeo)
+{
+	geometry.push_back(spGeo);
 }

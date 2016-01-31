@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Camera.cpp" />
     <ClCompile Include="src\World\Plane.cpp" />
     <ClCompile Include="src\World\Sphere.cpp" />
     <ClCompile Include="src\World\Geometry.cpp" />
@@ -80,6 +81,7 @@
     <ClCompile Include="src\World\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\World\Camera.hpp" />
     <ClInclude Include="include\World\Geometry.hpp" />
     <ClInclude Include="include\stdafx.hpp" />
     <ClInclude Include="include\World\World.hpp" />
