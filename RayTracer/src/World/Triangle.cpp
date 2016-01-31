@@ -24,10 +24,10 @@ Vector Triangle::intersects(Ray& rRay) const
 		Vector p = plane.intersects(rRay);
 		area = a.area(b, c);
 
-		b0 = p.area(a, b) / area;
-		b1 = p.area(b, c) / area;
-		b2 = p.area(c, a) / area;
-		if((b0 >= 0 && b0 <= 1) && (b1 >= 0 && b1 <= 1) && (b2 >= 0 && b2 <= 1))
+		double total = p.area(a, b);
+		total += p.area(b, c);
+		total += p.area(c, a);
+		if(total <= area)
 			return p;
 		else
 			return Vector();
