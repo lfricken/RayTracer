@@ -10,7 +10,7 @@ namespace leon
 	class Ray
 	{
 	public:
-		Ray();
+		Ray(Vector pos, Vector dir);
 		virtual ~Ray();
 
 		void cast(const World& rWorld);

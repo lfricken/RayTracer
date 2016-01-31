@@ -3,9 +3,10 @@
 
 using namespace leon;
 
-Plane::Plane()
+Plane::Plane(Vector pointi, Vector normali)
 {
-
+	point = pointi;
+	normal = normali;
 }
 Plane::~Plane()
 {

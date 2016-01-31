@@ -7,13 +7,14 @@ namespace leon
 	class Plane : public Geometry
 	{
 	public:
-		Plane();
+		Plane(Vector pointi, Vector normali);
 		virtual ~Plane();
 
 		virtual Vector intersects(Ray& rRay) const;
 
-		Vector normal;
 		Vector point;
+		Vector normal;
+
 	};
 }
 

@@ -17,8 +17,11 @@ namespace leon
 
 		double area(const Vector& b, const Vector& c) const;
 		double dot(const Vector& other) const;//dot product
+		Vector cross(const Vector& other) const;//cross product
 		double dist(const Vector& other) const;//distance
 		double len() const;//length
+		Vector normal() const;//return a vector that is normalized
+		void normalize();//normalize this vector
 
 		Vector to(const Vector& other) const;
 

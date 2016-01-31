@@ -12,11 +12,10 @@ Vector::Vector()
 }
 Vector::Vector(double xi, double yi, double zi)
 {
+	init = true;
 	x = xi;
 	y = yi;
 	z = zi;
-
-	init = true;
 }
 Vector::~Vector()
 {
@@ -27,12 +26,15 @@ double Vector::area(const Vector& b, const Vector& c) const
 	Vector ab = this->to(b);
 	Vector ac = this->to(c);
 
-	double theta = acos(ab.dot(ac) / (ab.len() * ac.len()));
-	return (ab.len() * ac.len() * sin(theta)) / 2.0;
+	return ab.cross(ac).len()/2;
 }
 double Vector::dot(const Vector& other) const
 {
 	return (x*other.x + y*other.y + z*other.z);
+}
+Vector Vector::cross(const Vector& other) const//cross product
+{
+	return Vector(y*other.z - z*other.y, z*other.x - x*other.z, x*other.y - y*other.x);
 }
 double Vector::dist(const Vector& other) const
 {
@@ -47,13 +49,18 @@ double Vector::len() const
 {
 	return sqrt(x*x + y*y + z*z);
 }
+Vector Vector::normal() const//return a vector that is normalized
+{
+	return (*this) / len();
+}
+void Vector::normalize()//normalize this vector
+{
+	*this = (*this) / len();
+}
 Vector Vector::to(const Vector& other) const
 {
 	return Vector(other.x-x, other.y-y, other.z-z);
 }
-
-
-
 /**OPERATOR OVERLOAD**/
 Vector Vector::operator-(const Vector& other) const
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Geometry.hpp"
+#include "Plane.hpp"
 
 namespace leon
 {
@@ -11,11 +12,10 @@ namespace leon
 		virtual ~Triangle();
 
 		virtual Vector intersects(Ray& rRay) const;
-		double myArea() const;
 
 		Vector a;
 		Vector b;
 		Vector c;
-		Vector normal;
+		Plane plane;
 	};
 }

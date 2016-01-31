@@ -2,9 +2,10 @@
 
 using namespace leon;
 
-Ray::Ray()
+Ray::Ray(Vector position, Vector direction)
 {
-
+	pos = position;
+	dir = direction.normal();
 }
 Ray::~Ray()
 {
