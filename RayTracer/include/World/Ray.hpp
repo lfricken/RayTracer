@@ -16,6 +16,7 @@ namespace leon
 		void cast(const World& rWorld);
 		Vector getFuture(double t) const;//get a point in the future of the ray
 
+		sf::Color lastColor;//last color we collided with
 		Vector pos;//start position
 		Vector dir;//direction
 	};

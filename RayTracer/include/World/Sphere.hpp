@@ -10,7 +10,10 @@ namespace leon
 		Sphere(Vector position, double radiusi);
 		virtual ~Sphere();
 
-		virtual Vector intersects(Ray& rRay) const;
+		virtual Vector getNormal(const Vector& point) const;
+
+	protected:
+		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 
 		Vector pos;
 		double radius;

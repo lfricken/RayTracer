@@ -1,5 +1,7 @@
 #include "World.hpp"
 #include "Ray.hpp"
+#include "Geometry.hpp"
+#include "Light.hpp"
 
 using namespace std;
 using namespace leon;
@@ -15,7 +17,7 @@ World::~World()
 {
 
 }
-void World::render(int resX, int resY, RenderMode mode)
+void World::render(int resX, int resY, double perX, double perY, RenderMode mode)
 {
 	sf::RenderWindow& window = *spWindow;
 
@@ -27,32 +29,29 @@ void World::render(int resX, int resY, RenderMode mode)
 		{
 			for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
 			{
-				r.pos.x = camera.position.x + x - (float)resX * 0.5;//center screen on coordinates
-				r.pos.y = camera.position.y + y - (float)resY * 0.5;
-				if((**it).intersects(r).init)
-					setPixel(x, y);
+				r.pos.x = camera.position.x + (x - (float)resX * 0.5)*perX;//center screen on coordinates
+				r.pos.y = camera.position.y + (y - (float)resY * 0.5)*perY;
+				if((**it).intersects(r, *this).init)
+					setPixel(x, -y + resY, r.lastColor);
 			}
 		}
 	}
 
-
+	texture.loadFromImage(image);
 	window.clear();
 	window.draw(sprite);
 	window.display();
 }
 void World::save(const std::string& rName)
 {
+	texture.loadFromImage(image);
 	image.saveToFile(rName);
 }
 void World::setPixel(int x, int y, sf::Color c)
 {
-	if(x < 0 || x >= image.getSize().x || y < 0 || y >= image.getSize().y)
+	if(x < 0 || x >= (signed)image.getSize().x || y < 0 || y >= (signed)image.getSize().y)
 		return;
 
 	image.setPixel(x, y, c);
-	texture.loadFromImage(image);
 }
-void World::addGeometry(sptr<Geometry> spGeo)
-{
-	geometry.push_back(spGeo);
-}
+

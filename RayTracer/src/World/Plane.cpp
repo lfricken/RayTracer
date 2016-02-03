@@ -12,7 +12,7 @@ Plane::~Plane()
 {
 
 }
-Vector Plane::intersects(Ray& rRay) const
+Vector Plane::intersectsHook(Ray& rRay, const World& world) const
 {
 	double dot = rRay.dir.dot(normal);
 
@@ -23,4 +23,8 @@ Vector Plane::intersects(Ray& rRay) const
 	}
 	else
 		return Vector();
+}
+Vector Plane::getNormal(const Vector& point) const
+{
+	return normal;
 }

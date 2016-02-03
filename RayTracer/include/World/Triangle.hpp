@@ -11,11 +11,14 @@ namespace leon
 		Triangle(Vector a, Vector b, Vector c);
 		virtual ~Triangle();
 
-		virtual Vector intersects(Ray& rRay) const;
+		virtual Vector getNormal(const Vector& point) const;
 
 		Vector a;
 		Vector b;
 		Vector c;
 		Plane plane;
+
+	protected:
+		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 	};
 }

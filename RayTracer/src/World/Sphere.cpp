@@ -12,7 +12,7 @@ Sphere::~Sphere()
 {
 
 }
-Vector Sphere::intersects(Ray& rRay) const
+Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 {
 	double a = rRay.dir.dot(rRay.dir);
 	double b = (2 * ((rRay.pos - pos).dot(rRay.dir)));
@@ -26,8 +26,13 @@ Vector Sphere::intersects(Ray& rRay) const
 		double t2 = (-b - sqrt(underRoot)) / (2 * a);
 		if(t2 < t)
 			t = t2;
+
 		return rRay.getFuture(t);
 	}
 
 	return Vector();
+}
+Vector Sphere::getNormal(const Vector& point) const
+{
+	return pos.to(point).normal();
 }

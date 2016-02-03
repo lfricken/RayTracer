@@ -15,6 +15,7 @@ namespace leon
 
 		bool init;
 
+		Vector inv() const;
 		double area(const Vector& b, const Vector& c) const;
 		double dot(const Vector& other) const;//dot product
 		Vector cross(const Vector& other) const;//cross product

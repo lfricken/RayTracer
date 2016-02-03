@@ -10,11 +10,13 @@ namespace leon
 		Plane(Vector pointi, Vector normali);
 		virtual ~Plane();
 
-		virtual Vector intersects(Ray& rRay) const;
+		virtual Vector getNormal(const Vector& point) const;
 
 		Vector point;
 		Vector normal;
 
+	protected:
+		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 	};
 }
 

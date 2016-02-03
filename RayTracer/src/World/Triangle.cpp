@@ -14,13 +14,13 @@ Triangle::~Triangle()
 {
 
 }
-Vector Triangle::intersects(Ray& rRay) const
+Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 {
 	double dot = rRay.dir.dot(plane.normal);
 
 	if(dot != 0)
 	{
-		Vector p = plane.intersects(rRay);
+		Vector p = plane.intersects(rRay, world);
 
 		Vector a1 = p.to(a);
 		Vector a2 = p.to(b);
@@ -45,3 +45,8 @@ Vector Triangle::intersects(Ray& rRay) const
 	else
 		return Vector();
 }
+Vector Triangle::getNormal(const Vector& point) const
+{
+	return plane.normal;
+}
+

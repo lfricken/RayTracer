@@ -21,6 +21,10 @@ Vector::~Vector()
 {
 
 }
+Vector Vector::inv() const
+{
+	return Vector(-x, -y, -z);
+}
 double Vector::area(const Vector& b, const Vector& c) const
 {
 	Vector ab = this->to(b);
