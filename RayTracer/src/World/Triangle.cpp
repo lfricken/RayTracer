@@ -49,4 +49,15 @@ Vector Triangle::getNormal(const Vector& point) const
 {
 	return plane.normal;
 }
-
+void Triangle::translate(const Vector& dist)
+{
+	a = a + dist;
+	b = b + dist;
+	c = c + dist;
+}
+void Triangle::transform(const Matrix& rot)
+{
+	a = rot*a;
+	b = rot*b;
+	c = rot*c;
+}

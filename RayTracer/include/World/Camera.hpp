@@ -11,7 +11,7 @@ namespace leon
 		Camera();
 		~Camera();
 
-		void move(const Vector& pos, World& world);
+		void move(const Vector& dir, World& world);
 		void yaw(double radCCW, World& world);
 		void pitch(double radCCW, World& world);
 		void roll(double radCCW, World& world);
@@ -22,6 +22,8 @@ namespace leon
 
 		double eyedist;
 	protected:
+		void transformWorld(Matrix rotMatrix, World& world) const;
+
 		Vector position;
 		Vector direction;
 		Vector up;
