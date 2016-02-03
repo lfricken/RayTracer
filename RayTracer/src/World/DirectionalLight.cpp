@@ -18,3 +18,13 @@ sf::Color DirectionalLight::getBrightnessHook(const Vector& point, const Vector&
 	else
 		return color*sf::Color(0, 0, 0);
 }
+void DirectionalLight::translate(const Vector& dist)
+{
+
+}
+void DirectionalLight::transform(const Matrix& rot)
+{
+	direction = rot*direction;
+}
+
+

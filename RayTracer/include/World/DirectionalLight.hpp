@@ -11,6 +11,9 @@ namespace leon
 		DirectionalLight(const sf::Color& colori, const Vector& directioni);
 		~DirectionalLight();
 
+		virtual void translate(const Vector& dist);
+		virtual void transform(const Matrix& rot);
+
 		Vector direction;
 
 	protected:

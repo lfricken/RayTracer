@@ -28,3 +28,13 @@ Vector Plane::getNormal(const Vector& point) const
 {
 	return normal;
 }
+void Plane::translate(const Vector& dist)
+{
+	point = point + dist;
+}
+void Plane::transform(const Matrix& rot)
+{
+	point = rot*point;
+	normal = rot*normal;
+}
+

@@ -70,6 +70,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Scenic.cpp" />
     <ClCompile Include="src\World\DirectionalLight.cpp" />
     <ClCompile Include="src\World\Light.cpp" />
     <ClCompile Include="src\World\Camera.cpp" />
@@ -94,6 +95,7 @@
     <ClInclude Include="include\World\Sphere.hpp" />
     <ClInclude Include="include\World\Plane.hpp" />
     <ClInclude Include="include\World\Light.hpp" />
+    <ClInclude Include="include\World\Scenic.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

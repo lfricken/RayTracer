@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Scenic.hpp"
 #include "stdafx.hpp"
 
 namespace leon
 {
 	class Vector;
 	class World;
-	class Light
+	class Light : public Scenic
 	{
 	public:
 		Light(const sf::Color& colori);

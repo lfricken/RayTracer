@@ -8,6 +8,7 @@ namespace leon
 	enum class RenderMode
 	{
 		Orthographic,
+		PerspectivePlane,
 	};
 
 	class Geometry;

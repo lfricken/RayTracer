@@ -12,6 +12,9 @@ namespace leon
 
 		virtual Vector getNormal(const Vector& point) const;
 
+		virtual void translate(const Vector& dist);
+		virtual void transform(const Matrix& rot);
+
 	protected:
 		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 

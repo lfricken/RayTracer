@@ -2,12 +2,13 @@
 
 #include "Vector.hpp"
 #include "stdafx.hpp"
+#include "Scenic.hpp"
 
 namespace leon
 {
 	class World;
 	class Ray;
-	class Geometry
+	class Geometry : public Scenic
 	{
 	public:
 		Geometry();

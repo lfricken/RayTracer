@@ -24,7 +24,10 @@ Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 	{
 		double t = (-b + sqrt(underRoot)) / (2 * a);
 		double t2 = (-b - sqrt(underRoot)) / (2 * a);
-		if(t2 < t)
+
+		if(t < 0 && t2 < 0)//are they both negative times?
+			return Vector();
+		if(t2 >= 0 && t2 < t)//is the second time smaller and non negative?
 			t = t2;
 
 		return rRay.getFuture(t);
@@ -36,3 +39,12 @@ Vector Sphere::getNormal(const Vector& point) const
 {
 	return pos.to(point).normal();
 }
+void Sphere::translate(const Vector& dist)
+{
+	pos = pos + dist;
+}
+void Sphere::transform(const Matrix& rot)
+{
+	pos = rot*pos;
+}
+
