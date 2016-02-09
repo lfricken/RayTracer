@@ -21,7 +21,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 {
 	std::default_random_engine gen;
 	gen.seed(time(NULL));
-	std::uniform_real_distribution<float> jitter(-0.005, 0.005);
+	std::uniform_real_distribution<float> jitter(-0.25, 0.25);
 
 	sf::RenderWindow& window = *spWindow;
 
@@ -76,17 +76,16 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 						if(i4)
 							c4 = r.lastColor*q;
 
-						if(!(i1 && i2 && i3 && i4) && (i1 || i2 || i3 || i4))
-						{
-							i1 = true;
-						}
+						//if(!(i1 && i2 && i3 && i4) && (i1 || i2 || i3 || i4))
+						//{
+						//	i1 = true;
+						//}
 
 						sf::Color p = c1 + c2 + c3 + c4;
 						if(i1 || i2 || i3 || i4)
 						{
 							sf::Color back = image.getPixel(x, -y + resY);
 							int alpha = 255 - p.a;
-							//p *= sf::Color(p.a, p.a, p.a, 255);
 							sf::Color mod(alpha, alpha, alpha, alpha);
 							sf::Color finalp = p + (back*mod);
 							setPixel(x, -y + resY, finalp);
