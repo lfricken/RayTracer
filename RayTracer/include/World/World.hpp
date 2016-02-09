@@ -10,6 +10,11 @@ namespace leon
 		Orthographic,
 		PerspectivePlane,
 	};
+	enum class SampleMode
+	{
+		PerPixel,
+		MultiJitter,
+	};
 
 	class Geometry;
 	class Light;
@@ -22,7 +27,7 @@ namespace leon
 		void setPixel(int x, int y = 0, sf::Color c = sf::Color::Blue);
 		void save(const std::string& rName);
 
-		void render(int resX, int resY, double perX, double perY, RenderMode mode);
+		void render(int resX, int resY, double perX, double perY, RenderMode mode = RenderMode::PerspectivePlane, SampleMode sample = SampleMode::PerPixel);
 
 		Camera camera;
 
@@ -39,3 +44,5 @@ namespace leon
 
 	};
 }
+
+

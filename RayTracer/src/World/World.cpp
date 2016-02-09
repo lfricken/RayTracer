@@ -17,8 +17,12 @@ World::~World()
 {
 
 }
-void World::render(int resX, int resY, double perX, double perY, RenderMode mode)
+void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample)
 {
+	std::default_random_engine gen;
+	gen.seed(time(NULL));
+	std::uniform_real_distribution<float> jitter(-0.005, 0.005);
+
 	sf::RenderWindow& window = *spWindow;
 
 	Ray r(Vector(0, 0, 0), Vector(1, 0, 0));
@@ -33,10 +37,61 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 			{
 				for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
 				{
-					r.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
-					r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
-					if((**it).intersects(r, *this).init)
-						setPixel(x, -y + resY, r.lastColor);
+					if(sample == SampleMode::PerPixel)
+					{
+						r.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
+						r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+						if((**it).intersects(r, *this).init)
+							setPixel(x, -y + resY, r.lastColor);
+					}
+					else// MultiJitter
+					{
+						sf::Color q = sf::Color(64, 64, 64, 64);
+						sf::Color d = sf::Color(0, 0, 0, 0);
+						sf::Color c1(d), c2(d), c3(d), c4(d);
+
+
+
+						r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
+						r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
+						bool i1 = (**it).intersects(r, *this).init;
+						if(i1)
+							c1 = r.lastColor*q;
+
+						r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
+						r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
+						bool i2 = (**it).intersects(r, *this).init;
+						if(i2)
+							c2 = r.lastColor*q;
+
+						r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
+						r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
+						bool i3 = (**it).intersects(r, *this).init;
+						if(i3)
+							c3 = r.lastColor*q;
+
+						r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
+						r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
+						bool i4 = (**it).intersects(r, *this).init;
+						if(i4)
+							c4 = r.lastColor*q;
+
+						if(!(i1 && i2 && i3 && i4) && (i1 || i2 || i3 || i4))
+						{
+							i1 = true;
+						}
+
+						sf::Color p = c1 + c2 + c3 + c4;
+						if(i1 || i2 || i3 || i4)
+						{
+							sf::Color back = image.getPixel(x, -y + resY);
+							int alpha = 255 - p.a;
+							//p *= sf::Color(p.a, p.a, p.a, 255);
+							sf::Color mod(alpha, alpha, alpha, alpha);
+							sf::Color finalp = p + (back*mod);
+							setPixel(x, -y + resY, finalp);
+						}
+					}
 				}
 			}
 		}
@@ -49,8 +104,17 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 			{
 				for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
 				{
-					r.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
-					r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					if(sample == SampleMode::PerPixel)
+					{
+						r.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
+						r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					}
+					else//else MultiJitter
+					{
+						r.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
+						r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					}
+
 					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
 					if((**it).intersects(r, *this).init)
 						setPixel(x, -y + resY, r.lastColor);

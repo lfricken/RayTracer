@@ -38,15 +38,18 @@ int main()
 
 	world.render(400, 400, 100, 100, RenderMode::Orthographic);//img1
 	world.save(content + "frame_Ortho.png");
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
-	world.save(content + "frame_PerspPlane.png");
+	world.render(400, 400, 100, 100, RenderMode::Orthographic, SampleMode::MultiJitter);//img1
+	world.save(content + "frame_Ortho_Jitter.png");
+
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
+	//world.save(content + "frame_PerspPlane.png");
 
 
-	world.camera.yaw(-0.3, world);
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
-	world.save(content + "frame_PerspPlane3.png");
-	world.camera.yaw(-0.6, world);
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
-	world.save(content + "frame_PerspPlane6.png");
+	//world.camera.yaw(-0.3, world);
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
+	//world.save(content + "frame_PerspPlane3.png");
+	//world.camera.yaw(-0.6, world);
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
+	//world.save(content + "frame_PerspPlane6.png");
 	return 0;
 }
