@@ -16,6 +16,7 @@ Triangle::~Triangle()
 }
 Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 {
+	//time of intersection set in plane
 	double dot = rRay.dir.dot(plane.normal);
 
 	if(dot != 0)

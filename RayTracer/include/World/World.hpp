@@ -16,6 +16,7 @@ namespace leon
 		MultiJitter,
 	};
 
+	class Ray;
 	class Geometry;
 	class Light;
 	class World
@@ -36,6 +37,8 @@ namespace leon
 
 	protected:
 	private:
+		void getFirstHit(Ray& ray) const;
+
 		sptr<sf::RenderWindow> spWindow;
 
 		sf::Texture texture;

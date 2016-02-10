@@ -30,6 +30,7 @@ Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 		if(t2 >= 0 && t2 < t)//is the second time smaller and non negative?
 			t = t2;
 
+		rRay.time = t;
 		return rRay.getFuture(t);
 	}
 

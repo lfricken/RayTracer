@@ -20,11 +20,11 @@ int main()
 	s->color = sf::Color(255, 255, 255);
 	world.geometry.push_back(sptr<Geometry>(s));
 
-	s = new Sphere(Vector(200, 100, 0), 50);
+	s = new Sphere(Vector(200, 30, 0), 50);
 	s->color = sf::Color(200, 255, 255);
 	world.geometry.push_back(sptr<Geometry>(s));
 
-	s = new Sphere(Vector(100, -100, 20), 50);
+	s = new Sphere(Vector(100, -120, 20), 50);
 	s->color = sf::Color(200, 69, 40);
 	world.geometry.push_back(sptr<Geometry>(s));
 
@@ -37,19 +37,21 @@ int main()
 	world.lights.push_back(sptr<Light>(l));
 
 	world.render(400, 400, 100, 100, RenderMode::Orthographic);//img1
-	world.save(content + "frame_Ortho.png");
-	world.render(400, 400, 100, 100, RenderMode::Orthographic, SampleMode::MultiJitter);//img1
-	world.save(content + "frame_Ortho_Jitter.png");
+	world.save(content + "frame1_orthographic1.png");
 
-	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
-	//world.save(content + "frame_PerspPlane.png");
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
+	world.save(content + "frame1_perspective1.png");
+
+	world.camera.yaw(-0.3, world);
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img3
+	world.save(content + "frame1_perspective2.png");
 
 
-	//world.camera.yaw(-0.3, world);
-	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
-	//world.save(content + "frame_PerspPlane3.png");
-	//world.camera.yaw(-0.6, world);
-	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);
-	//world.save(content + "frame_PerspPlane6.png");
+	world.camera.yaw(0.3, world);
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
+	world.save(content + "frame_perspective3_noJitter.png");
+
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter);//img5
+	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }
