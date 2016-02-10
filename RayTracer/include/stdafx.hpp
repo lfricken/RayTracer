@@ -23,12 +23,15 @@
 #include <intrin.h>
 #include <stdint.h>
 
+//<Comment flag> #419begin #type = 1 #src = http://www.sfml-dev.org/
 #include <SFML/System.hpp>/**SFML**/
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+//<Comment flag> #419end
 
+//Global variable content tells where to store images
 const std::string content = "../content/";
 
 template<typename T>/**Smart pointers**/

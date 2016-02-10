@@ -6,17 +6,18 @@ Ray::Ray(Vector position, Vector direction)
 {
 	pos = position;
 	dir = direction.normal();
-	lastColor = sf::Color(128, 128, 128, 255);
+	lastColor = sf::Color(128, 128, 128, 255);/
 	time = -1;
 }
 Ray::~Ray()
 {
 
 }
-void Ray::cast(const World& rWorld)
-{
-
-}
+/// <summary>
+/// Gets the future position of the theoretical ray
+/// </summary>
+/// <param name="t">time</param>
+/// <returns></returns>
 Vector Ray::getFuture(double t) const//get a point in the future of the ray
 {
 	return pos + (dir*t);

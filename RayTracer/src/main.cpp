@@ -9,6 +9,10 @@
 using namespace leon;
 using namespace std;
 
+/// <summary>
+/// Main function/program entry point.
+/// </summary>
+/// <returns>0 if everything went well</returns>
 int main()
 {
 	sptr<World> spWorld(new World());

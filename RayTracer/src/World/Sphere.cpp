@@ -12,6 +12,12 @@ Sphere::~Sphere()
 {
 
 }
+/// <summary>
+/// hook function for ray intersection
+/// </summary>
+/// <param name="rRay">the ray.</param>
+/// <param name="world">The world.</param>
+/// <returns></returns>
 Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 {
 	double a = rRay.dir.dot(rRay.dir);
@@ -36,14 +42,27 @@ Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 
 	return Vector();
 }
+/// <summary>
+/// Gets the normal for a point on the sphere.
+/// </summary>
+/// <param name="point">The point.</param>
+/// <returns></returns>
 Vector Sphere::getNormal(const Vector& point) const
 {
 	return pos.to(point).normal();
 }
+/// <summary>
+/// Translates the specified distance.
+/// </summary>
+/// <param name="dist">The dist.</param>
 void Sphere::translate(const Vector& dist)
 {
 	pos = pos + dist;
 }
+/// <summary>
+/// Transforms the specified rotation.
+/// </summary>
+/// <param name="rot">The rot.</param>
 void Sphere::transform(const Matrix& rot)
 {
 	pos = rot*pos;

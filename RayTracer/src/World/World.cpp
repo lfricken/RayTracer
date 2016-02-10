@@ -17,6 +17,15 @@ World::~World()
 {
 
 }
+/// <summary>
+/// Renders the specified resource x.
+/// </summary>
+/// <param name="resX">The resource x.</param>
+/// <param name="resY">The resource y.</param>
+/// <param name="perX">The per x.</param>
+/// <param name="perY">The per y.</param>
+/// <param name="mode">The mode.</param>
+/// <param name="sample">The sample.</param>
 void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample)
 {
 	std::default_random_engine gen;
@@ -154,11 +163,21 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	window.draw(sprite);
 	window.display();
 }
+/// <summary>
+/// Saves image to file
+/// </summary>
+/// <param name="rName">name of image</param>
 void World::save(const std::string& rName)
 {
 	texture.loadFromImage(image);
 	image.saveToFile(rName);
 }
+/// <summary>
+/// Sets the pixel on the image
+/// </summary>
+/// <param name="x">x position</param>
+/// <param name="y">y position</param>
+/// <param name="c">color</param>
 void World::setPixel(int x, int y, sf::Color c)
 {
 	if(x < 0 || x >= (signed)image.getSize().x || y < 0 || y >= (signed)image.getSize().y)
@@ -166,6 +185,10 @@ void World::setPixel(int x, int y, sf::Color c)
 
 	image.setPixel(x, y, c);
 }
+/// <summary>
+/// finds the first hit position for this ray
+/// </summary>
+/// <param name="ray">The ray.</param>
 void World::getFirstHit(Ray& ray) const
 {
 	sf::Color lastColor(128, 128, 128, 255);

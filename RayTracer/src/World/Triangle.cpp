@@ -14,6 +14,12 @@ Triangle::~Triangle()
 {
 
 }
+/// <summary>
+/// Hooked function for a ray that is intersecting us
+/// </summary>
+/// <param name="rRay">the ray.</param>
+/// <param name="world">the world.</param>
+/// <returns></returns>
 Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 {
 	//time of intersection set in plane
@@ -46,16 +52,29 @@ Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 	else
 		return Vector();
 }
+/// <summary>
+/// Gets the normal to this triangle.
+/// </summary>
+/// <param name="point">unnused</param>
+/// <returns></returns>
 Vector Triangle::getNormal(const Vector& point) const
 {
 	return plane.normal;
 }
+/// <summary>
+/// Translates the specified distance.
+/// </summary>
+/// <param name="dist">The dist.</param>
 void Triangle::translate(const Vector& dist)
 {
 	a = a + dist;
 	b = b + dist;
 	c = c + dist;
 }
+/// <summary>
+/// Transforms the specified rotation.
+/// </summary>
+/// <param name="rot">The rot.</param>
 void Triangle::transform(const Matrix& rot)
 {
 	a = rot*a;

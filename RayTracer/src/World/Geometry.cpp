@@ -13,6 +13,12 @@ Geometry::~Geometry()
 {
 
 }
+/// <summary>
+/// does this geometry intersect the specified ray?
+/// </summary>
+/// <param name="ray">The ray.</param>
+/// <param name="world">The world.</param>
+/// <returns>position of intersection</returns>
 Vector Geometry::intersects(Ray& ray, const World& world) const
 {
 	Vector intersection = intersectsHook(ray, world);
