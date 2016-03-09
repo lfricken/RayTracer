@@ -28,7 +28,7 @@ namespace leon
 		void setPixel(int x, int y = 0, sf::Color c = sf::Color::Blue);
 		void save(const std::string& rName);
 
-		void render(int resX, int resY, double perX, double perY, RenderMode mode = RenderMode::PerspectivePlane, SampleMode sample = SampleMode::PerPixel);
+		void render(int resX, int resY, double perX, double perY, RenderMode mode = RenderMode::PerspectivePlane, SampleMode sample = SampleMode::PerPixel, int samples = 2);
 
 		Camera camera;
 

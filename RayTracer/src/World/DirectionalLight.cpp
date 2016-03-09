@@ -21,7 +21,7 @@ sf::Color DirectionalLight::getBrightnessHook(const Vector& point, const Vector&
 {
 	double c = 255 * direction.inv().dot(normal.normal());
 	if(c >= 0)
-		return color*sf::Color(c, c, c);
+		return color*sf::Color((char)c, (char)c, (char)c);
 	else
 		return color*sf::Color(0, 0, 0);
 }

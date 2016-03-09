@@ -6,7 +6,7 @@ Ray::Ray(Vector position, Vector direction)
 {
 	pos = position;
 	dir = direction.normal();
-	lastColor = sf::Color(128, 128, 128, 255);/
+	lastColor = sf::Color(128, 128, 128, 255);
 	time = -1;
 }
 Ray::~Ray()

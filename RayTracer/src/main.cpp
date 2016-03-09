@@ -40,22 +40,22 @@ int main()
 	Light* l = new DirectionalLight(sf::Color(255, 255, 255), Vector(1, 1, -1));
 	world.lights.push_back(sptr<Light>(l));
 
-	world.render(400, 400, 100, 100, RenderMode::Orthographic);//img1
-	world.save(content + "frame1_orthographic1.png");
+	//world.render(400, 400, 100, 100, RenderMode::Orthographic);//img1
+	//world.save(content + "frame1_orthographic1.png");
 
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
-	world.save(content + "frame1_perspective1.png");
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img2
+	//world.save(content + "frame1_perspective1.png");
 
-	world.camera.yaw(-0.3, world);
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img3
-	world.save(content + "frame1_perspective2.png");
+	//world.camera.yaw(-0.3, world);
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img3
+	//world.save(content + "frame1_perspective2.png");
 
 
-	world.camera.yaw(0.3, world);
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
-	world.save(content + "frame_perspective3_noJitter.png");
+	//world.camera.yaw(0.3, world);
+	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
+	//world.save(content + "frame_perspective3_noJitter.png");
 
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter);//img5
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 1);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

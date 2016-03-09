@@ -8,8 +8,8 @@ using namespace leon;
 
 World::World()
 {
-	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
-	image.create(512, 512, sf::Color(128, 128, 128, 255));
+	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
+	image.create(400, 400, sf::Color(128, 128, 128, 255));
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }
@@ -26,17 +26,29 @@ World::~World()
 /// <param name="perY">The per y.</param>
 /// <param name="mode">The mode.</param>
 /// <param name="sample">The sample.</param>
-void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample)
+void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample, int samples)
 {
 	std::default_random_engine gen;
 	gen.seed((unsigned long)time(NULL));
-	std::uniform_real_distribution<float> jitter(-0.25, 0.25);
+	double range = 1.0 / (2.0*samples);
+	std::uniform_real_distribution<double> jitter(-range, range);
+	vector<int> row;
+	vector<int> column;
+	for(int i = 0; i < samples; ++i)
+	{
+		row.push_back(i);
+		column.push_back(i);
+	}
+
+
+	double xMod = -((float)resX * 0.5)*(perX / resX);
+	double yMod = -((float)resY * 0.5)*(perY / perY);
 
 	sf::RenderWindow& window = *spWindow;
 
 	Ray r(Vector(0, 0, 0), Vector(1, 0, 0));
 
-	image.create(512, 512, sf::Color(128, 128, 128, 255));
+	image.create(420, 420, sf::Color(128, 128, 128, 255));
 
 	if(mode == RenderMode::Orthographic)
 	{
@@ -56,7 +68,18 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					sf::Color d = sf::Color(0, 0, 0, 0);
 					sf::Color c1(d), c2(d), c3(d), c4(d);
 
+					for(int sample = 0; sample < samples; ++sample)
+					{
+						//Randomly select 2 numbers from row and column, and remove
 
+						//Convert them to a coordinate addition
+
+						//cast the ray to get the color
+
+						//add color to total rgba
+					}
+
+					//divide color by total samples
 
 					r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
 					r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
