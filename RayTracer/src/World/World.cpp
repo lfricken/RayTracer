@@ -30,11 +30,11 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 {
 	std::default_random_engine gen;
 	gen.seed((unsigned long)time(NULL));
-	double range = 1.0 / (2.0*samples);
-	std::uniform_real_distribution<double> jitter(-range, range);
+	std::uniform_int_distribution<unsigned int> rooks;
+
 	vector<int> row;
 	vector<int> column;
-	for(int i = 0; i < samples; ++i)
+	for(int i = 1; i <= samples; ++i)
 	{
 		row.push_back(i);
 		column.push_back(i);
@@ -46,7 +46,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 	sf::RenderWindow& window = *spWindow;
 
-	Ray r(Vector(0, 0, 0), Vector(1, 0, 0));
+	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0));
 
 	image.create(420, 420, sf::Color(128, 128, 128, 255));
 
@@ -58,61 +58,47 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 			{
 				if(sample == SampleMode::PerPixel)
 				{
-					r.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
-					r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
-					getFirstHit(r);
-					setPixel(-x + resX, -y + resY, r.lastColor);
+					ray.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
+					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					getFirstHit(ray);
+					setPixel(-x + resX, -y + resY, ray.lastColor);
 				}
 				else// MultiJitter
 				{
-					sf::Color d = sf::Color(0, 0, 0, 0);
-					sf::Color c1(d), c2(d), c3(d), c4(d);
+					sf::Color c1;
+					int r = 0, g = 0, b = 0, a = 0;
+					auto row2 = row;
+					auto column2 = column;
 
 					for(int sample = 0; sample < samples; ++sample)
 					{
-						//Randomly select 2 numbers from row and column, and remove
-
+						std::uniform_int_distribution<unsigned int>::param_type range(0, samples - (sample+1));
+						rooks.param(range);
+						int xIndex = rooks(gen);
+						int yIndex = rooks(gen);
 						//Convert them to a coordinate addition
 
+						double offsetX = (static_cast<double>(column2[xIndex]) - ((samples / 2.0) + 0.5))/samples;
+						double offsetY = (static_cast<double>(row2[yIndex]) - ((samples / 2.0) + 0.5))/samples;
+
+						column2.erase(column2.begin() + xIndex);
+						row2.erase(row2.begin() + yIndex);
+
+
 						//cast the ray to get the color
+						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
+						getFirstHit(ray);
+						c1 = ray.lastColor;
 
 						//add color to total rgba
+						r += c1.r;
+						g += c1.g;
+						b += c1.b;
 					}
 
-					//divide color by total samples
-
-					r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					getFirstHit(r);
-					c1 = r.lastColor;
-
-					r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					getFirstHit(r);
-					c2 = r.lastColor;
-
-					r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					getFirstHit(r);
-					c3 = r.lastColor;
-
-					r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					getFirstHit(r);
-					c4 = r.lastColor;
-
-					int r = c1.r + c2.r + c3.r + c4.r;
-					int g = c1.g + c2.g + c3.g + c4.g;
-					int b = c1.b + c2.b + c3.b + c4.b;
-					int a = c1.a + c2.a + c3.a + c4.a;
-
-					sf::Color p(r / 4, g / 4, b / 4, a / 4);
-
-					sf::Color back = image.getPixel(x, -y + resY);
-					int alpha = 255 - p.a;
-					sf::Color mod(alpha, alpha, alpha, alpha);
-					sf::Color finalp = p + (back*mod);
-					setPixel(-x + resX, -y + resY, finalp);
+					sf::Color finalColor(r / samples, g / samples, b / samples);
+					setPixel(-x + resX, -y + resY, finalColor);
 				}
 			}
 		}
@@ -123,59 +109,52 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 		{
 			for(int y = 0; y < (signed)resY; ++y)
 			{
-				r.lastColor = sf::Color(128, 128, 128, 255);
+				ray.lastColor = sf::Color(128, 128, 128, 255);
 				if(sample == SampleMode::PerPixel)
 				{
-					r.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
-					r.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
-					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
-					getFirstHit(r);
-					setPixel(x, -y + resY, r.lastColor);
+					ray.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
+					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
+					getFirstHit(ray);
+					setPixel(x, -y + resY, ray.lastColor);
 				}
-				else//else MultiJitter
+				else// MultiJitter
 				{
-					sf::Color d = sf::Color(0, 0, 0, 0);
-					sf::Color c1(d), c2(d), c3(d), c4(d);
+					sf::Color c1;
+					int r = 0, g = 0, b = 0, a = 0;
+					auto row2 = row;
+					auto column2 = column;
+
+					for(int sample = 0; sample < samples; ++sample)
+					{
+						std::uniform_int_distribution<unsigned int>::param_type range(0, samples - (sample + 1));
+						rooks.param(range);
+						int xIndex = rooks(gen);
+						int yIndex = rooks(gen);
+						//Convert them to a coordinate addition
+
+						double offsetX = (static_cast<double>(column2[xIndex]) - ((samples / 2.0) + 0.5)) / samples;
+						double offsetY = (static_cast<double>(row2[yIndex]) - ((samples / 2.0) + 0.5)) / samples;
+
+						column2.erase(column2.begin() + xIndex);
+						row2.erase(row2.begin() + yIndex);
 
 
+						//cast the ray to get the color
+						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
+						ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
+						getFirstHit(ray);
+						c1 = ray.lastColor;
 
-					r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
-					getFirstHit(r);
-					c1 = r.lastColor;
+						//add color to total rgba
+						r += c1.r;
+						g += c1.g;
+						b += c1.b;
+					}
 
-					r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y - 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
-					getFirstHit(r);
-					c2 = r.lastColor;
-
-					r.pos.y = 0 + ((x - 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
-					getFirstHit(r);
-					c3 = r.lastColor;
-
-					r.pos.y = 0 + ((x + 0.25 + jitter(gen)) - (float)resX * 0.5)*(perX / resX);
-					r.pos.z = 0 + ((y + 0.25 + jitter(gen)) - (float)resY * 0.5)*(perY / resY);
-					r.dir = Vector(-camera.eyedist, 0, 0).to(r.pos).normal();
-					getFirstHit(r);
-					c4 = r.lastColor;
-
-
-					int r = c1.r + c2.r + c3.r + c4.r;
-					int g = c1.g + c2.g + c3.g + c4.g;
-					int b = c1.b + c2.b + c3.b + c4.b;
-					int a = c1.a + c2.a + c3.a + c4.a;
-
-					sf::Color p(r / 4, g / 4, b / 4, a / 4);
-
-					sf::Color back = image.getPixel(x, -y + resY);
-					int alpha = 255 - p.a;
-					sf::Color mod(alpha, alpha, alpha, alpha);
-					sf::Color finalp = p + (back*mod);
-					setPixel(-x + resX, -y + resY, finalp);
+					sf::Color finalColor(r / samples, g / samples, b / samples);
+					setPixel(-x + resX, -y + resY, finalColor);
 				}
 			}
 		}
