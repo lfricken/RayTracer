@@ -69,7 +69,7 @@ void Camera::roll(double radCCW, World& world)
 /// Gets the position.
 /// </summary>
 /// <returns></returns>
-const Vector& Camera::getPosition()
+const Vector& Camera::getPosition() const
 {
 	return position;
 }
@@ -77,7 +77,7 @@ const Vector& Camera::getPosition()
 /// Gets the direction we are looking.
 /// </summary>
 /// <returns></returns>
-const Vector& Camera::getDirection()
+const Vector& Camera::getDirection() const
 {
 	return direction;
 }
@@ -85,7 +85,7 @@ const Vector& Camera::getDirection()
 /// Gets up vector of camera.
 /// </summary>
 /// <returns></returns>
-const Vector& Camera::getUp()
+const Vector& Camera::getUp() const
 {
 	return up;
 }

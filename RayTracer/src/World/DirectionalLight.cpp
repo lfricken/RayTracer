@@ -19,11 +19,13 @@ DirectionalLight::~DirectionalLight()
 /// <returns>brightness</returns>
 sf::Color DirectionalLight::getBrightnessHook(const Vector& point, const Vector& normal, const World& world) const
 {
-	double c = 255 * direction.inv().dot(normal.normal());
-	if(c >= 0)
-		return color*sf::Color((char)c, (char)c, (char)c);
+	//Diffuse
+	double d = getDiffuse(point, normal, world, direction);
+
+	if(d > 0)
+		return color*sf::Color((char)d, (char)d, (char)d);//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
 	else
-		return color*sf::Color(0, 0, 0);
+		return sf::Color(0, 0, 0);
 }
 /// <summary>
 /// Translates the specified distance.

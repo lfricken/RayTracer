@@ -1,6 +1,10 @@
 #include "Light.hpp"
+#include "World.hpp"
+
+#include <algorithm>
 
 using namespace leon;
+using namespace std;
 
 Light::Light(const sf::Color& colori)
 {
@@ -19,7 +23,9 @@ Light::~Light()
 /// <returns>color at that spot</returns>
 sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world) const
 {
-	return getBrightnessHook(point, normal, world);
+	sf::Color c = getBrightnessHook(point, normal, world);
+	const sf::Color& amb = world.ambientLight;
+	return sf::Color(min(255, (amb.r + c.r)), min(255, (amb.g + c.g)), min(255, (amb.b + c.b)));
 }
 /// <summary>
 /// Gets the color of light
@@ -37,3 +43,14 @@ void Light::setColor(const sf::Color& newColor)
 {
 	color = newColor;
 }
+double Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+{
+	Vector toEye = point.to(world.camera.getPosition());
+
+	return 0;
+}
+double Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+{
+	return 255 * lightRayDir.inv().dot(normal.normal());
+}
+

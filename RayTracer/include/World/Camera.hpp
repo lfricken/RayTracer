@@ -16,9 +16,9 @@ namespace leon
 		void pitch(double radCCW, World& world);
 		void roll(double radCCW, World& world);
 
-		const Vector& getPosition();
-		const Vector& getDirection();
-		const Vector& getUp();
+		const Vector& getPosition() const;
+		const Vector& getDirection() const;
+		const Vector& getUp() const;
 
 		double eyedist;
 	protected:

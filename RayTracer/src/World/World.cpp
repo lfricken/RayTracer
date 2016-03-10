@@ -9,7 +9,7 @@ using namespace leon;
 World::World()
 {
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
-	image.create(400, 400, sf::Color(128, 128, 128, 255));
+	image.create(400, 400, backgroundColor);
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }
@@ -48,7 +48,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0));
 
-	image.create(420, 420, sf::Color(128, 128, 128, 255));
+	image.create(420, 420, backgroundColor);
 
 	if(mode == RenderMode::Orthographic)
 	{
@@ -109,7 +109,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 		{
 			for(int y = 0; y < (signed)resY; ++y)
 			{
-				ray.lastColor = sf::Color(128, 128, 128, 255);
+				ray.lastColor = backgroundColor;
 				if(sample == SampleMode::PerPixel)
 				{
 					ray.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
@@ -183,7 +183,10 @@ void World::save(const std::string& rName)
 void World::setPixel(int x, int y, sf::Color c)
 {
 	if(x < 0 || x >= (signed)image.getSize().x || y < 0 || y >= (signed)image.getSize().y)
+	{
+		cout << "\nIndex Error!";
 		return;
+	}
 
 	image.setPixel(x, y, c);
 }
@@ -193,7 +196,7 @@ void World::setPixel(int x, int y, sf::Color c)
 /// <param name="ray">The ray.</param>
 void World::getFirstHit(Ray& ray) const
 {
-	sf::Color lastColor(128, 128, 128, 255);
+	sf::Color lastColor(backgroundColor);
 	double lastTime = -1;
 	for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
 	{

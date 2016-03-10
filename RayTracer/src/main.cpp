@@ -55,7 +55,7 @@ int main()
 	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
 	//world.save(content + "frame_perspective3_noJitter.png");
 
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 1);//img5
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

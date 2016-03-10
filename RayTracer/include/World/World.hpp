@@ -35,6 +35,9 @@ namespace leon
 		vector<sptr<Geometry> > geometry;
 		vector<sptr<Light> > lights;
 
+		const sf::Color backgroundColor = sf::Color(0, 0, 0);
+		const sf::Color ambientLight = sf::Color(15, 15, 15);
+
 	protected:
 	private:
 		void getFirstHit(Ray& ray) const;
