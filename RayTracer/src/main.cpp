@@ -33,7 +33,7 @@ int main()
 	world.geometry.push_back(sptr<Geometry>(s));
 
 
-	Geometry* t = new Triangle(Vector(50, 0, 0), Vector(50, 0, -20), Vector(50, -20, 0));
+	Geometry* t = new Triangle(Vector(200, 0, 0), Vector(200, 0, -200), Vector(200, -200, 0));
 	world.geometry.push_back(sptr<Geometry>(t));
 
 

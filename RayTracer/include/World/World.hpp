@@ -38,9 +38,11 @@ namespace leon
 		const sf::Color backgroundColor = sf::Color(0, 0, 0);
 		const sf::Color ambientLight = sf::Color(15, 15, 15);
 
+		void getFirstHit(Ray& ray) const;
+
 	protected:
 	private:
-		void getFirstHit(Ray& ray) const;
+
 
 		sptr<sf::RenderWindow> spWindow;
 

@@ -55,11 +55,11 @@ double Vector::len() const
 }
 Vector Vector::normal() const//return a vector that is normalized
 {
-	return (*this) / len();
+	return Vector(x,y,z) / len();
 }
 void Vector::normalize()//normalize this vector
 {
-	*this = (*this) / len();
+	*this = Vector(x, y, z) / len();
 }
 Vector Vector::to(const Vector& other) const
 {

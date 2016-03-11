@@ -1,6 +1,8 @@
 #include "DirectionalLight.hpp"
+#include "World.hpp"
 
 using namespace leon;
+using namespace std;
 
 DirectionalLight::DirectionalLight(const sf::Color& colori, const Vector& directioni) : Light(colori)
 {
@@ -19,11 +21,19 @@ DirectionalLight::~DirectionalLight()
 /// <returns>brightness</returns>
 sf::Color DirectionalLight::getBrightnessHook(const Vector& point, const Vector& normal, const World& world) const
 {
-	//Diffuse
-	double d = getDiffuse(point, normal, world, direction);
+	Vector start(point.x - direction.x * 2000, point.y - direction.y * 2000, point.z - direction.z * 2000);
 
-	if(d > 0)
-		return color*sf::Color((char)d, (char)d, (char)d);//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
+	if(!inShadow(start, direction, point, world))
+	{
+		//Diffuse
+		unsigned char d = getDiffuse(point, normal, world, direction);
+		unsigned char s = 0;// getSpecular(point, normal, world, direction);
+
+		if(d > 0)
+			return color*sf::Color(min(s + d, 255), min(s + d, 255), min(s + d, 255));//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
+		else
+			return sf::Color(0, 0, 0);
+	}
 	else
 		return sf::Color(0, 0, 0);
 }

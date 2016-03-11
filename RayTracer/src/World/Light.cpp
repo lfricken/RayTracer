@@ -1,5 +1,6 @@
 #include "Light.hpp"
 #include "World.hpp"
+#include "Ray.hpp"
 
 #include <algorithm>
 
@@ -43,14 +44,29 @@ void Light::setColor(const sf::Color& newColor)
 {
 	color = newColor;
 }
-double Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+unsigned char Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
 	Vector toEye = point.to(world.camera.getPosition());
+	Vector revLight = lightRayDir.inv();
 
-	return 0;
+	double e = 10;
+
+	Vector specVector = lightRayDir - (normal * (lightRayDir.dot(normal) * 2));
+
+	return pow(specVector.dot(toEye), e) * 255;
 }
-double Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+unsigned char Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
 	return 255 * lightRayDir.inv().dot(normal.normal());
 }
+bool Light::inShadow(const Vector& origin, const Vector& direction, const Vector& target, const World& world) const
+{
+
+	Ray r(origin, direction);
+	r.onlyIntersection = true;
+	world.getFirstHit(r);
+
+	return (r.time < 1999.999);
+}
+
 

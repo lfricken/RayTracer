@@ -23,8 +23,9 @@ Vector Geometry::intersects(Ray& ray, const World& world) const
 {
 	Vector intersection = intersectsHook(ray, world);
 
-	if(intersection.init)///TODO fix only checking light 0
-		ray.lastColor = color * world.lights[0]->getBrightness(intersection, getNormal(intersection), world);
+	if(!ray.onlyIntersection)
+		if(intersection.init)///TODO fix only checking light 0
+			ray.lastColor = color * world.lights[0]->getBrightness(intersection, getNormal(intersection), world);
 
 	return intersection;
 }
