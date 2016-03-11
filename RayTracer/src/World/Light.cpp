@@ -47,17 +47,21 @@ void Light::setColor(const sf::Color& newColor)
 unsigned char Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
 	Vector toEye = point.to(world.camera.getPosition());
-	Vector revLight = lightRayDir.inv();
 
-	double e = 10;
+	Vector p = point.normal();
+	Vector n = normal.normal();
+	Vector l = lightRayDir.normal();
+	toEye.normalize();
+
+	double e = 16;
 
 	Vector specVector = lightRayDir - (normal * (lightRayDir.dot(normal) * 2));
 
-	return pow(specVector.dot(toEye), e) * 255;
+	return static_cast<unsigned char>(pow(specVector.dot(toEye), e) * 255 * 0.8);
 }
 unsigned char Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	return 255 * lightRayDir.inv().dot(normal.normal());
+	return static_cast<unsigned char>(255.0 * lightRayDir.inv().dot(normal.normal()));
 }
 bool Light::inShadow(const Vector& origin, const Vector& direction, const Vector& target, const World& world) const
 {
@@ -68,5 +72,31 @@ bool Light::inShadow(const Vector& origin, const Vector& direction, const Vector
 
 	return (r.time < 1999.999);
 }
+/// <summary>
+/// determines how bright we are illuminating something
+/// </summary>
+/// <param name="point">The point.</param>
+/// <param name="normal">The normal.</param>
+/// <param name="world">The world.</param>
+/// <returns>brightness</returns>
+sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, const World& world) const
+{
+	Vector direction = this->getDirection(point);
 
+	Vector start(point.x - direction.x * 2000, point.y - direction.y * 2000, point.z - direction.z * 2000);
+
+	if(!inShadow(start, direction, point, world))
+	{
+		//Diffuse
+		unsigned char d = getDiffuse(point, normal, world, direction);
+		unsigned char s = getSpecular(point, normal, world, direction);
+
+		if(d > 0)
+			return color*sf::Color(min(s + d, 255), min(s + d, 255), min(s + d, 255));//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
+		else
+			return sf::Color(0, 0, 0);
+	}
+	else
+		return sf::Color(0, 0, 0);
+}
 

@@ -36,6 +36,10 @@ int main()
 	Geometry* t = new Triangle(Vector(200, 0, 0), Vector(200, 0, -200), Vector(200, -200, 0));
 	world.geometry.push_back(sptr<Geometry>(t));
 
+	//Geometry* at = new Triangle(Vector(140, 0, 90), Vector(140, 0, -110), Vector(140, -200, 90));
+	//at->color = sf::Color::Cyan;
+	//world.geometry.push_back(sptr<Geometry>(at));
+
 
 	Light* l = new DirectionalLight(sf::Color(255, 255, 255), Vector(1, 1, -1));
 	world.lights.push_back(sptr<Light>(l));

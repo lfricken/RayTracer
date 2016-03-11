@@ -14,9 +14,10 @@ namespace leon
 		virtual void translate(const Vector& dist);
 		virtual void transform(const Matrix& rot);
 
+		virtual Vector getDirection(const Vector& point) const;
+
 		Vector direction;
 
 	protected:
-		virtual sf::Color getBrightnessHook(const Vector& point, const Vector& normal, const World& world) const;
 	};
 }
