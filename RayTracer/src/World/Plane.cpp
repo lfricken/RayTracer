@@ -57,4 +57,9 @@ void Plane::transform(const Matrix& rot)
 	point = rot*point;
 	normal = rot*normal;
 }
+void Plane::calcBoundBox() const
+{
+
+}
+
 

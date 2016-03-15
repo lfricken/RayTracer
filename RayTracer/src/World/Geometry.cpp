@@ -8,6 +8,7 @@ using namespace leon;
 Geometry::Geometry()
 {
 	color = sf::Color(128, 0, 128, 255);
+	m_boxCalculated = false;
 }
 Geometry::~Geometry()
 {
@@ -28,4 +29,13 @@ Vector Geometry::intersects(Ray& ray, const World& world) const
 			ray.lastColor = color * world.lights[0]->getBrightness(intersection, getNormal(intersection), world);
 
 	return intersection;
+}
+const BoundingBox& Geometry::getBoundBox() const
+{
+	if(!m_boxCalculated)
+	{
+		calcBoundBox();
+		m_boxCalculated = true;
+	}
+	return m_box;
 }

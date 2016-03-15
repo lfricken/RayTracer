@@ -81,3 +81,15 @@ void Triangle::transform(const Matrix& rot)
 	b = rot*b;
 	c = rot*c;
 }
+void Triangle::calcBoundBox() const
+{
+	m_box.min.x = min3(a.x, b.x, c.x);
+	m_box.min.y = min3(a.y, b.y, c.y);
+	m_box.min.z = min3(a.z, b.z, c.z);
+
+	m_box.max.x = max3(a.x, b.x, c.x);
+	m_box.max.y = max3(a.y, b.y, c.y);
+	m_box.max.z = max3(a.z, b.z, c.z);
+}
+
+

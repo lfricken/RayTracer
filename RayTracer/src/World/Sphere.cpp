@@ -67,4 +67,7 @@ void Sphere::transform(const Matrix& rot)
 {
 	pos = rot*pos;
 }
-
+void Sphere::calcBoundBox() const
+{
+	m_box = BoundingBox(pos, radius);
+}

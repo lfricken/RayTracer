@@ -51,7 +51,13 @@
     <ClCompile Include="src\World\Scenic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PointLight.cpp">
+    <ClCompile Include="src\World\PointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\BoundingBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\World\OctTree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,7 +98,13 @@
     <ClInclude Include="include\World\Scenic.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PointLight.hpp">
+    <ClInclude Include="include\World\PointLight.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\World\BoundingBox.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\World\OctTree.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

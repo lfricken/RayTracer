@@ -70,7 +70,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="src\World\BoundingBox.cpp" />
+    <ClCompile Include="src\World\OctTree.cpp" />
+    <ClCompile Include="src\World\PointLight.cpp" />
     <ClCompile Include="src\World\Scenic.cpp" />
     <ClCompile Include="src\World\DirectionalLight.cpp" />
     <ClCompile Include="src\World\Light.cpp" />
@@ -85,6 +87,7 @@
     <ClCompile Include="src\World\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\World\BoundingBox.hpp" />
     <ClInclude Include="include\World\DirectionalLight.hpp" />
     <ClInclude Include="include\World\Camera.hpp" />
     <ClInclude Include="include\World\Geometry.hpp" />
@@ -97,7 +100,8 @@
     <ClInclude Include="include\World\Plane.hpp" />
     <ClInclude Include="include\World\Light.hpp" />
     <ClInclude Include="include\World\Scenic.hpp" />
-    <ClInclude Include="PointLight.hpp" />
+    <ClInclude Include="include\World\PointLight.hpp" />
+    <ClInclude Include="include\World\OctTree.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

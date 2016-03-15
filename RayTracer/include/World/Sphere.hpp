@@ -16,6 +16,7 @@ namespace leon
 		virtual void transform(const Matrix& rot);
 
 	protected:
+		virtual void calcBoundBox() const;
 		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 
 		Vector pos;

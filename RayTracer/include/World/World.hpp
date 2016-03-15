@@ -32,7 +32,7 @@ namespace leon
 
 		Camera camera;
 
-		vector<sptr<Geometry> > geometry;
+		vector<sptr<Geometry> > geometry;//replace with oct-tree
 		vector<sptr<Light> > lights;
 
 		const sf::Color backgroundColor = sf::Color(0, 0, 0);

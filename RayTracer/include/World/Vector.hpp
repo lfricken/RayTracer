@@ -8,6 +8,18 @@ namespace leon
 		return x*x;
 	}
 
+	template<typename T>
+	inline T min3(T x1, T x2, T x3)
+	{
+		return std::min(std::min(x1, x2), x3);
+	}
+
+	template<typename T>
+	inline T max3(T x1, T x2, T x3)
+	{
+		return std::max(std::max(x1, x2), x3);
+	}
+
 	class Vector
 	{
 	public:

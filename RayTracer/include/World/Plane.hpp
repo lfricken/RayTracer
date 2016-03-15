@@ -19,6 +19,7 @@ namespace leon
 		Vector normal;
 
 	protected:
+		virtual void calcBoundBox() const;
 		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
 	};
 }
