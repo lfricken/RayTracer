@@ -8,7 +8,7 @@ using namespace leon;
 
 World::World()
 {
-	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 64, 1));
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 16, 4));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(400, 400, backgroundColor);
 	texture.loadFromImage(image);
@@ -60,6 +60,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	{
 		for(int x = 0; x < (signed)resX; ++x)
 		{
+			cout << "\n" << (x * 100) / resX << "%";
 			for(int y = 0; y < (signed)resY; ++y)
 			{
 				if(sample == SampleMode::PerPixel)
@@ -113,6 +114,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	{
 		for(int x = 0; x < (signed)resX; ++x)
 		{
+			cout << "\n" << (x * 100) / resX << "%";
 			for(int y = 0; y < (signed)resY; ++y)
 			{
 				ray.lastColor = backgroundColor;
@@ -202,9 +204,12 @@ void World::setPixel(int x, int y, sf::Color c)
 /// <param name="ray">The ray.</param>
 void World::getFirstHit(Ray& ray) const
 {
+	std::set<const Geometry*> candidates = octree->getCandidates(ray);
+
+
 	sf::Color lastColor(backgroundColor);
 	double lastTime = -1;
-	for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
+	for(auto it = candidates.cbegin(); it != candidates.cend(); ++it)
 	{
 		if((**it).intersects(ray, *this).init)//we hit this object
 		{

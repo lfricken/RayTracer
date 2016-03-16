@@ -44,6 +44,16 @@ void OctNode::add(const Geometry* data, const BoundingBox& box)
 		}
 	}
 }
+void OctNode::getCandidates(const Ray& ray, std::set<const Geometry*>& candidates) const
+{
+	if(!m_children[0])//if we don't have children
+		for(auto it = m_data.begin(); it != m_data.end(); ++it)
+			candidates.insert(it->second);
+	else
+		for(int i = 0; i < m_numChildren; ++i)
+			if(m_box.intersects(ray))
+				m_children[i]->getCandidates(ray, candidates);
+}
 const BoundingBox& OctNode::getBox() const
 {
 	return m_box;
@@ -69,5 +79,10 @@ void OctTree::addObject(const Geometry* data)
 	if(m_root->getBox().intersects(box))
 		m_root->add(data, box);
 }
-
+std::set<const Geometry*> OctTree::getCandidates(const Ray& ray) const
+{
+	std::set<const Geometry*> cands;
+	m_root->getCandidates(ray, cands);
+	return cands;
+}
 

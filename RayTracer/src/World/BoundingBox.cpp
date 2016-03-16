@@ -1,5 +1,6 @@
 #include "BoundingBox.hpp"
 
+
 using namespace leon;
 
 BoundingBox::BoundingBox()
@@ -67,9 +68,43 @@ bool BoundingBox::intersects(const BoundingBox& other) const
 
 	return true;
 }
+/// <summary>
+/// Intersectses the specified ray.
+/// </summary>
+/// https://tavianator.com/fast-branchless-raybounding-box-intersections/
+/// <returns></returns>
 bool BoundingBox::intersects(const Ray& ray) const
 {
-	return false;//TOODO
+	double tmin = -999999999, tmax = 999999999;
+
+	if(ray.dir.x != 0.0)
+	{
+		double txmin = (min.x - ray.pos.x) / ray.dir.x;
+		double txmax = (max.x - ray.pos.x) / ray.dir.x;
+
+		tmin = std::min(txmin, txmax);
+		tmax = std::max(txmin, txmax);
+	}
+
+	if(ray.dir.y != 0.0)
+	{
+		double tymin = (min.y - ray.pos.y) / ray.dir.y;
+		double tymax = (max.y - ray.pos.y) / ray.dir.y;
+
+		tmin = std::max(tmin, std::min(tymin, tymax));
+		tmax = std::min(tmax, std::max(tymin, tymax));
+	}
+
+	if(ray.dir.z != 0.0)
+	{
+		double tzmin = (min.z - ray.pos.z) / ray.dir.z;
+		double tzmax = (max.z - ray.pos.z) / ray.dir.z;
+
+		tmin = std::max(tmin, std::min(tzmin, tzmax));
+		tmax = std::min(tmax, std::max(tzmin, tzmax));
+	}
+
+	return tmax >= tmin;
 }
 
 

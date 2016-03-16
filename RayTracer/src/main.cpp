@@ -20,17 +20,26 @@ int main()
 
 	Geometry* s = NULL;
 		
-	s = new Sphere(Vector(512, 512, 512), 50);
-	s->color = sf::Color::Green;
-	world.add(s);
+	int num = 100;//squared
+	int startY = 900;
+	int startZ = 900;
+	int increment = 15;
 
-	s = new Sphere(Vector(512, 512, -512), 50);
-	s->color = sf::Color::Yellow;
-	world.add(s);
+	for(int y = 0; y < num; ++y)
+		for(int z = 0; z < num; ++z)
+		{
+			s = new Sphere(Vector(750, startY - y * increment, startZ - z * increment), 5);
+			s->color = sf::Color::Green;
+			world.add(s);
+		}
 
-	s = new Sphere(Vector(512, -512, 512), 50);
-	s->color = sf::Color::Cyan;
-	world.add(s);
+	//s = new Sphere(Vector(512, 512, -512), 50);
+	//s->color = sf::Color::Yellow;
+	//world.add(s);
+
+	//s = new Sphere(Vector(512, -512, 512), 50);
+	//s->color = sf::Color::Cyan;
+	//world.add(s);
 
 
 	//s = new Triangle(Vector(200, 0, -40), Vector(200, 0, -60), Vector(200, -50, -40));

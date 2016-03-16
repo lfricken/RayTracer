@@ -20,6 +20,7 @@ namespace leon
 			m_tree = parent;
 		}
 
+		void getCandidates(const Ray& ray, std::set<const Geometry*>& candidates) const;
 		void add(const Geometry* data, const BoundingBox& box);
 		const BoundingBox& getBox() const;
 
@@ -41,6 +42,8 @@ namespace leon
 		~OctTree();
 
 		void addObject(const Geometry* data);
+		std::set<const Geometry*> getCandidates(const Ray& ray) const;
+
 		int m_minSize;//we stop splitting if new octant would be less than this
 		int m_maxObjects;//max objects to have in a cell before attempting a split
 
