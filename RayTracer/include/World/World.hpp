@@ -2,6 +2,7 @@
 
 #include "stdafx.hpp"
 #include "Camera.hpp"
+#include "OctTree.hpp"
 
 namespace leon
 {
@@ -32,8 +33,10 @@ namespace leon
 
 		Camera camera;
 
+		void add(Geometry* geo);
 		vector<sptr<Geometry> > geometry;//replace with oct-tree
 		vector<sptr<Light> > lights;
+		sptr<OctTree> octree;
 
 		const sf::Color backgroundColor = sf::Color(0, 0, 0);
 		const sf::Color ambientLight = sf::Color(15, 15, 15);

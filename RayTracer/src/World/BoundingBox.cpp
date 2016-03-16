@@ -6,8 +6,10 @@ BoundingBox::BoundingBox()
 {
 
 }
-BoundingBox::BoundingBox(const Vector& center, int halfSize)
+BoundingBox::BoundingBox(const Vector& center, int size)
 {
+	int halfSize = size / 2;
+
 	min.x = center.x - halfSize;
 	min.y = center.y - halfSize;
 	min.z = center.z - halfSize;
@@ -46,4 +48,28 @@ vector<Vector> BoundingBox::getCorners() const
 	
 	return corners;
 }
+bool BoundingBox::intersects(const BoundingBox& other) const
+{
+	if(min.x > other.max.x)
+		return false;
+	if(min.y > other.max.y)
+		return false;
+	if(min.z > other.max.z)
+		return false;
+
+
+	if(other.min.x > max.x)
+		return false;
+	if(other.min.y > max.y)
+		return false;
+	if(other.min.z >max.z)
+		return false;
+
+	return true;
+}
+bool BoundingBox::intersects(const Ray& ray) const
+{
+	return false;//TOODO
+}
+
 

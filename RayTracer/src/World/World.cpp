@@ -8,6 +8,7 @@ using namespace leon;
 
 World::World()
 {
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 64, 1));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(400, 400, backgroundColor);
 	texture.loadFromImage(image);
@@ -16,6 +17,11 @@ World::World()
 World::~World()
 {
 
+}
+void World::add(Geometry* geo)
+{
+	geometry.push_back(sptr<Geometry>(geo));
+	octree->addObject(geometry.back().get());
 }
 /// <summary>
 /// Renders the specified resource x.
@@ -41,8 +47,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	}
 
 
-	double xMod = -((float)resX * 0.5)*(perX / resX);
-	double yMod = -((float)resY * 0.5)*(perY / perY);
+	double xMod = -((double)resX * 0.5)*(perX / resX);
+	double yMod = -((double)resY * 0.5)*(perY / perY);
 
 	sf::RenderWindow& window = *spWindow;
 
@@ -58,8 +64,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 			{
 				if(sample == SampleMode::PerPixel)
 				{
-					ray.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
-					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					ray.pos.y = 0 + (x - (double)resX * 0.5)*(perX / resX);//center screen on coordinates
+					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
 					getFirstHit(ray);
 					setPixel(-x + resX, -y + resY, ray.lastColor);
 				}
@@ -86,8 +92,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 
 						//cast the ray to get the color
-						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
-						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
+						ray.pos.y = 0 + (x + offsetX - (double)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (double)resY * 0.5)*(perY / resY);
 						getFirstHit(ray);
 						c1 = ray.lastColor;
 
@@ -112,8 +118,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 				ray.lastColor = backgroundColor;
 				if(sample == SampleMode::PerPixel)
 				{
-					ray.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
-					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
+					ray.pos.y = -(0 + (x - (double)resX * 0.5)*(perX / resX));//center screen on coordinates
+					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
 					ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
 					getFirstHit(ray);
 					setPixel(x, -y + resY, ray.lastColor);
@@ -141,8 +147,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 
 						//cast the ray to get the color
-						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
-						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
+						ray.pos.y = 0 + (x + offsetX - (double)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (double)resY * 0.5)*(perY / resY);
 						ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
 						getFirstHit(ray);
 						c1 = ray.lastColor;

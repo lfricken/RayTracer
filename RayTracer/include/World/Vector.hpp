@@ -85,7 +85,7 @@ namespace leon
 			result.z3 = z3 + o.z3;
 			return result;
 		}
-		Mat3<T> operator*(float c) const//overloaded for multiplication by a constant
+		Mat3<T> operator*(double c) const//overloaded for multiplication by a constant
 		{
 			Mat3<T> result;
 			result.x1 = x1*c;
@@ -176,7 +176,7 @@ namespace leon
 	};
 	typedef Mat3<double> Matrix;
 	typedef Mat3<double> Mat3d;
-	typedef Mat3<float> Mat3f;
+	typedef Mat3<double> Mat3f;
 	typedef Mat3<int> Mat3i;
 
 

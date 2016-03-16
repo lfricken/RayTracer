@@ -2,6 +2,7 @@
 
 #include "Vector.hpp"
 #include "stdafx.hpp"
+#include "Ray.hpp"
 
 namespace leon
 {
@@ -10,7 +11,7 @@ namespace leon
 	{
 	public:
 		BoundingBox();
-		BoundingBox(const Vector& center, int halfSize);
+		BoundingBox(const Vector& center, int size);
 
 		Vector min;
 		Vector max;
@@ -18,6 +19,9 @@ namespace leon
 		vector<Vector> getCorners() const;
 		int getHalfx() const;//half x distance
 		Vector getCenter() const;//center of cube
+
+		bool intersects(const BoundingBox& other) const;
+		bool intersects(const Ray& ray) const;
 		bool contains(const Vector& point) const;//Does this boundingbox surround that point?
 	};
 }
