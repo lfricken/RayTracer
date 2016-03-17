@@ -26,13 +26,13 @@ int main()
 	int startZ = 900;
 	int increment = 15;
 
-	//for(int y = 0; y < num; ++y)
-	//	for(int z = 0; z < num; ++z)
-	//	{
-	//		s = new Sphere(Vector(750, startY - y * increment, startZ - z * increment), 5);
-	//		s->color = sf::Color::Green;
-	//		world.add(s);
-	//	}
+	for(int y = 0; y < num; ++y)
+		for(int z = 0; z < num; ++z)
+		{
+			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), 5);
+			s->color = sf::Color::Green;
+			world.add(s);
+		}
 
 	s = new Sphere(Vector(512, 512, -512), 50);
 	s->color = sf::Color::Yellow;
@@ -41,6 +41,8 @@ int main()
 	s = new Sphere(Vector(512, -512, 512), 50);
 	s->color = sf::Color::Cyan;
 	world.add(s);
+
+	//world.loadModel(100, "human.obj", Vector(200, 0, 0));
 
 
 	//s = new Triangle(Vector(200, 0, -40), Vector(200, 0, -60), Vector(200, -50, -40));
@@ -51,11 +53,11 @@ int main()
 	//world.geometry.push_back(sptr<Geometry>(at));
 
 
-	//Light* l = new DirectionalLight(sf::Color(255, 255, 255), Vector(1, 1, -1));
-	//world.lights.push_back(sptr<Light>(l));
-
-	Light* l = new PointLight(sf::Color(255, 255, 255), Vector(512, 0, 0));
+	Light* l = new DirectionalLight(sf::Color(255, 255, 255), Vector(1, 1, -1));
 	world.lights.push_back(sptr<Light>(l));
+
+	//Light* l = new PointLight(sf::Color(255, 255, 255), Vector(512, 0, 0));
+	//world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 40;
 
@@ -74,7 +76,7 @@ int main()
 	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
 	//world.save(content + "frame_perspective3_noJitter.png");
 
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 2);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

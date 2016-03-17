@@ -6,6 +6,7 @@
 namespace leon
 {
 	class World;
+	class Geometry;
 
 	class Ray
 	{
@@ -20,5 +21,7 @@ namespace leon
 		double time;//time of our hit
 		Vector pos;//start position
 		Vector dir;//direction
+
+		const Geometry* lastHit;
 	};
 }

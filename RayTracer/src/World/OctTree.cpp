@@ -46,7 +46,7 @@ void OctNode::add(const Geometry* data, const BoundingBox& box)
 }
 void OctNode::getCandidates(const Ray& ray, std::set<const Geometry*>& candidates) const
 {
-	if(!m_children[0])//if we don't have children
+	if(m_children[0].get() == NULL)//if we don't have children
 		for(auto it = m_data.begin(); it != m_data.end(); ++it)
 			candidates.insert(it->second);
 	else

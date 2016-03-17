@@ -9,6 +9,8 @@ Ray::Ray(Vector position, Vector direction)
 	lastColor = sf::Color(128, 128, 128, 255);
 	time = -1;
 	onlyIntersection = false;
+
+	lastHit = NULL;
 }
 Ray::~Ray()
 {

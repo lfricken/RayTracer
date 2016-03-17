@@ -2,13 +2,15 @@
 #include "Ray.hpp"
 #include "Geometry.hpp"
 #include "Light.hpp"
+#include "Triangle.hpp"
+#include <fstream>
 
 using namespace std;
 using namespace leon;
 
 World::World()
 {
-	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 16, 4));
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 1));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(400, 400, backgroundColor);
 	texture.loadFromImage(image);
@@ -16,6 +18,48 @@ World::World()
 }
 World::~World()
 {
+
+}
+void World::loadModel(double scale, const std::string& fileName, const Vector& position)//load a model into the world
+{
+	std::string dir = content + "models/" + fileName;
+	//Note: Obj files index at 1, not 0
+	vector<Vector> verts;
+	verts.push_back(Vector(-1, -1, -1));
+
+	ifstream inFile(dir);
+
+	string line;
+	bool done = false;
+	while(!done && getline(inFile, line))//std::getline(infile, line))
+	{
+		if(line[0] == 'v')//vertex
+		{
+			line.erase(line.begin(), line.begin() + 1);
+			double x, y, z;
+			istringstream iss(line);
+			if(iss >> x >> y >> z)
+				verts.push_back(position + Vector(x * scale, y * scale, z * scale));
+			else
+				perror("AAA");
+			//cout << "\n" << x << "\t" << y << "\t" << z;
+		}
+		else if(line[0] == 'f')//face
+		{
+			line.erase(line.begin(), line.begin() + 1);
+			int v1, v2, v3;
+			istringstream iss(line);
+			if(iss >> v1 >> v2 >> v3)
+				this->add(new Triangle(verts[v1], verts[v2], verts[v3]));
+			else
+				perror("AAA");
+			//cout << "\n" << v1 << "\t" << v2 << "\t" << v3;
+		}
+		else
+		{
+			perror(line.c_str());
+		}
+	}
 
 }
 void World::add(Geometry* geo)
@@ -206,8 +250,9 @@ void World::getFirstHit(Ray& ray) const
 {
 	std::set<const Geometry*> candidates = octree->getCandidates(ray);
 
+	ray.lastHit = NULL;
+	const Geometry* last = NULL;
 
-	sf::Color lastColor(backgroundColor);
 	double lastTime = -1;
 	for(auto it = candidates.cbegin(); it != candidates.cend(); ++it)
 	{
@@ -215,12 +260,19 @@ void World::getFirstHit(Ray& ray) const
 		{
 			if(lastTime == -1 || lastTime > ray.time)
 			{
-				lastColor = ray.lastColor;
+				last = ray.lastHit;
 				lastTime = ray.time;
 			}
 
 		}
 	}
-	ray.lastColor = lastColor;
+
+	if(last != NULL)
+		ray.lastColor = last->getColorPoint(ray.pos + ray.dir * lastTime, *this);
+	else
+		ray.lastColor = backgroundColor;
+
+
+
 	ray.time = lastTime;
 }

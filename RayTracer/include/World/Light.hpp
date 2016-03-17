@@ -22,8 +22,8 @@ namespace leon
 		void setColor(const sf::Color& newColor);
 
 	protected:
-		unsigned char getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
-		unsigned char getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
+		int getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
+		int getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
 
 		virtual bool inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const = 0;
 

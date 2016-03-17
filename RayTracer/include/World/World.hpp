@@ -26,6 +26,7 @@ namespace leon
 		World();
 		virtual ~World();
 
+		void loadModel(double scale, const std::string& fileName, const Vector& position);//load a model into the world
 		void setPixel(int x, int y = 0, sf::Color c = sf::Color::Blue);
 		void save(const std::string& rName);
 

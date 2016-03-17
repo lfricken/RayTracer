@@ -14,6 +14,10 @@ Geometry::~Geometry()
 {
 
 }
+sf::Color Geometry::getColorPoint(const Vector& point, const World& world) const
+{
+	return color * world.lights[0]->getBrightness(point, getNormal(point), world);
+}
 /// <summary>
 /// does this geometry intersect the specified ray?
 /// </summary>
@@ -24,9 +28,10 @@ Vector Geometry::intersects(Ray& ray, const World& world) const
 {
 	Vector intersection = intersectsHook(ray, world);
 
-	if(!ray.onlyIntersection)
-		if(intersection.init)///TODO fix only checking light 0
-			ray.lastColor = color * world.lights[0]->getBrightness(intersection, getNormal(intersection), world);
+	ray.lastHit = this;
+	//if(!ray.onlyIntersection)
+	//	if(intersection.init)///TODO fix only checking light 0
+	//		ray.lastColor = getColorPoint(intersection, world);
 
 	return intersection;
 }

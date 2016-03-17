@@ -15,6 +15,8 @@ namespace leon
 		Geometry();
 		virtual ~Geometry();
 
+		sf::Color getColorPoint(const Vector& point, const World& world) const;
+
 		Vector intersects(Ray& ray, const World& world) const;
 		const BoundingBox& getBoundBox() const;
 

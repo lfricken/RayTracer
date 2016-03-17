@@ -44,7 +44,7 @@ void Light::setColor(const sf::Color& newColor)
 {
 	color = newColor;
 }
-unsigned char Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+int Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
 	Vector toEye = point.to(world.camera.getPosition());
 
@@ -57,11 +57,11 @@ unsigned char Light::getSpecular(const Vector& point, const Vector& normal, cons
 
 	Vector specVector = lightRayDir - (normal * (lightRayDir.dot(normal) * 2));
 
-	return static_cast<unsigned char>(pow(specVector.dot(toEye), e) * 255 * 0.8);
+	return (pow(specVector.dot(toEye), e) * 255 * 0.8);
 }
-unsigned char Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+int Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	return static_cast<unsigned char>(255.0 * lightRayDir.inv().dot(normal.normal()));
+	return (255.0 * lightRayDir.inv().dot(normal.normal()));
 }
 bool Light::inShadow(const Vector& origin, const Vector& direction, const Vector& target, const World& world) const
 {
@@ -89,15 +89,15 @@ sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, co
 	if(!inShadow(start, direction, point, world))
 	{
 		//Diffuse
-		unsigned char d = getDiffuse(point, normal, world, direction);
-		unsigned char s = getSpecular(point, normal, world, direction);
+		int d = getDiffuse(point, normal, world, direction);
+		int s = 0;// getSpecular(point, normal, world, direction);
 
 		if(d > 0)
 			return color*sf::Color(min(s + d, 255), min(s + d, 255), min(s + d, 255));//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
 		else
 			return sf::Color(0, 0, 0);
 	}
-	else
-		return sf::Color(0, 0, 0);
+	//else
+	//	return sf::Color(0, 0, 0);
 }
 
