@@ -21,18 +21,18 @@ int main()
 
 	Geometry* s = NULL;
 		
-	int num = 100;//squared
+	int num = 10;//squared
 	int startY = 900;
 	int startZ = 900;
 	int increment = 15;
 
-	//for(int y = 0; y < num; ++y)
-	//	for(int z = 0; z < num; ++z)
-	//	{
-	//		s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), 5);
-	//		s->color = sf::Color::Green;
-	//		world.add(s);
-	//	}
+	for(int y = 0; y < num; ++y)
+		for(int z = 0; z < num; ++z)
+		{
+			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), 5);
+			s->color = sf::Color::Green;
+			world.add(s);
+		}
 
 	s = new Sphere(Vector(512, -550, 552), 50);
 	s->color = sf::Color::Yellow;
@@ -76,7 +76,7 @@ int main()
 	//world.render(400, 400, 100, 100, RenderMode::PerspectivePlane);//img4
 	//world.save(content + "frame_perspective3_noJitter.png");
 
-	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 2);//img5
+	world.render(400, 400, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

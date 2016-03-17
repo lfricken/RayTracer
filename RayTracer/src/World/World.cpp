@@ -268,7 +268,7 @@ void World::getFirstHit(Ray& ray) const
 		}
 	}
 
-	if(last != NULL)
+	if(last != NULL && (!ray.onlyIntersection))
 		ray.lastColor = last->getColorPoint(ray.pos + ray.dir * lastTime, *this);
 	else
 		ray.lastColor = backgroundColor;
