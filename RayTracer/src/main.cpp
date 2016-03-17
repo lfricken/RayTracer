@@ -26,21 +26,21 @@ int main()
 	int startZ = 900;
 	int increment = 15;
 
-	for(int y = 0; y < num; ++y)
-		for(int z = 0; z < num; ++z)
-		{
-			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), 5);
-			s->color = sf::Color::Green;
-			world.add(s);
-		}
+	//for(int y = 0; y < num; ++y)
+	//	for(int z = 0; z < num; ++z)
+	//	{
+	//		s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), 5);
+	//		s->color = sf::Color::Green;
+	//		world.add(s);
+	//	}
 
-	s = new Sphere(Vector(512, 512, -512), 50);
+	s = new Sphere(Vector(512, -550, 552), 50);
 	s->color = sf::Color::Yellow;
 	world.add(s);
 
-	s = new Sphere(Vector(512, -512, 512), 50);
-	s->color = sf::Color::Cyan;
-	world.add(s);
+	//s = new Sphere(Vector(512, -512, 512), 50);
+	//s->color = sf::Color::Cyan;
+	//world.add(s);
 
 	//world.loadModel(100, "human.obj", Vector(200, 0, 0));
 

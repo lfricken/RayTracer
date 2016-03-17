@@ -252,6 +252,7 @@ void World::getFirstHit(Ray& ray) const
 
 	ray.lastHit = NULL;
 	const Geometry* last = NULL;
+	ray.time = -1;
 
 	double lastTime = -1;
 	for(auto it = candidates.cbegin(); it != candidates.cend(); ++it)
