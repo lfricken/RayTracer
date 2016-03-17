@@ -63,6 +63,15 @@ unsigned char Light::getDiffuse(const Vector& point, const Vector& normal, const
 {
 	return static_cast<unsigned char>(255.0 * lightRayDir.inv().dot(normal.normal()));
 }
+bool Light::inShadow(const Vector& origin, const Vector& direction, const Vector& target, const World& world) const
+{
+
+	Ray r(origin, direction);
+	r.onlyIntersection = true;
+	world.getFirstHit(r);
+
+	return (r.time < 1999.999);
+}
 /// <summary>
 /// determines how bright we are illuminating something
 /// </summary>
@@ -74,8 +83,8 @@ sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, co
 {
 	Vector direction = this->getDirection(point);
 
-	Vector start = this->getStart(direction);
-
+	Vector start = this->getStart(point);
+		//start(point.x - direction.x * 2000, point.y - direction.y * 2000, point.z - direction.z * 2000);
 
 	if(!inShadow(start, direction, point, world))
 	{
