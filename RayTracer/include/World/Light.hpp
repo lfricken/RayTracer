@@ -16,6 +16,7 @@ namespace leon
 		sf::Color getBrightness(const Vector& point, const Vector& normal, const World& world) const;
 
 		virtual Vector getDirection(const Vector& point) const = 0;
+		virtual Vector getStart(const Vector& point) const = 0;
 
 		const sf::Color& getColor() const;
 		void setColor(const sf::Color& newColor);
@@ -24,7 +25,7 @@ namespace leon
 		unsigned char getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
 		unsigned char getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
 
-		bool inShadow(const Vector& origin, const Vector& direction, const Vector& target, const World& world) const;
+		virtual bool inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const = 0;
 
 		sf::Color getBrightnessHook(const Vector& point, const Vector& normal, const World& world) const;
 

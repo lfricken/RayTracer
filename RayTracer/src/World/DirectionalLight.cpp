@@ -32,4 +32,16 @@ Vector DirectionalLight::getDirection(const Vector& point) const
 {
 	return direction;
 }
+Vector DirectionalLight::getStart(const Vector& point) const
+{
+	return Vector(point.x - direction.x * 2000, point.y - direction.y * 2000, point.z - direction.z * 2000);
+}
+bool DirectionalLight::inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const
+{
+	Ray r(origin, direction);
+	r.onlyIntersection = true;
+	world.getFirstHit(r);
+
+	return (r.time < 1999.999);
+}
 

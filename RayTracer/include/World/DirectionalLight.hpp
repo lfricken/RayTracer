@@ -15,9 +15,13 @@ namespace leon
 		virtual void transform(const Matrix& rot);
 
 		virtual Vector getDirection(const Vector& point) const;
+		virtual Vector getStart(const Vector& point) const;
 
 		Vector direction;
 
 	protected:
+
+		virtual bool inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const;
+
 	};
 }
