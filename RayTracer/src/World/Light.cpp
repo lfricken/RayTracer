@@ -22,11 +22,19 @@ Light::~Light()
 /// <param name="normal">The normal.</param>
 /// <param name="world">The world.</param>
 /// <returns>color at that spot</returns>
-sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world) const
+sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world, const sf::Color& geoColor) const
 {
 	sf::Color c = getBrightnessHook(point, normal, world);
 	const sf::Color& amb = world.ambientLight;
-	return sf::Color(min(255, (amb.r + c.r)), min(255, (amb.g + c.g)), min(255, (amb.b + c.b)));
+
+
+	sf::Color fin = geoColor * sf::Color(min(255, (amb.r + c.r)), min(255, (amb.g + c.g)), min(255, (amb.b + c.b)));
+
+	int spec = 0;
+	if(c != sf::Color(0,0,0))//not in shadow
+		spec = getSpecular(point, normal, world, getDirection(point));
+
+	return sf::Color(std::min(255, fin.r + spec), std::min(255, fin.g + spec), std::min(255, fin.b + spec));
 }
 /// <summary>
 /// Gets the color of light
@@ -46,7 +54,7 @@ void Light::setColor(const sf::Color& newColor)
 }
 int Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	Vector toEye = point.to(world.camera.getPosition());
+	Vector toEye = point.to(world.camera.getPosition()).normal();
 
 	Vector p = point.normal();
 	Vector n = normal.normal();
@@ -55,7 +63,7 @@ int Light::getSpecular(const Vector& point, const Vector& normal, const World& w
 
 	double e = 16;
 
-	Vector specVector = lightRayDir - (normal * (lightRayDir.dot(normal) * 2));
+	Vector specVector = (l - (n * (l.dot(n) * 2))).normal();
 
 	return (pow(specVector.dot(toEye), e) * 255 * 0.8);
 }
@@ -81,10 +89,10 @@ sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, co
 	{
 		//Diffuse
 		int d = getDiffuse(point, normal, world, direction);
-		int s = getSpecular(point, normal, world, direction);
+	//	int s = getSpecular(point, normal, world, direction);
 
 		if(d > 0)
-			return color*sf::Color(min(s + d, 255), min(s + d, 255), min(s + d, 255));//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
+			return color*sf::Color(min(d, 255), min(d, 255), min(d, 255));//TODO THIS SHOULD REFERENCE COLOR OF THIS LIGHT
 		else
 			return sf::Color(0, 0, 0);
 	}

@@ -10,7 +10,7 @@ using namespace leon;
 
 World::World()
 {
-	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 1));
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 2));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(512, 512, backgroundColor);
 	texture.loadFromImage(image);
@@ -70,7 +70,10 @@ void World::redoOctree()
 {
 	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 1, 1));
 	for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
+	{
+	//	std::cout << "\n" << it - geometry.cbegin();
 		octree->addObject(it->get());
+	}
 }
 void World::add(Geometry* geo)
 {
@@ -246,7 +249,6 @@ void World::setPixel(int x, int y, sf::Color c)
 {
 	if(x < 0 || x >= (signed)image.getSize().x || y < 0 || y >= (signed)image.getSize().y)
 	{
-		cout << "\nIndex Error!";
 		return;
 	}
 
