@@ -34,6 +34,8 @@ namespace leon
 
 		Camera camera;
 
+		void redoOctree();
+
 		void add(Geometry* geo);
 		vector<sptr<Geometry> > geometry;//replace with oct-tree
 		vector<sptr<Light> > lights;

@@ -70,6 +70,8 @@ void Triangle::translate(const Vector& dist)
 	a = a + dist;
 	b = b + dist;
 	c = c + dist;
+
+	plane = Plane(a, (a.to(b).cross(a.to(c))));
 }
 /// <summary>
 /// Transforms the specified rotation.
@@ -80,6 +82,8 @@ void Triangle::transform(const Matrix& rot)
 	a = rot*a;
 	b = rot*b;
 	c = rot*c;
+
+	plane = Plane(a, (a.to(b).cross(a.to(c))));
 }
 void Triangle::calcBoundBox() const
 {

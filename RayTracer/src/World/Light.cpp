@@ -77,7 +77,7 @@ sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, co
 	Vector start = this->getStart(point);
 		//start(point.x - direction.x * 2000, point.y - direction.y * 2000, point.z - direction.z * 2000);
 
-	//if(!inShadow(start, direction, point, world))
+	if(!inShadow(start, direction, point, world))
 	{
 		//Diffuse
 		int d = getDiffuse(point, normal, world, direction);
@@ -88,7 +88,7 @@ sf::Color Light::getBrightnessHook(const Vector& point, const Vector& normal, co
 		else
 			return sf::Color(0, 0, 0);
 	}
-	//else
+	else
 	{
 		return sf::Color(0, 0, 0);
 	}

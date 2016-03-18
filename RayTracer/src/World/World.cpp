@@ -10,7 +10,7 @@ using namespace leon;
 
 World::World()
 {
-	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 16, 6));
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 1));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(512, 512, backgroundColor);
 	texture.loadFromImage(image);
@@ -53,7 +53,7 @@ void World::loadModel(double scale, const std::string& fileName, const Vector& p
 			{
 				this->add(new Triangle(verts[v1], verts[v2], verts[v3]));
 				if(iss >> v4)
-					this->add(new Triangle(v3, v4, v1));
+					this->add(new Triangle(verts[v3], verts[v4], verts[v1]));
 			}
 			else
 				perror("AAA");
@@ -66,10 +66,16 @@ void World::loadModel(double scale, const std::string& fileName, const Vector& p
 	}
 
 }
+void World::redoOctree()
+{
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 1, 1));
+	for(auto it = geometry.cbegin(); it != geometry.cend(); ++it)
+		octree->addObject(it->get());
+}
 void World::add(Geometry* geo)
 {
 	geometry.push_back(sptr<Geometry>(geo));
-	octree->addObject(geometry.back().get());
+	//octree->addObject(geometry.back().get());
 }
 /// <summary>
 /// Renders the specified resource x.
