@@ -10,9 +10,9 @@ using namespace leon;
 
 World::World()
 {
-	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 1));
+	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 16, 6));
 	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
-	image.create(400, 400, backgroundColor);
+	image.create(512, 512, backgroundColor);
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }
@@ -47,10 +47,14 @@ void World::loadModel(double scale, const std::string& fileName, const Vector& p
 		else if(line[0] == 'f')//face
 		{
 			line.erase(line.begin(), line.begin() + 1);
-			int v1, v2, v3;
+			int v1, v2, v3, v4;
 			istringstream iss(line);
 			if(iss >> v1 >> v2 >> v3)
+			{
 				this->add(new Triangle(verts[v1], verts[v2], verts[v3]));
+				if(iss >> v4)
+					this->add(new Triangle(v3, v4, v1));
+			}
 			else
 				perror("AAA");
 			//cout << "\n" << v1 << "\t" << v2 << "\t" << v3;
@@ -98,7 +102,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0));
 
-	image.create(420, 420, backgroundColor);
+	image.create(512, 512, backgroundColor);
 
 	if(mode == RenderMode::Orthographic)
 	{
@@ -112,7 +116,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					ray.pos.y = 0 + (x - (double)resX * 0.5)*(perX / resX);//center screen on coordinates
 					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
 					getFirstHit(ray);
-					setPixel(-x + resX, -y + resY, ray.lastColor);
+					setPixel(-x + (resX - 1), -y + (resY - 1), ray.lastColor);
 				}
 				else// MultiJitter
 				{
@@ -149,7 +153,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					}
 
 					sf::Color finalColor(r / samples, g / samples, b / samples);
-					setPixel(-x + resX, -y + resY, finalColor);
+					setPixel(-x + (resX - 1), -y + (resY - 1), finalColor);
 				}
 			}
 		}
@@ -168,7 +172,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
 					ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
 					getFirstHit(ray);
-					setPixel(x, -y + resY, ray.lastColor);
+					setPixel(x, -y + (resY - 1), ray.lastColor);
 				}
 				else// MultiJitter
 				{
@@ -206,7 +210,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					}
 
 					sf::Color finalColor(r / samples, g / samples, b / samples);
-					setPixel(-x + resX, -y + resY, finalColor);
+					setPixel(-x + (resX-1), -y + (resY-1), finalColor);
 				}
 			}
 		}
