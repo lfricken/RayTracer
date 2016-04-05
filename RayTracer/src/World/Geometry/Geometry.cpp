@@ -7,7 +7,7 @@ using namespace leon;
 
 Geometry::Geometry()
 {
-	color = sf::Color(128, 0, 128, 255);
+	material.color = sf::Color(128, 0, 128, 255);
 	m_boxCalculated = false;
 }
 Geometry::~Geometry()
@@ -17,7 +17,7 @@ Geometry::~Geometry()
 sf::Color Geometry::getColorPoint(const Vector& point, const World& world) const
 {
 	Light& light = *world.lights[0];
-	return light.getBrightness(point, getNormal(point), world, color);
+	return light.getBrightness(point, getNormal(point), world, material);
 }
 /// <summary>
 /// does this geometry intersect the specified ray?

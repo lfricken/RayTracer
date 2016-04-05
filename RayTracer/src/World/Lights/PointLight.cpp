@@ -16,10 +16,6 @@ void PointLight::translate(const Vector& dist)
 {
 	pos = pos + dist;
 }
-/// <summary>
-/// Transforms the specified rotation.
-/// </summary>
-/// <param name="rot">The rot.</param>
 void PointLight::transform(const Matrix& rot)
 {
 	pos = rot*pos;
@@ -28,7 +24,6 @@ Vector PointLight::getDirection(const Vector& point) const
 {
 	return pos.to(point).normal();
 }
-
 Vector PointLight::getStart(const Vector& point) const
 {
 	return pos;

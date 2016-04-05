@@ -39,10 +39,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>include\World;include;include\API;$(IncludePath)</IncludePath>
+    <IncludePath>include\World\Geometry;include\World\Lights;include\World;include;include\API;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>include\World;include;include\API;$(IncludePath)</IncludePath>
+    <IncludePath>include\World\Geometry;include\World\Lights;include\World;include;include\API;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -77,35 +77,36 @@
   <ItemGroup>
     <ClCompile Include="src\World\BoundingBox.cpp" />
     <ClCompile Include="src\World\OctTree.cpp" />
-    <ClCompile Include="src\World\PointLight.cpp" />
+    <ClCompile Include="src\World\Lights\PointLight.cpp" />
     <ClCompile Include="src\World\Scenic.cpp" />
-    <ClCompile Include="src\World\DirectionalLight.cpp" />
-    <ClCompile Include="src\World\Light.cpp" />
+    <ClCompile Include="src\World\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\World\Lights\Light.cpp" />
     <ClCompile Include="src\World\Camera.cpp" />
-    <ClCompile Include="src\World\Plane.cpp" />
-    <ClCompile Include="src\World\Sphere.cpp" />
-    <ClCompile Include="src\World\Geometry.cpp" />
+    <ClCompile Include="src\World\Geometry\Plane.cpp" />
+    <ClCompile Include="src\World\Geometry\Sphere.cpp" />
+    <ClCompile Include="src\World\Geometry\Geometry.cpp" />
     <ClCompile Include="src\World\Ray.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\World\World.cpp" />
     <ClCompile Include="src\World\Vector.cpp" />
-    <ClCompile Include="src\World\Triangle.cpp" />
+    <ClCompile Include="src\World\Geometry\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\World\BoundingBox.hpp" />
-    <ClInclude Include="include\World\DirectionalLight.hpp" />
+    <ClInclude Include="include\World\Lights\DirectionalLight.hpp" />
     <ClInclude Include="include\World\Camera.hpp" />
-    <ClInclude Include="include\World\Geometry.hpp" />
+    <ClInclude Include="include\World\Geometry\Geometry.hpp" />
     <ClInclude Include="include\stdafx.hpp" />
+    <ClInclude Include="include\World\Geometry\Material.hpp" />
     <ClInclude Include="include\World\World.hpp" />
     <ClInclude Include="include\World\Ray.hpp" />
     <ClInclude Include="include\World\Vector.hpp" />
-    <ClInclude Include="include\World\Triangle.hpp" />
-    <ClInclude Include="include\World\Sphere.hpp" />
-    <ClInclude Include="include\World\Plane.hpp" />
-    <ClInclude Include="include\World\Light.hpp" />
+    <ClInclude Include="include\World\Geometry\Triangle.hpp" />
+    <ClInclude Include="include\World\Geometry\Sphere.hpp" />
+    <ClInclude Include="include\World\Geometry\Plane.hpp" />
+    <ClInclude Include="include\World\Lights\Light.hpp" />
     <ClInclude Include="include\World\Scenic.hpp" />
-    <ClInclude Include="include\World\PointLight.hpp" />
+    <ClInclude Include="include\World\Lights\PointLight.hpp" />
     <ClInclude Include="include\World\OctTree.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

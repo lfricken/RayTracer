@@ -1,27 +1,26 @@
 #pragma once
 
-#include "Vector.hpp"
 #include "Light.hpp"
+#include "Vector.hpp"
+
 
 namespace leon
 {
-	class DirectionalLight : public Light
+	class PointLight : public Light
 	{
 	public:
-		DirectionalLight(const sf::Color& colori, const Vector& directioni);
-		~DirectionalLight();
+		PointLight(const sf::Color& color, const Vector& position);
+		~PointLight();
 
 		virtual void translate(const Vector& dist);
 		virtual void transform(const Matrix& rot);
 
+	protected:
+		virtual bool inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const;
 		virtual Vector getDirection(const Vector& point) const;
 		virtual Vector getStart(const Vector& point) const;
 
-		Vector direction;
-
-	protected:
-
-		virtual bool inShadow(const Vector& origin, const Vector& direction, const Vector& point, const World& world) const;
-
+		Vector pos;
 	};
 }
+

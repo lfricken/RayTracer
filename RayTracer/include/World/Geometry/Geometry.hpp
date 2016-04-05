@@ -4,6 +4,7 @@
 #include "stdafx.hpp"
 #include "Scenic.hpp"
 #include "BoundingBox.hpp"
+#include "Material.hpp"
 
 namespace leon
 {
@@ -20,7 +21,7 @@ namespace leon
 		Vector intersects(Ray& ray, const World& world) const;
 		const BoundingBox& getBoundBox() const;
 
-		sf::Color color;
+		Material material;
 
 		virtual Vector getNormal(const Vector& point) const = 0;
 
