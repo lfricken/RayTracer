@@ -27,22 +27,24 @@ int main()
 	world.camera.eyedist = 35;
 
 
-	int num = 40;//squared
-	int startY = 800;
-	int startZ = 800;
-	int increment = 35;
-	int radius = 15;
+	int num = 20;//squared
+	int startY = 500;
+	int startZ = 500;
+	int increment = 20;
+	int radius = 10;
 	for(int y = 0; y < num; ++y)
 		for(int z = 0; z < num; ++z)
 		{
 			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), radius);
-			s->color = sf::Color(y*40, 255, z*10);
+			s->material.color = sf::Color(y*40, 255, z*10);
 			world.add(s);
 		}
 
 
 	s = new Sphere(Vector(300, 100, 100), 35);
-	s->color = sf::Color::Green;
+	s->material.color = sf::Color::Green;
+	s->material.specular = 1;
+	s->material.diffuse = 1;
 	world.add(s);
 
 
