@@ -75,6 +75,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Geometry\Rectangle.cpp" />
     <ClCompile Include="src\World\BoundingBox.cpp" />
     <ClCompile Include="src\World\OctTree.cpp" />
     <ClCompile Include="src\World\Lights\PointLight.cpp" />
@@ -108,6 +109,7 @@
     <ClInclude Include="include\World\Scenic.hpp" />
     <ClInclude Include="include\World\Lights\PointLight.hpp" />
     <ClInclude Include="include\World\OctTree.hpp" />
+    <ClInclude Include="include\World\Geometry\Rectangle.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

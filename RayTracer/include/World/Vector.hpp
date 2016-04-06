@@ -49,8 +49,9 @@ namespace leon
 		Vector operator*(double c) const;
 		Vector operator/(double c) const;
 
-	};
+		bool operator!=(const Vector& other) const;
 
+	};
 
 
 	/** 3x3 Matrix**/

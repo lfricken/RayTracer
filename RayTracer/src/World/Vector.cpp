@@ -82,3 +82,7 @@ Vector Vector::operator/(double c) const
 {
 	return Vector(x/c, y/c, z/c);
 }
+bool Vector::operator!=(const Vector& other) const
+{
+	return (x != other.x || y != other.y || z != other.z);
+}

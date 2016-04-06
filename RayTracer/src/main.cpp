@@ -6,6 +6,7 @@
 #include "Light.hpp"
 #include "DirectionalLight.hpp"
 #include "PointLight.hpp"
+#include "Rectangle.hpp"
 
 using namespace leon;
 using namespace std;
@@ -21,7 +22,7 @@ int main()
 
 	Geometry* s = NULL;
 
-	Light* l = new PointLight(sf::Color(255, 255, 255), Vector(200, 0, 0));
+	Light* l = new PointLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
 	world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 35;
@@ -37,17 +38,23 @@ int main()
 		{
 			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), radius);
 			s->material.color = sf::Color(y*40, 255, z*10);
+			s->material.specular = 0;
 			world.add(s);
 		}
 
 
+
 	s = new Sphere(Vector(300, 100, 100), 35);
 	s->material.color = sf::Color::Green;
-	s->material.specular = 1;
+	s->material.specular = 0;
 	s->material.diffuse = 1;
 	world.add(s);
 
-
+	s = new Rectangle(Vector(100, 0, 0), Vector(100, 0, 20), Vector(100, 30, 30), Vector(100, 20, 0));
+	s->material.color = sf::Color::Green;
+	s->material.diffuse = 1;
+	s->material.specular = 0;
+	world.add(s);
 
 	//Geometry* at = new Triangle(Vector(512, 512, 300), Vector(512, 512, -600), Vector(512, -512, 0));
 	//at->color = sf::Color::Cyan;
@@ -61,7 +68,7 @@ int main()
 
 	world.redoOctree();
 
-	world.render(512, 512, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 2);//img5
+	world.render(512, 512, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

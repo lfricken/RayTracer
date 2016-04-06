@@ -9,7 +9,7 @@ BoundingBox::BoundingBox()
 }
 BoundingBox::BoundingBox(const Vector& center, int size)
 {
-	int halfSize = size / 2;
+	const int halfSize = size / 2;
 
 	min.x = center.x - halfSize;
 	min.y = center.y - halfSize;
@@ -29,7 +29,7 @@ bool BoundingBox::contains(const Vector& point) const
 }
 int BoundingBox::getHalfx() const
 {
-	return (max.x - min.x) / 2;
+	return static_cast<int>((max.x - min.x) / 2.f);
 }
 vector<Vector> BoundingBox::getCorners() const
 {
@@ -79,8 +79,8 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	if(ray.dir.x != 0.0)
 	{
-		double txmin = (min.x - ray.pos.x) / ray.dir.x;
-		double txmax = (max.x - ray.pos.x) / ray.dir.x;
+		const double txmin = (min.x - ray.pos.x) / ray.dir.x;
+		const double txmax = (max.x - ray.pos.x) / ray.dir.x;
 
 		tmin = std::min(txmin, txmax);
 		tmax = std::max(txmin, txmax);
@@ -88,8 +88,8 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	if(ray.dir.y != 0.0)
 	{
-		double tymin = (min.y - ray.pos.y) / ray.dir.y;
-		double tymax = (max.y - ray.pos.y) / ray.dir.y;
+		const double tymin = (min.y - ray.pos.y) / ray.dir.y;
+		const double tymax = (max.y - ray.pos.y) / ray.dir.y;
 
 		tmin = std::max(tmin, std::min(tymin, tymax));
 		tmax = std::min(tmax, std::max(tymin, tymax));
@@ -97,8 +97,8 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	if(ray.dir.z != 0.0)
 	{
-		double tzmin = (min.z - ray.pos.z) / ray.dir.z;
-		double tzmax = (max.z - ray.pos.z) / ray.dir.z;
+		const double tzmin = (min.z - ray.pos.z) / ray.dir.z;
+		const double tzmax = (max.z - ray.pos.z) / ray.dir.z;
 
 		tmin = std::max(tmin, std::min(tzmin, tzmax));
 		tmax = std::min(tmax, std::max(tzmin, tzmax));
@@ -106,5 +106,16 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	return tmax >= tmin;
 }
+BoundingBox BoundingBox::operator+(const BoundingBox& other) const
+{
+	BoundingBox newBox;
+	newBox.min.x = std::min(min.x, other.min.x);
+	newBox.min.y = std::min(min.y, other.min.y);
+	newBox.min.z = std::min(min.z, other.min.z);
 
+	newBox.max.x = std::max(max.x, other.max.x);
+	newBox.max.y = std::max(max.y, other.max.y);
+	newBox.max.z = std::max(max.z, other.max.z);
+	return newBox;
+}
 

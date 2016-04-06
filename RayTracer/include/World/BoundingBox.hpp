@@ -20,6 +20,7 @@ namespace leon
 		int getHalfx() const;//half x distance
 		Vector getCenter() const;//center of cube
 
+		BoundingBox operator+(const BoundingBox& other) const;
 		bool intersects(const BoundingBox& other) const;
 		bool intersects(const Ray& ray) const;
 		bool contains(const Vector& point) const;//Does this boundingbox surround that point?

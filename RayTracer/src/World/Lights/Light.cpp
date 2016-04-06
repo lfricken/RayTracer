@@ -25,8 +25,8 @@ Light::~Light()
 /// <returns>color at that spot</returns>
 sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const
 {
-	Vector direction = this->getDirection(point);
-	Vector start = this->getStart(point);
+	const Vector direction = this->getDirection(point);
+	const Vector start = this->getStart(point);
 	const sf::Color& ambient = world.ambientLight;
 
 	if(!inShadow(start, direction, point, world))
@@ -46,16 +46,15 @@ sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const 
 }
 int Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	Vector toEye = point.to(world.camera.getPosition()).normal();
+	const Vector toEye = point.to(world.camera.getPosition()).normal();
 
-	Vector p = point.normal();
-	Vector n = normal.normal();
-	Vector l = lightRayDir.normal();
-	toEye.normalize();
+	const Vector p = point.normal();
+	const Vector n = normal.normal();
+	const Vector l = lightRayDir.normal();
 
-	double e = 16;
+	const double e = 16;
 
-	Vector specVector = (l - (n * (l.dot(n) * 2))).normal();
+	const Vector specVector = (l - (n * (l.dot(n) * 2))).normal();
 
 	return (pow(specVector.dot(toEye), e) * 255 * 0.8);
 }

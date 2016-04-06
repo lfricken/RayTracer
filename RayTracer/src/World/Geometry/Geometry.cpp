@@ -19,20 +19,11 @@ sf::Color Geometry::getColorPoint(const Vector& point, const World& world) const
 	Light& light = *world.lights[0];
 	return light.getBrightness(point, getNormal(point), world, material);
 }
-/// <summary>
-/// does this geometry intersect the specified ray?
-/// </summary>
-/// <param name="ray">The ray.</param>
-/// <param name="world">The world.</param>
-/// <returns>position of intersection</returns>
 Vector Geometry::intersects(Ray& ray, const World& world) const
 {
 	Vector intersection = intersectsHook(ray, world);
 
 	ray.lastHit = this;
-	//if(!ray.onlyIntersection)
-	//	if(intersection.init)///TODO fix only checking light 0
-	//		ray.lastColor = getColorPoint(intersection, world);
 
 	return intersection;
 }
