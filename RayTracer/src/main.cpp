@@ -23,8 +23,13 @@ int main()
 
 	Geometry* s = NULL;
 
-	Light* l = new PointLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
-	//Light* l = new RectangleLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
+	//Light* l = new PointLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
+	s = new Rectangle(Vector(0, -300, 0), Vector(0, 0, -50), Vector(0, -50, 0));
+	s->material.color = sf::Color::Red;
+	s->material.diffuse = 1;
+	s->material.specular = 1;
+
+	Light* l = new SquareLight(sf::Color::White, (Rectangle*)s);
 	world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 35;
@@ -48,6 +53,12 @@ int main()
 
 	s = new Sphere(Vector(300, 100, 100), 35);
 	s->material.color = sf::Color::Green;
+	s->material.specular = 0;
+	s->material.diffuse = 1;
+	world.add(s);
+
+	s = new Sphere(Vector(300, 0, 0), 25);
+	s->material.color = sf::Color::Cyan;
 	s->material.specular = 0;
 	s->material.diffuse = 1;
 	world.add(s);
@@ -82,7 +93,7 @@ int main()
 
 	world.redoOctree();
 
-	world.render(512, 512, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
+	world.render(512, 512, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 8);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	return 0;
 }

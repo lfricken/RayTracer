@@ -28,6 +28,7 @@ sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const 
 	const Vector direction = this->getDirection(point);
 	const sf::Color& ambient = world.ambientLight;
 
+
 	if(!inShadow(point, world))
 	{
 		const int diffValue = getDiffuse(point, normal, world, direction);
