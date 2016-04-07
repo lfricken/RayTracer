@@ -65,6 +65,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -75,6 +76,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Lights\SquareLight.cpp" />
     <ClCompile Include="src\World\Geometry\Rectangle.cpp" />
     <ClCompile Include="src\World\BoundingBox.cpp" />
     <ClCompile Include="src\World\OctTree.cpp" />
@@ -110,6 +112,7 @@
     <ClInclude Include="include\World\Lights\PointLight.hpp" />
     <ClInclude Include="include\World\OctTree.hpp" />
     <ClInclude Include="include\World\Geometry\Rectangle.hpp" />
+    <ClInclude Include="include\World\Lights\SquareLight.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

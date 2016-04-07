@@ -26,16 +26,15 @@ Light::~Light()
 sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const
 {
 	const Vector direction = this->getDirection(point);
-	const Vector start = this->getStart(point);
 	const sf::Color& ambient = world.ambientLight;
 
-	if(!inShadow(start, direction, point, world))
+	if(!inShadow(point, world))
 	{
 		const int diffValue = getDiffuse(point, normal, world, direction);
 		const float diffFrac = material.diffuse*static_cast<float>(diffValue) / 255.f;
 		const sf::Color diffuse = material.color * sf::Color(diffFrac * color.r, diffFrac * color.g, diffFrac * color.b);
 
-		const int specValue = getSpecular(point, normal, world, getDirection(point));
+		const int specValue = getSpecular(point, normal, world, direction);
 		const float specFrac = material.specular*static_cast<float>(specValue) / 255.f;
 		const sf::Color specular = sf::Color::White * sf::Color(specFrac * color.r, specFrac * color.g, specFrac * color.b);
 
@@ -62,3 +61,14 @@ int Light::getDiffuse(const Vector& point, const Vector& normal, const World& wo
 {
 	return (255.0 * lightRayDir.inv().dot(normal.normal()));
 }
+bool Light::inShadow(const Vector& point, const World& world) const
+{
+	Ray r(getStart(point), getDirection(point));
+	r.onlyIntersection = true;
+	world.getFirstHit(r);
+
+	Vector dir = getStart(point).to(point);
+
+	return (r.time < dir.len() - 0.01);
+}
+

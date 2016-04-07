@@ -6,7 +6,7 @@ using namespace leon;
 Plane::Plane(Vector pointi, Vector normali)
 {
 	point = pointi;
-	normal = normali;
+	normal = normali.normal();
 }
 Plane::~Plane()
 {

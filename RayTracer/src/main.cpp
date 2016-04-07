@@ -7,6 +7,7 @@
 #include "DirectionalLight.hpp"
 #include "PointLight.hpp"
 #include "Rectangle.hpp"
+#include "SquareLight.hpp"
 
 using namespace leon;
 using namespace std;
@@ -23,24 +24,25 @@ int main()
 	Geometry* s = NULL;
 
 	Light* l = new PointLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
+	//Light* l = new RectangleLight(sf::Color(255, 255, 255), Vector(50, -10, 0));
 	world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 35;
 
 
-	int num = 20;//squared
-	int startY = 500;
-	int startZ = 500;
-	int increment = 20;
-	int radius = 10;
-	for(int y = 0; y < num; ++y)
-		for(int z = 0; z < num; ++z)
-		{
-			s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), radius);
-			s->material.color = sf::Color(y*40, 255, z*10);
-			s->material.specular = 0;
-			world.add(s);
-		}
+	//int num = 20;//squared
+	//int startY = 500;
+	//int startZ = 500;
+	//int increment = 20;
+	//int radius = 10;
+	//for(int y = 0; y < num; ++y)
+	//	for(int z = 0; z < num; ++z)
+	//	{
+	//		s = new Sphere(Vector(600, startY - y * increment, startZ - z * increment), radius);
+	//		s->material.color = sf::Color(y*40, 255, z*10);
+	//		s->material.specular = 0;
+	//		world.add(s);
+	//	}
 
 
 
@@ -50,11 +52,23 @@ int main()
 	s->material.diffuse = 1;
 	world.add(s);
 
-	s = new Rectangle(Vector(100, 0, 0), Vector(100, 0, 20), Vector(100, 30, 30), Vector(100, 20, 0));
-	s->material.color = sf::Color::Green;
+	s = new Rectangle(Vector(400, 400, 400), Vector(0, 0, -400), Vector(0, -400, 0));
+	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
-	s->material.specular = 0;
+	s->material.specular = 1;
 	world.add(s);
+
+	//s = new Triangle(Vector(400, 400, 400), Vector(400, 0, 0), Vector(400, 0, 400));
+	//s->material.color = sf::Color::Red;
+	//s->material.diffuse = 1;
+	//s->material.specular = 1;
+	//world.add(s);
+
+	//s = new Triangle(Vector(400, 400, 400), Vector(400, 400, 0), Vector(400, 0, 0));
+	//s->material.color = sf::Color::Red;
+	//s->material.diffuse = 1;
+	//s->material.specular = 1;
+	//world.add(s);
 
 	//Geometry* at = new Triangle(Vector(512, 512, 300), Vector(512, 512, -600), Vector(512, -512, 0));
 	//at->color = sf::Color::Cyan;
