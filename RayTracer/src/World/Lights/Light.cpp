@@ -52,15 +52,25 @@ int Light::getSpecular(const Vector& point, const Vector& normal, const World& w
 	const Vector n = normal.normal();
 	const Vector l = lightRayDir.normal();
 
-	const double e = 16;
+	const Vector reflectionRay = (l - n*(2 * l.dot(n))).normal();
+	const float refAlongEye = reflectionRay.dot(toEye);
 
-	const Vector specVector = (l - (n * (l.dot(n) * 2))).normal();
-
-	return (pow(specVector.dot(toEye), e) * 255 * 0.8);
+	if(refAlongEye > 0)
+	{
+		const double e = 16;
+		return (pow(refAlongEye, e) * 255 * 0.8);
+	}
+	else
+		return 0;
 }
 int Light::getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	return (255.0 * lightRayDir.inv().dot(normal.normal()));
+	Vector start = getStart(point);
+	float distance = start.to(point).len();
+
+	float fallOff = pow(2.71828f, -(distance/300));
+
+	return std::min(((255.0 * lightRayDir.inv().dot(normal.normal())) * fallOff), 255.0);
 }
 bool Light::inShadow(const Vector& point, const World& world) const
 {

@@ -19,13 +19,8 @@ sf::Color Geometry::getColorPoint(const Vector& point, const World& world) const
 	Vector viewDir = world.camera.getPosition().to(point).normal().inv();
 	Vector norm = getNormal(point);
 
-	if(norm.dot(viewDir) >= 0)
-	{
-		Light& light = *world.lights[0];
-		return light.getBrightness(point, norm, world, material);
-	}
-	else
-		return sf::Color::Magenta;
+	Light& light = *world.lights[0];
+	return light.getBrightness(point, norm, world, material);
 }
 Vector Geometry::intersects(Ray& ray, const World& world) const
 {

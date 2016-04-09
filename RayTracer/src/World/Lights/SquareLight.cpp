@@ -6,7 +6,9 @@ namespace leon
 	SquareLight::SquareLight(const sf::Color& color, Rectangle* rectangle) : Light(color)
 	{
 		m_shape.reset(rectangle);
-		m_rootSamples = 1;
+		rectangle->light = true;
+		rectangle->material.color = color;
+		m_rootSamples = 7;
 	}
 	SquareLight::~SquareLight()
 	{
@@ -14,27 +16,6 @@ namespace leon
 	}
 	sf::Color SquareLight::getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const
 	{
-		//Vector pos = m_shape->getPos();
-		//Vector axisA = m_shape->getAxisA();
-		//Vector axisB = m_shape->getAxisB();
-
-		//int r = 0, g = 0, b = 0;
-
-		//for(int j = 0; j < m_rootSamples; ++j)
-		//{
-		//	float fracB = static_cast<float>(j) / static_cast<float>(m_rootSamples);//calculate fractions
-
-		//	tempOrigin = pos + (axisA * 0) + (axisB*fracB);
-
-		//	sf::Color singleHit = Light::getBrightness(point, normal, world, material);
-
-		//	r += singleHit.r;
-		//	g += singleHit.g;
-		//	b += singleHit.b;
-		//}
-
-		//return sf::Color(r / m_rootSamples, g / m_rootSamples, b / m_rootSamples);
-
 		Vector pos = m_shape->getPos();
 		Vector axisA = m_shape->getAxisA();
 		Vector axisB = m_shape->getAxisB();

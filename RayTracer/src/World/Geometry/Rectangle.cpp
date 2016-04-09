@@ -4,6 +4,7 @@ using namespace leon;
 
 Rectangle::Rectangle(Vector pos, Vector axisA, Vector axisB)
 {
+	light = false;
 	first.reset(new Triangle(pos, pos + axisA, pos + axisB));
 	second.reset(new Triangle(pos + axisA, pos + axisA + axisB, pos + axisB));
 
@@ -37,13 +38,29 @@ void Rectangle::calcBoundBox() const
 }
 Vector Rectangle::intersectsHook(Ray& ray, const World& world) const
 {
-	Vector intersected;
-
-	intersected = first->intersects(ray, world);
-	if(intersected != Vector(0, 0, 0))
-		return intersected;
+	if(light && ray.onlyIntersection)//don't collide with shadow ray
+	{
+		return Vector();
+	}
 	else
-		return second->intersects(ray, world);
+	{
+		Vector intersected;
+
+		intersected = first->intersects(ray, world);
+		if(intersected != Vector(0, 0, 0))
+			return intersected;
+		else
+			return second->intersects(ray, world);
+	}
+
+
+}
+sf::Color Rectangle::getColorPoint(const Vector& point, const World& world) const
+{
+	if(light)
+		return material.color;
+	else
+		return Geometry::getColorPoint(point, world);
 }
 void Rectangle::translate(const Vector& dist)
 {

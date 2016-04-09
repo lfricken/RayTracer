@@ -12,6 +12,8 @@ namespace leon
 		Rectangle(Vector pos, Vector axisA, Vector axisB);
 		~Rectangle();
 
+		virtual sf::Color getColorPoint(const Vector& point, const World& world) const;
+
 		virtual void translate(const Vector& dist);
 		virtual void transform(const Matrix& rot);
 
@@ -19,6 +21,7 @@ namespace leon
 		const Vector& getAxisB() const;
 		const Vector& getPos() const;
 
+		bool light;
 
 		virtual Vector getNormal(const Vector& point) const;
 	protected:
