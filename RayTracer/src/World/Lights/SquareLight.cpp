@@ -6,7 +6,7 @@ namespace leon
 	SquareLight::SquareLight(const sf::Color& color, Rectangle* rectangle) : Light(color)
 	{
 		m_shape.reset(rectangle);
-		m_rootSamples = 7;
+		m_rootSamples = 1;
 	}
 	SquareLight::~SquareLight()
 	{
