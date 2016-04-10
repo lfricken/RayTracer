@@ -11,10 +11,10 @@ using namespace leon;
 World::World()
 {
 	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 2));
-	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
-	image.create(512, 512, backgroundColor);
-	texture.loadFromImage(image);
-	sprite.setTexture(texture);
+	//spWindow.reset(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
+	//image.create(512, 512, backgroundColor);
+	//texture.loadFromImage(image);
+	//sprite.setTexture(texture);
 }
 World::~World()
 {
@@ -91,6 +91,11 @@ void World::add(Geometry* geo)
 /// <param name="sample">The sample.</param>
 void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample, int samples)
 {
+	spWindow.reset(new sf::RenderWindow(sf::VideoMode(resX, resY), "Leon's Ray Tracer: 2016 Edition"));
+	image.create(resX, resY, backgroundColor);
+	texture.loadFromImage(image);
+	sprite.setTexture(texture);
+
 	std::default_random_engine gen;
 	gen.seed((unsigned long)time(NULL));
 	std::uniform_int_distribution<unsigned int> rooks;

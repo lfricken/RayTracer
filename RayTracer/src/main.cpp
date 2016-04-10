@@ -32,12 +32,12 @@ int main()
 	Light* l = NULL;
 
 
-	s = new Rectangle(Vector(lightDist - (lightSize / 2), 20 -(lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
+	s = new Rectangle(Vector(lightDist - (lightSize / 2), 20 - (lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
 	world.add(s);
-	l = new SquareLight(sf::Color::White, (Rectangle*)s, 5);
+	l = new SquareLight(sf::Color::White, (Rectangle*)s, 1);
 
 	//l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
 
@@ -61,7 +61,7 @@ int main()
 	world.add(s);
 
 	s = new Sphere(Vector(-40, 40, 20), 20);
-	s->material.color = sf::Color(128,128,255);
+	s->material.color = sf::Color(128, 128, 255);
 	s->material.specular = 0.2;
 	s->material.diffuse = 1;
 	s->material.reflection = 0.1;
@@ -74,7 +74,7 @@ int main()
 	s->material.reflection = 0.3;
 	world.add(s);
 
-	s = new Plane(Vector(0, 0, floorHeight), Vector(0,0,1));
+	s = new Plane(Vector(0, 0, floorHeight), Vector(0, 0, 1));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
@@ -92,12 +92,19 @@ int main()
 
 	//world.redoOctree();
 
-	int resX = 1000;
-	int resY = 1000;
+	int resX = 1920;
+	int resY = 1080;
+	int frameX = 100;
+	int frameY = (float)resY / (float)((float)resX / (float)frameX);
+	int samples = 1;
 
-	world.render(resX, resY, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 4);//img5
+	world.render(resX, resY, frameX, frameY, RenderMode::PerspectivePlane, SampleMode::PerPixel, samples);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
-	cout << "Used: " << 
+
+	cout << "\n\nUsed " << resX * resY * samples << " rays.";
+
+	cout << "\nPress Enter to continue...";
 	cin.get();
+	
 	return 0;
 }
