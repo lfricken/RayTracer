@@ -92,8 +92,8 @@ int main()
 
 	//world.redoOctree();
 
-	int resX = 1920;
-	int resY = 1080;
+	int resX = 800;
+	int resY = 800;
 	int frameX = 100;
 	int frameY = (float)resY / (float)((float)resX / (float)frameX);
 	int samples = 1;
