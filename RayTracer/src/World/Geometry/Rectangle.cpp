@@ -55,20 +55,24 @@ Vector Rectangle::intersectsHook(Ray& ray, const World& world) const
 
 
 }
-sf::Color Rectangle::getColorPoint(const Vector& point, const World& world) const
+sf::Color Rectangle::getColorPoint(const Ray& ray, const Vector& point, const World& world) const
 {
 	if(light)
 		return material.color;
 	else
-		return Geometry::getColorPoint(point, world);
+		return Geometry::getColorPoint(ray, point, world);
 }
 void Rectangle::translate(const Vector& dist)
 {
+	m_pos = m_pos + dist;
 	first->translate(dist);
 	second->translate(dist);
 }
 void Rectangle::transform(const Matrix& rot)
 {
+	m_pos = rot*m_pos;
+	m_axisA = rot*m_axisA;
+	m_axisB = rot*m_axisB;
 	first->transform(rot);
 	second->transform(rot);
 }

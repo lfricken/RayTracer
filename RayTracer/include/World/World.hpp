@@ -42,7 +42,7 @@ namespace leon
 		sptr<OctTree> octree;
 
 		const sf::Color backgroundColor = sf::Color(0, 0, 0);
-		const sf::Color ambientLight = sf::Color(15, 15, 15);
+		const sf::Color ambientLight = sf::Color(4, 4, 4);
 
 		void getFirstHit(Ray& ray) const;
 

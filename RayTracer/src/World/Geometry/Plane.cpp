@@ -25,8 +25,15 @@ Vector Plane::intersectsHook(Ray& rRay, const World& world) const
 	if(dot != 0)
 	{
 		double t = ((point - rRay.pos).dot(normal)) / dot;
-		rRay.time = t;
-		return rRay.getFuture(t);
+		if(t > 0)
+		{
+			rRay.time = t;
+			Vector hitPoint = rRay.getFuture(t);
+			hitPoint.init = true;
+			return hitPoint;
+		}
+		else
+			return Vector();
 	}
 	else
 		return Vector();

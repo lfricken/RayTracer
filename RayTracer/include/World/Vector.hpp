@@ -37,6 +37,7 @@ namespace leon
 		double area(const Vector& b, const Vector& c) const;
 		double dot(const Vector& other) const;//dot product
 		Vector cross(const Vector& other) const;//cross product
+		Vector reflect(const Vector& other) const;//reflect this across other
 		double dist(const Vector& other) const;//distance
 		double len() const;//length
 		Vector normal() const;//return a vector that is normalized

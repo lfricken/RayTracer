@@ -1,20 +1,21 @@
 #include "SquareLight.hpp"
 #include "Rectangle.hpp"
+#include "Ray.hpp"
 
 namespace leon
 {
-	SquareLight::SquareLight(const sf::Color& color, Rectangle* rectangle) : Light(color)
+	SquareLight::SquareLight(const sf::Color& color, Rectangle* rectangle, int samples) : Light(color)
 	{
 		m_shape.reset(rectangle);
 		rectangle->light = true;
 		rectangle->material.color = color;
-		m_rootSamples = 7;
+		m_rootSamples = samples;
 	}
 	SquareLight::~SquareLight()
 	{
 
 	}
-	sf::Color SquareLight::getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const
+	sf::Color SquareLight::getBrightness(const Ray& ray, const Vector& point, const Vector& normal, const World& world, const Material& material) const
 	{
 		Vector pos = m_shape->getPos();
 		Vector axisA = m_shape->getAxisA();
@@ -30,7 +31,7 @@ namespace leon
 
 				tempOrigin = pos + (axisA*fracA) + (axisB*fracB);
 
-				sf::Color singleHit = Light::getBrightness(point, normal, world, material);
+				sf::Color singleHit = Light::getBrightness(ray, point, normal, world, material);
 
 				r += singleHit.r;
 				g += singleHit.g;
@@ -55,11 +56,11 @@ namespace leon
 	}
 	void SquareLight::translate(const Vector& dist)
 	{
-		m_shape->translate(dist);
+		//m_shape->translate(dist);
 	}
 	void SquareLight::transform(const Matrix& rot)
 	{
-		m_shape->transform(rot);
+		//m_shape->transform(rot);
 	}
 
 }

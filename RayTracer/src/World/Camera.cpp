@@ -41,7 +41,11 @@ void Camera::yaw(double radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(up, radCCW);
+
+	Vector eye(-eyedist, 0, 0);
+	move(eye, world);
 	transformWorld(rotCam, world);
+	move(eye.inv(), world);
 }
 /// <summary>
 /// Pitches the specified rotation
@@ -52,7 +56,11 @@ void Camera::pitch(double radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(up.cross(direction), radCCW);
+
+	Vector eye(-eyedist, 0, 0);
+	move(eye, world);
 	transformWorld(rotCam, world);
+	move(eye.inv(), world);
 }
 /// <summary>
 /// Rolls the specified RAD CCW.
@@ -63,7 +71,11 @@ void Camera::roll(double radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(direction, radCCW);
+
+	Vector eye(-eyedist, 0, 0);
+	move(eye, world);
 	transformWorld(rotCam, world);
+	move(eye.inv(), world);
 }
 /// <summary>
 /// Gets the position.

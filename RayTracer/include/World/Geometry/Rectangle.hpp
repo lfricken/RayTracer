@@ -12,7 +12,7 @@ namespace leon
 		Rectangle(Vector pos, Vector axisA, Vector axisB);
 		~Rectangle();
 
-		virtual sf::Color getColorPoint(const Vector& point, const World& world) const;
+		virtual sf::Color getColorPoint(const Ray& ray, const Vector& point, const World& world) const;
 
 		virtual void translate(const Vector& dist);
 		virtual void transform(const Matrix& rot);

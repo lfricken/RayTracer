@@ -37,7 +37,9 @@ Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 			t = t2;
 
 		rRay.time = t;
-		return rRay.getFuture(t);
+		Vector hitPoint = rRay.getFuture(t);
+		hitPoint.init = true;
+		return hitPoint;
 	}
 
 	return Vector();

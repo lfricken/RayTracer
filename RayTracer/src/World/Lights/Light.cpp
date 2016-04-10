@@ -23,7 +23,7 @@ Light::~Light()
 /// <param name="normal">The normal.</param>
 /// <param name="world">The world.</param>
 /// <returns>color at that spot</returns>
-sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const
+sf::Color Light::getBrightness(const Ray& ray, const Vector& point, const Vector& normal, const World& world, const Material& material) const
 {
 	const Vector direction = this->getDirection(point);
 	const sf::Color& ambient = world.ambientLight;
@@ -35,7 +35,7 @@ sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const 
 		const float diffFrac = material.diffuse*static_cast<float>(diffValue) / 255.f;
 		const sf::Color diffuse = material.color * sf::Color(diffFrac * color.r, diffFrac * color.g, diffFrac * color.b);
 
-		const int specValue = getSpecular(point, normal, world, direction);
+		const int specValue = getSpecular(ray, point, normal, world, direction);
 		const float specFrac = material.specular*static_cast<float>(specValue) / 255.f;
 		const sf::Color specular = sf::Color::White * sf::Color(specFrac * color.r, specFrac * color.g, specFrac * color.b);
 
@@ -44,16 +44,16 @@ sf::Color Light::getBrightness(const Vector& point, const Vector& normal, const 
 	else
 		return ambient;
 }
-int Light::getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
+int Light::getSpecular(const Ray& ray, const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const
 {
-	const Vector toEye = point.to(world.camera.getPosition()).normal();
+	const Vector rayDirInv = ray.dir.inv();
 
 	const Vector p = point.normal();
 	const Vector n = normal.normal();
 	const Vector l = lightRayDir.normal();
 
-	const Vector reflectionRay = (l - n*(2 * l.dot(n))).normal();
-	const float refAlongEye = reflectionRay.dot(toEye);
+	const Vector reflectionRay = l.reflect(n);
+	const float refAlongEye = reflectionRay.dot(rayDirInv);
 
 	if(refAlongEye > 0)
 	{
@@ -68,7 +68,7 @@ int Light::getDiffuse(const Vector& point, const Vector& normal, const World& wo
 	Vector start = getStart(point);
 	float distance = start.to(point).len();
 
-	float fallOff = pow(2.71828f, -(distance/300));
+	float fallOff = pow(2.71828f, -(distance/500));
 
 	return std::min(((255.0 * lightRayDir.inv().dot(normal.normal())) * fallOff), 255.0);
 }

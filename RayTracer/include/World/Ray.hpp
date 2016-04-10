@@ -23,5 +23,6 @@ namespace leon
 		Vector dir;//direction
 
 		const Geometry* lastHit;
+		const Geometry* ignore;
 	};
 }

@@ -5,8 +5,10 @@
 
 struct Material;
 
+
 namespace leon
 {
+	class Ray;
 	class Vector;
 	class World;
 	class Light : public Scenic
@@ -15,10 +17,10 @@ namespace leon
 		Light(const sf::Color& colori);
 		~Light();
 
-		virtual sf::Color getBrightness(const Vector& point, const Vector& normal, const World& world, const Material& material) const;
+		virtual sf::Color getBrightness(const Ray& ray, const Vector& point, const Vector& normal, const World& world, const Material& material) const;
 
 	protected:
-		int getSpecular(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
+		int getSpecular(const Ray& ray, const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
 		int getDiffuse(const Vector& point, const Vector& normal, const World& world, const Vector& lightRayDir) const;
 		bool inShadow(const Vector& point, const World& world) const;
 

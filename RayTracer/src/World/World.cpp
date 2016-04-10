@@ -11,7 +11,7 @@ using namespace leon;
 World::World()
 {
 	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 2));
-	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(400, 400), "Leon's Ray Tracer: 2016 Edition"));
+	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(512, 512, backgroundColor);
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
@@ -111,7 +111,7 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 
 	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0));
 
-	image.create(512, 512, backgroundColor);
+	image.create(resX, resY, backgroundColor);
 
 	if(mode == RenderMode::Orthographic)
 	{
@@ -222,6 +222,10 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 					setPixel(-x + (resX-1), -y + (resY-1), finalColor);
 				}
 			}
+			texture.loadFromImage(image);
+			window.clear();
+			window.draw(sprite);
+			window.display();
 		}
 	}
 
@@ -260,7 +264,8 @@ void World::setPixel(int x, int y, sf::Color c)
 /// <param name="ray">The ray.</param>
 void World::getFirstHit(Ray& ray) const
 {
-	std::set<const Geometry*> candidates = octree->getCandidates(ray);
+	//std::set<const Geometry*> candidates = octree->getCandidates(ray);
+	const std::vector<sptr<Geometry> >& candidates = geometry;
 
 	ray.lastHit = NULL;
 	const Geometry* last = NULL;
@@ -269,19 +274,20 @@ void World::getFirstHit(Ray& ray) const
 	double lastTime = -1;
 	for(auto it = candidates.cbegin(); it != candidates.cend(); ++it)
 	{
-		if((**it).intersects(ray, *this).init)//we hit this object
-		{
-			if(lastTime == -1 || lastTime > ray.time)
+		if(it->get() != ray.ignore)
+			if((**it).intersects(ray, *this).init)//we hit this object
 			{
-				last = ray.lastHit;
-				lastTime = ray.time;
-			}
+				if(lastTime == -1 || lastTime > ray.time)
+				{
+					last = ray.lastHit;
+					lastTime = ray.time;
+				}
 
-		}
+			}
 	}
 
 	if(last != NULL && (!ray.onlyIntersection))
-		ray.lastColor = last->getColorPoint(ray.pos + ray.dir * lastTime, *this);
+		ray.lastColor = last->getColorPoint(ray, ray.pos + ray.dir * lastTime, *this);
 	else
 		ray.lastColor = backgroundColor;
 

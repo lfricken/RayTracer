@@ -32,6 +32,10 @@ double Vector::area(const Vector& b, const Vector& c) const
 
 	return ab.cross(ac).len()/2;
 }
+Vector Vector::reflect(const Vector& other) const//reflect this across other
+{
+	return (*this - other*(2 * this->dot(other)));
+}
 double Vector::dot(const Vector& other) const
 {
 	return (x*other.x + y*other.y + z*other.z);
@@ -86,3 +90,4 @@ bool Vector::operator!=(const Vector& other) const
 {
 	return (x != other.x || y != other.y || z != other.z);
 }
+

@@ -19,10 +19,10 @@ using namespace std;
 int main()
 {
 	int floorSize = 1000;
-	int floorHeight = -100;
+	int floorHeight = 0;
 	int lightHeight = 90;
-	int lightSize = 20;
-	int lightDist = 100;
+	int lightSize = 5;
+	int lightDist = 45;
 
 	sptr<World> spWorld(new World());
 	World& world = *spWorld;
@@ -32,52 +32,72 @@ int main()
 	Light* l = NULL;
 
 
-	//s = new Rectangle(Vector(lightDist - (lightSize / 2), -(lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
-	//s->material.color = sf::Color::Red;
-	//s->material.diffuse = 1;
-	//s->material.specular = 1;
-	//world.add(s);
-	//l = new SquareLight(sf::Color::White, (Rectangle*)s);
-
-	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
-
-	world.lights.push_back(sptr<Light>(l));
-
-	world.camera.eyedist = 35;
-
-
-	s = new Sphere(Vector(100, 100, 0), 25);
-	s->material.color = sf::Color::Green;
-	s->material.specular = 1;
-	s->material.diffuse = 1;
-	world.add(s);
-
-	s = new Sphere(Vector(70, -40, 0), 35);
-	s->material.color = sf::Color::Cyan;
-	s->material.specular = 1;
-	s->material.diffuse = 1;
-	world.add(s);
-
-
-	s = new Rectangle(Vector(0, -floorSize / 2, floorHeight), Vector(floorSize, 0, 0), Vector(0, floorSize, 0));
+	s = new Rectangle(Vector(lightDist - (lightSize / 2), 20 -(lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
 	world.add(s);
+	l = new SquareLight(sf::Color::White, (Rectangle*)s, 5);
 
-	//Geometry* at = new Triangle(Vector(512, 512, 300), Vector(512, 512, -600), Vector(512, -512, 0));
-	//at->color = sf::Color::Cyan;
-	//world.add(at);
+	//l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
+
+	world.lights.push_back(sptr<Light>(l));
+
+	world.camera.eyedist = 60;
+
+
+	s = new Sphere(Vector(45, -40, 35), 35);
+	s->material.color = sf::Color::Cyan;
+	s->material.specular = 1;
+	s->material.diffuse = 1;
+	s->material.reflection = 0.5;
+	world.add(s);
+
+	s = new Sphere(Vector(30, 100, 25), 25);
+	s->material.color = sf::Color::Green;
+	s->material.specular = 1;
+	s->material.diffuse = 1;
+	s->material.reflection = 0.9;
+	world.add(s);
+
+	s = new Sphere(Vector(-40, 40, 20), 20);
+	s->material.color = sf::Color(128,128,255);
+	s->material.specular = 0.2;
+	s->material.diffuse = 1;
+	s->material.reflection = 0.1;
+	world.add(s);
+
+	s = new Sphere(Vector(-50, -50, 20), 20);
+	s->material.color = sf::Color(0, 0, 255);
+	s->material.specular = 0.1;
+	s->material.diffuse = 1;
+	s->material.reflection = 0.3;
+	world.add(s);
+
+	s = new Plane(Vector(0, 0, floorHeight), Vector(0,0,1));
+	s->material.color = sf::Color::Red;
+	s->material.diffuse = 1;
+	s->material.specular = 1;
+	s->material.reflection = 0.2;
+	world.add(s);
+
+
 
 	//world.loadModel(100, "cow.obj", Vector(100, 20, -30));
 
-	//world.camera.move(Vector(100, 10, 0), world);
-	//world.camera.yaw(70 * 3.14 / 180, world);
-	//world.camera.pitch(60 * 3.14 / 180, world);
+	world.camera.move(Vector(-60, -60, 90), world);
+	//world.camera.roll(45 * 3.14 / 180, world);
+	world.camera.yaw(35 * 3.14 / 180, world);
+	world.camera.pitch(45 * 3.14 / 180, world);
 
-	world.redoOctree();
+	//world.redoOctree();
 
-	world.render(512, 512, 100, 100, RenderMode::PerspectivePlane, SampleMode::PerPixel, 1);//img5
+	int resX = 1000;
+	int resY = 1000;
+
+	world.render(resX, resY, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 4);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
+	cout << "Used: " << 
+	cin.get();
 	return 0;
 }

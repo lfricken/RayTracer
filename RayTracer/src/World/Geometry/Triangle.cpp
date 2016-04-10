@@ -4,8 +4,10 @@
 
 using namespace leon;
 
-Triangle::Triangle(Vector ai, Vector bi, Vector ci) : plane(ai, (ai.to(bi).cross(ai.to(ci))))
+Triangle::Triangle(Vector ai, Vector bi, Vector ci)
 {
+	plane.reset(new Plane(ai, (ai.to(bi).cross(ai.to(ci)))));
+
 	a = ai;
 	b = bi;
 	c = ci;
@@ -23,26 +25,26 @@ Triangle::~Triangle()
 Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 {
 	//time of intersection set in plane
-	double dot = rRay.dir.dot(plane.normal);
+	double dot = rRay.dir.dot(plane->normal);
 
 	if(dot != 0)
 	{
-		Vector p = plane.intersects(rRay, world);
+		Vector p = plane->intersects(rRay, world);
 
 		Vector a1 = p.to(a);
 		Vector a2 = p.to(b);
 		Vector a3 = a1.cross(a2);
-		double sidea = a3.dot(plane.normal);
+		double sidea = a3.dot(plane->normal);
 
 		Vector b1 = p.to(b);
 		Vector b2 = p.to(c);
 		Vector b3 = b1.cross(b2);
-		double sideb = b3.dot(plane.normal);
+		double sideb = b3.dot(plane->normal);
 
 		Vector c1 = p.to(c);
 		Vector c2 = p.to(a);
 		Vector c3 = c1.cross(c2);
-		double sidec = c3.dot(plane.normal);
+		double sidec = c3.dot(plane->normal);
 
 		if(sidea >= 0 && sideb >= 0 && sidec >= 0)
 			return p;
@@ -59,7 +61,7 @@ Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 /// <returns></returns>
 Vector Triangle::getNormal(const Vector& point) const
 {
-	return plane.normal;
+	return plane->normal;
 }
 /// <summary>
 /// Translates the specified distance.
@@ -71,7 +73,7 @@ void Triangle::translate(const Vector& dist)
 	b = b + dist;
 	c = c + dist;
 
-	plane = Plane(a, (a.to(b).cross(a.to(c))));
+	plane.reset(new Plane(a, (a.to(b).cross(a.to(c)))));
 }
 /// <summary>
 /// Transforms the specified rotation.
@@ -83,7 +85,7 @@ void Triangle::transform(const Matrix& rot)
 	b = rot*b;
 	c = rot*c;
 
-	plane = Plane(a, (a.to(b).cross(a.to(c))));
+	plane.reset(new Plane(a, (a.to(b).cross(a.to(c)))));
 }
 void Triangle::calcBoundBox() const
 {

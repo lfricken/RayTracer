@@ -19,7 +19,7 @@ namespace leon
 		Vector a;
 		Vector b;
 		Vector c;
-		Plane plane;
+		sptr<Plane> plane;
 
 	protected:
 		virtual void calcBoundBox() const;
