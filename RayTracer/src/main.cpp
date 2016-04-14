@@ -19,11 +19,17 @@ using namespace std;
 /// <returns>0 if everything went well</returns>
 int main()
 {
+	sf::Clock clock;
+
+	sf::Time time = clock.getElapsedTime();
+
+	float t = time.asSeconds();
+
 	int floorSize = 1000;
 	int floorHeight = -30;
-	int lightHeight = 10;
-	int lightSize = 10;
-	int lightDist = 10;
+	int lightHeight = 90;
+	int lightSize = 8;
+	int lightDist = 0;
 
 	sptr<World> spWorld(new World());
 	World& world = *spWorld;
@@ -38,7 +44,7 @@ int main()
 	s->material.diffuse = 1;
 	s->material.specular = 1;
 	world.add(s);
-	l = new SquareLight(sf::Color::White, (Rectangle*)s, 1);
+	l = new SquareLight(sf::Color::White, (Rectangle*)s, 6);
 
 	//l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
 
@@ -49,27 +55,28 @@ int main()
 
 	s = new Sphere(Vector(45, -40, 0), 15);
 	s->material.color = sf::Color::Cyan;
-	s->material.specular = 0;
-	s->material.diffuse = 1;
+	s->material.specular = 0.1;
+	s->material.diffuse = 0.05;
 	s->material.reflection = 0.7;
 	world.add(s);
 
-	//i = new Instance(s);
-	//i->material.color = sf::Color::Blue;
-	//i->material.specular = 1;
-	//i->material.diffuse = 1;
-	//i->material.reflection = 0.5;
-	//i->translate(Vector(0, 30, 0));
-	//world.add(i);
+	i = new Instance(s);
+	i->material.color = sf::Color::Blue;
+	i->material.specular = 0;
+	i->material.diffuse = 1;
+	i->material.reflection = 0;
+	i->translate(Vector(30, 30, 0));
+	world.add(i);
 
-	//i = new Instance(s);
-	//i->translate(Vector(0, 90, 0));
-	//i->scale(Vector(1, 1, 1.6f));
-	//i->material.color = sf::Color::Green;
-	//i->material.specular = 1;
-	//i->material.diffuse = 1;
-	//i->material.reflection = 0.5;
-	//world.add(i);
+	i = new Instance(s);
+	i->translate(Vector(0, 90, 0));
+	i->scale(Vector(1, 1, 1.6f));
+	i->material.color = sf::Color::Green;
+	i->material.specular = 0.2;
+	i->material.diffuse = 1;
+	i->material.reflection = 0.2;
+
+	world.add(i);
 
 	//s = new Sphere(Vector(30, 100, 25), 25);
 	//s->material.color = sf::Color::Green;
@@ -95,8 +102,8 @@ int main()
 	s = new Plane(Vector(0, 0, floorHeight), Vector(0, 0, 1));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
-	s->material.specular = 1;
-	//s->material.reflection = 0.2;
+	s->material.specular = 0.2;
+	s->material.reflection = 0.3;
 	world.add(s);
 
 
@@ -119,7 +126,10 @@ int main()
 	world.render(resX, resY, frameX, frameY, RenderMode::PerspectivePlane, SampleMode::PerPixel, samples);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 
-	cout << "\n\nUsed " << world.numRays << " rays.";
+	time = clock.getElapsedTime();
+	float t2 = time.asSeconds();
+
+	cout << "\n\nUsed " << world.numRays << " rays in " << t2-t << " seconds.";
 
 	cout << "\nPress Enter to continue...";
 	cin.get();

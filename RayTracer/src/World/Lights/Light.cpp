@@ -35,8 +35,8 @@ sf::Color Light::getBrightness(const Ray& ray, const Vector& point, const Vector
 		const float diffFrac = material.diffuse*static_cast<float>(diffValue) / 255.f;
 		const sf::Color diffuse = material.color * sf::Color(diffFrac * color.r, diffFrac * color.g, diffFrac * color.b);
 
-		//if(diffValue < 0)
-		//	return ambient;
+		if(diffValue < 0)
+			return ambient;
 
 		const int specValue = getSpecular(ray, point, normal, world, direction);
 		const float specFrac = material.specular*static_cast<float>(specValue) / 255.f;
