@@ -32,5 +32,7 @@ namespace leon
 
 		virtual void calcBoundBox() const = 0;
 		virtual Vector intersectsHook(Ray& ray, const World& world) const = 0;
+
+		friend class Instance;
 	};
 }

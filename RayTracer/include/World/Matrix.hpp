@@ -31,9 +31,10 @@ public:
 
 	void set_identity();
 	void setRotMat(leon::Vector axis, float rads);
+	float det() const;
 	void transpose();
 
-	float m[4][4];//(x,y,z,w)(0,1,2,3)
+	float m[4][4];//(row, column)
 };
 
 

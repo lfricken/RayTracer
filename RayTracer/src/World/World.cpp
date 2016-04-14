@@ -119,7 +119,6 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	{
 		for(int x = 0; x < (signed)resX; ++x)
 		{
-			cout << "\n" << (x * 100) / resX << "%";
 			for(int y = 0; y < (signed)resY; ++y)
 			{
 				if(sample == SampleMode::PerPixel)
@@ -173,7 +172,6 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	{
 		for(int x = 0; x < (signed)resX; ++x)
 		{
-			cout << "\n" << (x * 100) / resX << "%";
 			for(int y = 0; y < (signed)resY; ++y)
 			{
 				ray.lastColor = backgroundColor;
