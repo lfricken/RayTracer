@@ -51,7 +51,9 @@ Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
 /// <returns></returns>
 Vector Sphere::getNormal(const Vector& point) const
 {
-	return pos.to(point).normal();
+	Vector norm = pos.to(point).normal();
+	norm.w = 0;
+	return norm;
 }
 /// <summary>
 /// Translates the specified distance.

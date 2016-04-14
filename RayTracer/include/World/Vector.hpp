@@ -1,5 +1,7 @@
 #pragma once
 
+class Matrix;
+
 namespace leon
 {
 	template<typename T>
@@ -24,12 +26,13 @@ namespace leon
 	{
 	public:
 		Vector();
-		Vector(double x , double y = 0, double z = 0);
+		Vector(double x , double y = 0, double z = 0, double w = 1);
 		virtual ~Vector();
 	
 		double x;
 		double y;
 		double z;
+		double w;
 
 		bool init;
 
@@ -176,7 +179,6 @@ namespace leon
 		T y1, y2, y3;
 		T z1, z2, z3;
 	};
-	typedef Mat3<double> Matrix;
 	typedef Mat3<double> Mat3d;
 	typedef Mat3<double> Mat3f;
 	typedef Mat3<int> Mat3i;

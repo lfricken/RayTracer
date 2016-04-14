@@ -6,7 +6,9 @@ using namespace leon;
 Plane::Plane(Vector pointi, Vector normali)
 {
 	point = pointi;
+	point.w = 1;
 	normal = normali.normal();
+	normal.w = 0;
 }
 Plane::~Plane()
 {
@@ -62,7 +64,8 @@ void Plane::translate(const Vector& dist)
 void Plane::transform(const Matrix& rot)
 {
 	point = rot*point;
-	normal = rot*normal;
+	normal = (rot*normal).normal();
+	normal.w = 0;
 }
 void Plane::calcBoundBox() const
 {

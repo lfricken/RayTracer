@@ -101,7 +101,7 @@ int main()
 	world.render(resX, resY, frameX, frameY, RenderMode::PerspectivePlane, SampleMode::PerPixel, samples);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 
-	cout << "\n\nUsed " << resX * resY * samples << " rays.";
+	cout << "\n\nUsed " << world.numRays << " rays.";
 
 	cout << "\nPress Enter to continue...";
 	cin.get();

@@ -56,11 +56,11 @@ namespace leon
 	}
 	void SquareLight::translate(const Vector& dist)
 	{
-		//m_shape->translate(dist);
+		//m_shape is already in geometry, so we don't need to translate it again
 	}
 	void SquareLight::transform(const Matrix& rot)
 	{
-		//m_shape->transform(rot);
+		//m_shape is already in geometry, so we don't need to transform it again
 	}
 
 }

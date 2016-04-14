@@ -9,13 +9,15 @@ Vector::Vector()
 	x = 0;
 	y = 0;
 	z = 0;
+	w = 1;
 }
-Vector::Vector(double xi, double yi, double zi)
+Vector::Vector(double xi, double yi, double zi, double wi)
 {
 	init = true;
 	x = xi;
 	y = yi;
 	z = zi;
+	w = wi;
 }
 Vector::~Vector()
 {

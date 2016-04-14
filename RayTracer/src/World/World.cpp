@@ -11,10 +11,7 @@ using namespace leon;
 World::World()
 {
 	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 2));
-	//spWindow.reset(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
-	//image.create(512, 512, backgroundColor);
-	//texture.loadFromImage(image);
-	//sprite.setTexture(texture);
+	numRays = 0;
 }
 World::~World()
 {
@@ -269,6 +266,7 @@ void World::setPixel(int x, int y, sf::Color c)
 /// <param name="ray">The ray.</param>
 void World::getFirstHit(Ray& ray) const
 {
+	++numRays;
 	//std::set<const Geometry*> candidates = octree->getCandidates(ray);
 	const std::vector<sptr<Geometry> >& candidates = geometry;
 

@@ -45,7 +45,7 @@ namespace leon
 		const sf::Color ambientLight = sf::Color(4, 4, 4);
 
 		void getFirstHit(Ray& ray) const;
-
+		mutable int numRays;
 	protected:
 	private:
 

@@ -11,6 +11,9 @@ Rectangle::Rectangle(Vector pos, Vector axisA, Vector axisB)
 	m_pos = pos;
 	m_axisA = axisA;
 	m_axisB = axisB;
+
+	m_axisA.w = 0;
+	m_axisB.w = 0;
 }
 Rectangle::~Rectangle()
 {
@@ -73,6 +76,8 @@ void Rectangle::transform(const Matrix& rot)
 	m_pos = rot*m_pos;
 	m_axisA = rot*m_axisA;
 	m_axisB = rot*m_axisB;
+	m_axisA.w = 0;
+	m_axisB.w = 0;
 	first->transform(rot);
 	second->transform(rot);
 }

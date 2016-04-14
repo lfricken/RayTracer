@@ -61,7 +61,7 @@ Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 /// <returns></returns>
 Vector Triangle::getNormal(const Vector& point) const
 {
-	return plane->normal;
+	return plane->getNormal(point);
 }
 /// <summary>
 /// Translates the specified distance.

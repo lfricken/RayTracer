@@ -26,11 +26,22 @@ void Camera::move(const Vector& dir, World& world)//direction relative to camera
 	vector<sptr<Geometry> >& geos = world.geometry;
 	vector<sptr<Light> >& lights = world.lights;
 
+	Matrix move;
+	move.m[0][3] = -dir.x;
+	move.m[1][3] = -dir.y;
+	move.m[2][3] = -dir.z;
+
 	for(auto it = geos.begin(); it != geos.end(); ++it)
-		(**it).translate(dir.inv());
+		(**it).transform(move);
 
 	for(auto it = lights.begin(); it != lights.end(); ++it)
-		(**it).translate(dir.inv());
+		(**it).transform(move);
+
+	//for(auto it = geos.begin(); it != geos.end(); ++it)
+	//	(**it).translate(dir.inv());
+
+	//for(auto it = lights.begin(); it != lights.end(); ++it)
+	//	(**it).translate(dir.inv());
 }
 /// <summary>
 /// Yaws the specified rotation.

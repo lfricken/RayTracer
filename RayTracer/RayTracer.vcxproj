@@ -76,6 +76,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\World\Geometry\Instance.cpp" />
+    <ClCompile Include="src\World\Matrix.cpp" />
     <ClCompile Include="src\World\Lights\SquareLight.cpp" />
     <ClCompile Include="src\World\Geometry\Rectangle.cpp" />
     <ClCompile Include="src\World\BoundingBox.cpp" />
@@ -113,6 +115,8 @@
     <ClInclude Include="include\World\OctTree.hpp" />
     <ClInclude Include="include\World\Geometry\Rectangle.hpp" />
     <ClInclude Include="include\World\Lights\SquareLight.hpp" />
+    <ClInclude Include="include\World\Geometry\Instance.hpp" />
+    <ClInclude Include="include\World\Matrix.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
