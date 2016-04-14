@@ -13,7 +13,9 @@ namespace leon
 	Vector Instance::getNormal(const Vector& point) const
 	{
 		auto trans = back*point;
-		return m_pParent->getNormal(trans);
+		auto norm = m_pParent->getNormal(trans).normal();
+		auto g = forward*norm;
+		return g;
 	}
 	bool Instance::intersectsHook(Ray& ray, const World& world) const
 	{
@@ -24,8 +26,11 @@ namespace leon
 		
 		bool intersected = m_pParent->intersectsHook(trans, world);
 		
+		Vector hitPos = trans.getFuture(trans.time);
+		hitPos = forward*hitPos;
 		trans.pos = ray.pos;
 		trans.dir = ray.dir;
+		trans.time = ray.pos.to(hitPos).len();
 		ray = trans;
 		return intersected;
 	}

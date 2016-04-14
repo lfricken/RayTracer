@@ -20,55 +20,56 @@ using namespace std;
 int main()
 {
 	int floorSize = 1000;
-	int floorHeight = -20;
-	int lightHeight = 90;
-	int lightSize = 5;
-	int lightDist = 0;
+	int floorHeight = -30;
+	int lightHeight = 10;
+	int lightSize = 10;
+	int lightDist = 10;
 
 	sptr<World> spWorld(new World());
 	World& world = *spWorld;
 
-
+	Instance* i = NULL;
 	Geometry* s = NULL;
 	Light* l = NULL;
 
 
-	//s = new Rectangle(Vector(lightDist - (lightSize / 2), 20 - (lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
-	//s->material.color = sf::Color::Red;
-	//s->material.diffuse = 1;
-	//s->material.specular = 1;
-	//world.add(s);
-	//l = new SquareLight(sf::Color::White, (Rectangle*)s, 1);
+	s = new Rectangle(Vector(lightDist - (lightSize / 2), 20 - (lightSize / 2), lightHeight), Vector(lightSize, 0, 0), Vector(0, lightSize, 0));
+	s->material.color = sf::Color::Red;
+	s->material.diffuse = 1;
+	s->material.specular = 1;
+	world.add(s);
+	l = new SquareLight(sf::Color::White, (Rectangle*)s, 1);
 
-	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
+	//l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
 
 	world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 60;
 
 
-	s = new Sphere(Vector(45, -40, 35), 15);
+	s = new Sphere(Vector(45, -40, 0), 15);
 	s->material.color = sf::Color::Cyan;
-	s->material.specular = 1;
+	s->material.specular = 0;
 	s->material.diffuse = 1;
-	s->material.reflection = 0.5;
+	s->material.reflection = 0.7;
 	world.add(s);
 
-	s = new Instance(s);
-	s->material.color = sf::Color::Blue;
-	s->material.specular = 1;
-	s->material.diffuse = 1;
-	s->material.reflection = 0.5;
-	s->translate(Vector(0, 30, 0));
-	world.add(s);
+	//i = new Instance(s);
+	//i->material.color = sf::Color::Blue;
+	//i->material.specular = 1;
+	//i->material.diffuse = 1;
+	//i->material.reflection = 0.5;
+	//i->translate(Vector(0, 30, 0));
+	//world.add(i);
 
-	s = new Instance(s);
-	s->material.color = sf::Color::Green;
-	s->material.specular = 1;
-	s->material.diffuse = 1;
-	s->material.reflection = 0.5;
-	s->translate(Vector(0, 60, 0));
-	world.add(s);
+	//i = new Instance(s);
+	//i->translate(Vector(0, 90, 0));
+	//i->scale(Vector(1, 1, 1.6f));
+	//i->material.color = sf::Color::Green;
+	//i->material.specular = 1;
+	//i->material.diffuse = 1;
+	//i->material.reflection = 0.5;
+	//world.add(i);
 
 	//s = new Sphere(Vector(30, 100, 25), 25);
 	//s->material.color = sf::Color::Green;
@@ -95,7 +96,7 @@ int main()
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
-	s->material.reflection = 0.2;
+	//s->material.reflection = 0.2;
 	world.add(s);
 
 

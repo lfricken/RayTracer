@@ -34,8 +34,10 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 		world.getFirstHit(reflectRay);
 		reflectedColor = reflectRay.lastColor;
 	}
+	auto my = sf::Color(myColor.r * m + reflectedColor.r * r, myColor.g * m + reflectedColor.g * r, myColor.b * m + reflectedColor.b * r);
 
-	return sf::Color(myColor.r * m + reflectedColor.r * r, myColor.g * m + reflectedColor.g * r, myColor.b * m + reflectedColor.b * r);
+
+	return my;
 }
 bool Geometry::intersects(Ray& ray, const World& world) const
 {
