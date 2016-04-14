@@ -20,25 +20,21 @@ Plane::~Plane()
 /// <param name="rRay">The r ray.</param>
 /// <param name="world">The world.</param>
 /// <returns></returns>
-Vector Plane::intersectsHook(Ray& rRay, const World& world) const
+bool Plane::intersectsHook(Ray& rRay, const World& world) const
 {
-	double dot = rRay.dir.dot(normal);
+	float dot = rRay.dir.dot(normal);
 
 	if(dot != 0)
 	{
-		double t = ((point - rRay.pos).dot(normal)) / dot;
+		float t = ((point - rRay.pos).dot(normal)) / dot;
 		if(t > 0)
 		{
 			rRay.time = t;
-			Vector hitPoint = rRay.getFuture(t);
-			hitPoint.init = true;
-			return hitPoint;
+			return true;
 		}
-		else
-			return Vector();
 	}
-	else
-		return Vector();
+
+	return false;
 }
 /// <summary>
 /// Gets the normal.

@@ -14,11 +14,11 @@ namespace leon
 		Ray(Vector pos, Vector dir);
 		virtual ~Ray();
 
-		Vector getFuture(double t) const;//get a point in the future of the ray
+		Vector getFuture(float t) const;//get a point in the future of the ray
 
 		bool onlyIntersection;
 		sf::Color lastColor;//last color we collided with
-		double time;//time of our hit
+		float time;//time of our hit
 		Vector pos;//start position
 		Vector dir;//direction
 

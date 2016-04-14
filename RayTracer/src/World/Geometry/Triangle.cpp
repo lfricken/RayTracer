@@ -22,10 +22,10 @@ Triangle::~Triangle()
 /// <param name="rRay">the ray.</param>
 /// <param name="world">the world.</param>
 /// <returns></returns>
-Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
+bool Triangle::intersectsHook(Ray& rRay, const World& world) const
 {
 	//time of intersection set in plane
-	double dot = rRay.dir.dot(plane->normal);
+	float dot = rRay.dir.dot(plane->normal);
 
 	if(dot != 0)
 	{
@@ -34,25 +34,23 @@ Vector Triangle::intersectsHook(Ray& rRay, const World& world) const
 		Vector a1 = p.to(a);
 		Vector a2 = p.to(b);
 		Vector a3 = a1.cross(a2);
-		double sidea = a3.dot(plane->normal);
+		float sidea = a3.dot(plane->normal);
 
 		Vector b1 = p.to(b);
 		Vector b2 = p.to(c);
 		Vector b3 = b1.cross(b2);
-		double sideb = b3.dot(plane->normal);
+		float sideb = b3.dot(plane->normal);
 
 		Vector c1 = p.to(c);
 		Vector c2 = p.to(a);
 		Vector c3 = c1.cross(c2);
-		double sidec = c3.dot(plane->normal);
+		float sidec = c3.dot(plane->normal);
 
 		if(sidea >= 0 && sideb >= 0 && sidec >= 0)
-			return p;
-		else
-			return Vector();
+			return true;
 	}
-	else
-		return Vector();
+
+	return false;
 }
 /// <summary>
 /// Gets the normal to this triangle.

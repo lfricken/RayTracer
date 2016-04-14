@@ -80,7 +80,7 @@ Matrix Matrix::operator* (const Matrix& mat) const
 	for(int y = 0; y < 4; y++)
 		for(int x = 0; x < 4; x++)
 		{
-			double sum = 0.0;
+			float sum = 0.0;
 
 			for(int j = 0; j < 4; j++)
 				sum += m[x][j] * mat.m[j][y];

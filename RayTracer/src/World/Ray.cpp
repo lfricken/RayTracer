@@ -21,7 +21,7 @@ Ray::~Ray()
 /// </summary>
 /// <param name="t">time</param>
 /// <returns></returns>
-Vector Ray::getFuture(double t) const//get a point in the future of the ray
+Vector Ray::getFuture(float t) const//get a point in the future of the ray
 {
 	return pos + (dir*t);
 }

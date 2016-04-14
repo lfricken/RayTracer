@@ -20,7 +20,7 @@ namespace leon
 
 	protected:
 		virtual void calcBoundBox() const;
-		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
+		virtual bool intersectsHook(Ray& rRay, const World& world) const;
 	};
 }
 

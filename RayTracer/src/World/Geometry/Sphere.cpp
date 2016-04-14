@@ -3,7 +3,7 @@
 
 using namespace leon;
 
-Sphere::Sphere(Vector position, double radiusi)
+Sphere::Sphere(Vector position, float radiusi)
 {
 	pos = position;
 	radius = radiusi;
@@ -18,31 +18,29 @@ Sphere::~Sphere()
 /// <param name="rRay">the ray.</param>
 /// <param name="world">The world.</param>
 /// <returns></returns>
-Vector Sphere::intersectsHook(Ray& rRay, const World& world) const
+bool Sphere::intersectsHook(Ray& rRay, const World& world) const
 {
-	double a = rRay.dir.dot(rRay.dir);
-	double b = (2 * ((rRay.pos - pos).dot(rRay.dir)));
-	double c = (rRay.pos - pos).dot(rRay.pos - pos) - (radius*radius);
+	float a = rRay.dir.dot(rRay.dir);
+	float b = (2 * ((rRay.pos - pos).dot(rRay.dir)));
+	float c = (rRay.pos - pos).dot(rRay.pos - pos) - (radius*radius);
 
-	double underRoot = (b*b) - (4 * a * c);
+	float underRoot = (b*b) - (4 * a * c);
 
 	if(underRoot >= 0)
 	{
-		double t = (-b + sqrt(underRoot)) / (2 * a);
-		double t2 = (-b - sqrt(underRoot)) / (2 * a);
+		float t = (-b + sqrt(underRoot)) / (2 * a);
+		float t2 = (-b - sqrt(underRoot)) / (2 * a);
 
 		if(t < 0 && t2 < 0)//are they both negative times?
-			return Vector();
+			return false;
 		if(t2 >= 0 && t2 < t)//is the second time smaller and non negative?
 			t = t2;
 
 		rRay.time = t;
-		Vector hitPoint = rRay.getFuture(t);
-		hitPoint.init = true;
-		return hitPoint;
+		return true;
 	}
 
-	return Vector();
+	return false;
 }
 /// <summary>
 /// Gets the normal for a point on the sphere.

@@ -11,7 +11,7 @@ Vector::Vector()
 	z = 0;
 	w = 1;
 }
-Vector::Vector(double xi, double yi, double zi, double wi)
+Vector::Vector(float xi, float yi, float zi, float wi)
 {
 	init = true;
 	x = xi;
@@ -27,7 +27,7 @@ Vector Vector::inv() const
 {
 	return Vector(-x, -y, -z);
 }
-double Vector::area(const Vector& b, const Vector& c) const
+float Vector::area(const Vector& b, const Vector& c) const
 {
 	Vector ab = this->to(b);
 	Vector ac = this->to(c);
@@ -38,7 +38,7 @@ Vector Vector::reflect(const Vector& other) const//reflect this across other
 {
 	return (*this - other*(2 * this->dot(other)));
 }
-double Vector::dot(const Vector& other) const
+float Vector::dot(const Vector& other) const
 {
 	return (x*other.x + y*other.y + z*other.z);
 }
@@ -46,16 +46,16 @@ Vector Vector::cross(const Vector& other) const//cross product
 {
 	return Vector(y*other.z - z*other.y, z*other.x - x*other.z, x*other.y - y*other.x);
 }
-double Vector::dist(const Vector& other) const
+float Vector::dist(const Vector& other) const
 {
-	double dx, dy, dz;
+	float dx, dy, dz;
 	dx = x - other.x;
 	dy = y - other.y;
 	dz = z - other.z;
 		
 	return sqrt(dx*dx + dy*dy + dz*dz);
 }
-double Vector::len() const
+float Vector::len() const
 {
 	return sqrt(x*x + y*y + z*z);
 }
@@ -80,11 +80,11 @@ Vector Vector::operator+(const Vector& other) const
 {
 	return Vector(x + other.x, y + other.y, z + other.z);
 }
-Vector Vector::operator*(double c) const
+Vector Vector::operator*(float c) const
 {
 	return Vector(x*c, y*c, z*c);
 }
-Vector Vector::operator/(double c) const
+Vector Vector::operator/(float c) const
 {
 	return Vector(x/c, y/c, z/c);
 }

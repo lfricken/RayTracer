@@ -26,7 +26,7 @@ namespace leon
 		virtual Vector getNormal(const Vector& point) const;
 	protected:
 		virtual void calcBoundBox() const;
-		virtual Vector intersectsHook(Ray& ray, const World& world) const;
+		virtual bool intersectsHook(Ray& ray, const World& world) const;
 
 		Vector m_pos;
 		Vector m_axisA;

@@ -26,23 +26,23 @@ namespace leon
 	{
 	public:
 		Vector();
-		Vector(double x , double y = 0, double z = 0, double w = 1);
+		Vector(float x , float y = 0, float z = 0, float w = 1);
 		virtual ~Vector();
 	
-		double x;
-		double y;
-		double z;
-		double w;
+		float x;
+		float y;
+		float z;
+		float w;
 
 		bool init;
 
 		Vector inv() const;
-		double area(const Vector& b, const Vector& c) const;
-		double dot(const Vector& other) const;//dot product
+		float area(const Vector& b, const Vector& c) const;
+		float dot(const Vector& other) const;//dot product
 		Vector cross(const Vector& other) const;//cross product
 		Vector reflect(const Vector& other) const;//reflect this across other
-		double dist(const Vector& other) const;//distance
-		double len() const;//length
+		float dist(const Vector& other) const;//distance
+		float len() const;//length
 		Vector normal() const;//return a vector that is normalized
 		void normalize();//normalize this vector
 
@@ -50,8 +50,8 @@ namespace leon
 
 		Vector operator-(const Vector& other) const;
 		Vector operator+(const Vector& other) const;
-		Vector operator*(double c) const;
-		Vector operator/(double c) const;
+		Vector operator*(float c) const;
+		Vector operator/(float c) const;
 
 		bool operator!=(const Vector& other) const;
 
@@ -90,7 +90,7 @@ namespace leon
 			result.z3 = z3 + o.z3;
 			return result;
 		}
-		Mat3<T> operator*(double c) const//overloaded for multiplication by a constant
+		Mat3<T> operator*(float c) const//overloaded for multiplication by a constant
 		{
 			Mat3<T> result;
 			result.x1 = x1*c;
@@ -144,7 +144,7 @@ namespace leon
 			z2 = vec.x;
 			z3 = 0;
 		}
-		void setRotMat(Vector axis, double rads)//set this matrix to be the rotation matrix
+		void setRotMat(Vector axis, float rads)//set this matrix to be the rotation matrix
 		{
 			axis.normalize();
 
@@ -179,8 +179,8 @@ namespace leon
 		T y1, y2, y3;
 		T z1, z2, z3;
 	};
-	typedef Mat3<double> Mat3d;
-	typedef Mat3<double> Mat3f;
+	typedef Mat3<float> Mat3d;
+	typedef Mat3<float> Mat3f;
 	typedef Mat3<int> Mat3i;
 
 

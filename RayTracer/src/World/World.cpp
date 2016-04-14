@@ -17,7 +17,7 @@ World::~World()
 {
 
 }
-void World::loadModel(double scale, const std::string& fileName, const Vector& position)//load a model into the world
+void World::loadModel(float scale, const std::string& fileName, const Vector& position)//load a model into the world
 {
 	std::string dir = content + "models/" + fileName;
 	//Note: Obj files index at 1, not 0
@@ -33,7 +33,7 @@ void World::loadModel(double scale, const std::string& fileName, const Vector& p
 		if(line[0] == 'v')//vertex
 		{
 			line.erase(line.begin(), line.begin() + 1);
-			double x, y, z;
+			float x, y, z;
 			istringstream iss(line);
 			if(iss >> x >> y >> z)
 				verts.push_back(position + Vector(x * scale, y * scale, z * scale));
@@ -86,7 +86,7 @@ void World::add(Geometry* geo)
 /// <param name="perY">The per y.</param>
 /// <param name="mode">The mode.</param>
 /// <param name="sample">The sample.</param>
-void World::render(int resX, int resY, double perX, double perY, RenderMode mode, SampleMode sample, int samples)
+void World::render(int resX, int resY, float perX, float perY, RenderMode mode, SampleMode sample, int samples)
 {
 	spWindow.reset(new sf::RenderWindow(sf::VideoMode(resX, resY), "Leon's Ray Tracer: 2016 Edition"));
 	image.create(resX, resY, backgroundColor);
@@ -106,8 +106,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 	}
 
 
-	double xMod = -((double)resX * 0.5)*(perX / resX);
-	double yMod = -((double)resY * 0.5)*(perY / perY);
+	float xMod = -((float)resX * 0.5)*(perX / resX);
+	float yMod = -((float)resY * 0.5)*(perY / perY);
 
 	sf::RenderWindow& window = *spWindow;
 
@@ -123,8 +123,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 			{
 				if(sample == SampleMode::PerPixel)
 				{
-					ray.pos.y = 0 + (x - (double)resX * 0.5)*(perX / resX);//center screen on coordinates
-					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
+					ray.pos.y = 0 + (x - (float)resX * 0.5)*(perX / resX);//center screen on coordinates
+					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
 					getFirstHit(ray);
 					setPixel(-x + (resX - 1), -y + (resY - 1), ray.lastColor);
 				}
@@ -143,16 +143,16 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 						int yIndex = rooks(gen);
 						//Convert them to a coordinate addition
 
-						double offsetX = (static_cast<double>(column2[xIndex]) - ((samples / 2.0) + 0.5))/samples;
-						double offsetY = (static_cast<double>(row2[yIndex]) - ((samples / 2.0) + 0.5))/samples;
+						float offsetX = (static_cast<float>(column2[xIndex]) - ((samples / 2.0) + 0.5))/samples;
+						float offsetY = (static_cast<float>(row2[yIndex]) - ((samples / 2.0) + 0.5))/samples;
 
 						column2.erase(column2.begin() + xIndex);
 						row2.erase(row2.begin() + yIndex);
 
 
 						//cast the ray to get the color
-						ray.pos.y = 0 + (x + offsetX - (double)resX * 0.5)*(perX / resX);
-						ray.pos.z = 0 + (y + offsetY - (double)resY * 0.5)*(perY / resY);
+						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
 						getFirstHit(ray);
 						c1 = ray.lastColor;
 
@@ -177,8 +177,8 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 				ray.lastColor = backgroundColor;
 				if(sample == SampleMode::PerPixel)
 				{
-					ray.pos.y = -(0 + (x - (double)resX * 0.5)*(perX / resX));//center screen on coordinates
-					ray.pos.z = 0 + (y - (double)resY * 0.5)*(perY / resY);
+					ray.pos.y = -(0 + (x - (float)resX * 0.5)*(perX / resX));//center screen on coordinates
+					ray.pos.z = 0 + (y - (float)resY * 0.5)*(perY / resY);
 					ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
 					getFirstHit(ray);
 					setPixel(x, -y + (resY - 1), ray.lastColor);
@@ -198,16 +198,16 @@ void World::render(int resX, int resY, double perX, double perY, RenderMode mode
 						int yIndex = rooks(gen);
 						//Convert them to a coordinate addition
 
-						double offsetX = (static_cast<double>(column2[xIndex]) - ((samples / 2.0) + 0.5)) / samples;
-						double offsetY = (static_cast<double>(row2[yIndex]) - ((samples / 2.0) + 0.5)) / samples;
+						float offsetX = (static_cast<float>(column2[xIndex]) - ((samples / 2.0) + 0.5)) / samples;
+						float offsetY = (static_cast<float>(row2[yIndex]) - ((samples / 2.0) + 0.5)) / samples;
 
 						column2.erase(column2.begin() + xIndex);
 						row2.erase(row2.begin() + yIndex);
 
 
 						//cast the ray to get the color
-						ray.pos.y = 0 + (x + offsetX - (double)resX * 0.5)*(perX / resX);
-						ray.pos.z = 0 + (y + offsetY - (double)resY * 0.5)*(perY / resY);
+						ray.pos.y = 0 + (x + offsetX - (float)resX * 0.5)*(perX / resX);
+						ray.pos.z = 0 + (y + offsetY - (float)resY * 0.5)*(perY / resY);
 						ray.dir = Vector(-camera.eyedist, 0, 0).to(ray.pos).normal();
 						getFirstHit(ray);
 						c1 = ray.lastColor;
@@ -272,11 +272,11 @@ void World::getFirstHit(Ray& ray) const
 	const Geometry* last = NULL;
 	ray.time = -1;
 
-	double lastTime = -1;
+	float lastTime = -1;
 	for(auto it = candidates.cbegin(); it != candidates.cend(); ++it)
 	{
 		if(it->get() != ray.ignore)
-			if((**it).intersects(ray, *this).init)//we hit this object
+			if((**it).intersects(ray, *this))//we hit this object
 			{
 				if(lastTime == -1 || lastTime > ray.time)
 				{

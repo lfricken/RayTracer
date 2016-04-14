@@ -18,7 +18,7 @@ namespace leon
 
 		virtual sf::Color getColorPoint(const Ray& ray, const Vector& point, const World& world) const;
 
-		Vector intersects(Ray& ray, const World& world) const;
+		bool intersects(Ray& ray, const World& world) const;
 		const BoundingBox& getBoundBox() const;
 
 		Material material;
@@ -31,7 +31,7 @@ namespace leon
 		mutable BoundingBox m_box;
 
 		virtual void calcBoundBox() const = 0;
-		virtual Vector intersectsHook(Ray& ray, const World& world) const = 0;
+		virtual bool intersectsHook(Ray& ray, const World& world) const = 0;
 
 		friend class Instance;
 	};

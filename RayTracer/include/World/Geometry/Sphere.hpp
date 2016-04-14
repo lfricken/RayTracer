@@ -7,7 +7,7 @@ namespace leon
 	class Sphere : public Geometry
 	{
 	public:
-		Sphere(Vector position, double radiusi);
+		Sphere(Vector position, float radiusi);
 		virtual ~Sphere();
 
 		virtual Vector getNormal(const Vector& point) const;
@@ -17,10 +17,10 @@ namespace leon
 
 	protected:
 		virtual void calcBoundBox() const;
-		virtual Vector intersectsHook(Ray& rRay, const World& world) const;
+		virtual bool intersectsHook(Ray& rRay, const World& world) const;
 
 		Vector pos;
-		double radius;
+		float radius;
 
 	};
 }

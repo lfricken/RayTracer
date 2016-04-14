@@ -75,12 +75,12 @@ bool BoundingBox::intersects(const BoundingBox& other) const
 /// <returns></returns>
 bool BoundingBox::intersects(const Ray& ray) const
 {
-	double tmin = -999999999, tmax = 999999999;
+	float tmin = -999999999.f, tmax = 999999999.f;
 
 	if(ray.dir.x != 0.0)
 	{
-		const double txmin = (min.x - ray.pos.x) / ray.dir.x;
-		const double txmax = (max.x - ray.pos.x) / ray.dir.x;
+		const float txmin = (min.x - ray.pos.x) / ray.dir.x;
+		const float txmax = (max.x - ray.pos.x) / ray.dir.x;
 
 		tmin = std::min(txmin, txmax);
 		tmax = std::max(txmin, txmax);
@@ -88,8 +88,8 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	if(ray.dir.y != 0.0)
 	{
-		const double tymin = (min.y - ray.pos.y) / ray.dir.y;
-		const double tymax = (max.y - ray.pos.y) / ray.dir.y;
+		const float tymin = (min.y - ray.pos.y) / ray.dir.y;
+		const float tymax = (max.y - ray.pos.y) / ray.dir.y;
 
 		tmin = std::max(tmin, std::min(tymin, tymax));
 		tmax = std::min(tmax, std::max(tymin, tymax));
@@ -97,8 +97,8 @@ bool BoundingBox::intersects(const Ray& ray) const
 
 	if(ray.dir.z != 0.0)
 	{
-		const double tzmin = (min.z - ray.pos.z) / ray.dir.z;
-		const double tzmax = (max.z - ray.pos.z) / ray.dir.z;
+		const float tzmin = (min.z - ray.pos.z) / ray.dir.z;
+		const float tzmax = (max.z - ray.pos.z) / ray.dir.z;
 
 		tmin = std::max(tmin, std::min(tzmin, tzmax));
 		tmax = std::min(tmax, std::max(tzmin, tzmax));

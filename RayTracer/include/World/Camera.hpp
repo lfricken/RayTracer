@@ -12,15 +12,15 @@ namespace leon
 		~Camera();
 
 		void move(const Vector& dir, World& world);
-		void yaw(double radCCW, World& world);
-		void pitch(double radCCW, World& world);
-		void roll(double radCCW, World& world);
+		void yaw(float radCCW, World& world);
+		void pitch(float radCCW, World& world);
+		void roll(float radCCW, World& world);
 
 		const Vector& getPosition() const;
 		const Vector& getDirection() const;
 		const Vector& getUp() const;
 
-		double eyedist;
+		float eyedist;
 	protected:
 		void transformWorld(Matrix rotMatrix, World& world) const;
 

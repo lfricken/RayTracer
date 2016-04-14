@@ -30,6 +30,6 @@ namespace leon
 
 		virtual void calcBoundBox() const;
 
-		virtual Vector intersectsHook(Ray& ray, const World& world) const;
+		virtual bool intersectsHook(Ray& ray, const World& world) const;
 	};
 }

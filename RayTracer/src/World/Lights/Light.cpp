@@ -57,8 +57,8 @@ int Light::getSpecular(const Ray& ray, const Vector& point, const Vector& normal
 
 	if(refAlongEye > 0)
 	{
-		const double e = 16;
-		return (pow(refAlongEye, e) * 255 * 0.8);
+		const float e = 16;
+		return (pow(refAlongEye, e) * 255.0f * 0.8f);
 	}
 	else
 		return 0;

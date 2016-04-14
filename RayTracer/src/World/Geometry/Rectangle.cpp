@@ -39,19 +39,16 @@ void Rectangle::calcBoundBox() const
 {
 	m_box = first->getBoundBox() + second->getBoundBox();
 }
-Vector Rectangle::intersectsHook(Ray& ray, const World& world) const
+bool Rectangle::intersectsHook(Ray& ray, const World& world) const
 {
 	if(light && ray.onlyIntersection)//don't collide with shadow ray
 	{
-		return Vector();
+		return false;
 	}
 	else
 	{
-		Vector intersected;
-
-		intersected = first->intersects(ray, world);
-		if(intersected != Vector(0, 0, 0))
-			return intersected;
+		if(first->intersects(ray, world))
+			return true;
 		else
 			return second->intersects(ray, world);
 	}

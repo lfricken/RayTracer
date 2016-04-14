@@ -48,7 +48,7 @@ void Camera::move(const Vector& dir, World& world)//direction relative to camera
 /// </summary>
 /// <param name="radCCW">rotation in radians Counter ClockWise</param>
 /// <param name="world">The world.</param>
-void Camera::yaw(double radCCW, World& world)
+void Camera::yaw(float radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(up, radCCW);
@@ -63,7 +63,7 @@ void Camera::yaw(double radCCW, World& world)
 /// </summary>
 /// <param name="radCCW">rotation in radians Counter ClockWise</param>
 /// <param name="world">The world.</param>
-void Camera::pitch(double radCCW, World& world)
+void Camera::pitch(float radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(up.cross(direction), radCCW);
@@ -78,7 +78,7 @@ void Camera::pitch(double radCCW, World& world)
 /// </summary>
 /// <param name="radCCW">rotation in radians Counter ClockWise</param>
 /// <param name="world">The world.</param>
-void Camera::roll(double radCCW, World& world)
+void Camera::roll(float radCCW, World& world)
 {
 	Matrix rotCam;
 	rotCam.setRotMat(direction, radCCW);

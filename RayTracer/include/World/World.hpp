@@ -26,11 +26,11 @@ namespace leon
 		World();
 		virtual ~World();
 
-		void loadModel(double scale, const std::string& fileName, const Vector& position);//load a model into the world
+		void loadModel(float scale, const std::string& fileName, const Vector& position);//load a model into the world
 		void setPixel(int x, int y = 0, sf::Color c = sf::Color::Blue);
 		void save(const std::string& rName);
 
-		void render(int resX, int resY, double perX, double perY, RenderMode mode = RenderMode::PerspectivePlane, SampleMode sample = SampleMode::PerPixel, int samples = 2);
+		void render(int resX, int resY, float perX, float perY, RenderMode mode = RenderMode::PerspectivePlane, SampleMode sample = SampleMode::PerPixel, int samples = 2);
 
 		Camera camera;
 

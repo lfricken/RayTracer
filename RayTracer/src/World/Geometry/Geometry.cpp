@@ -37,9 +37,9 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 
 	return sf::Color(myColor.r * m + reflectedColor.r * r, myColor.g * m + reflectedColor.g * r, myColor.b * m + reflectedColor.b * r);
 }
-Vector Geometry::intersects(Ray& ray, const World& world) const
+bool Geometry::intersects(Ray& ray, const World& world) const
 {
-	Vector intersection = this->intersectsHook(ray, world);
+	bool intersection = this->intersectsHook(ray, world);
 
 	ray.lastHit = this;
 

@@ -15,16 +15,16 @@ namespace leon
 		auto trans = back*point;
 		return m_pParent->getNormal(trans);
 	}
-	Vector Instance::intersectsHook(Ray& ray, const World& world) const
+	bool Instance::intersectsHook(Ray& ray, const World& world) const
 	{
 		Ray trans = ray;
 		trans.pos = back*ray.pos;//DOES NOT ACCOUNT FOR ANYTHING BUT TRANSLATION
 		
-		Vector ret = m_pParent->intersectsHook(trans, world);
+		bool intersected = m_pParent->intersectsHook(trans, world);
 		
 		trans.pos = ray.pos;
 		ray = trans;
-		return ret;
+		return intersected;
 	}
 	void Instance::translate(const Vector& trans)
 	{
