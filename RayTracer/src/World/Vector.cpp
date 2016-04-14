@@ -61,11 +61,11 @@ float Vector::len() const
 }
 Vector Vector::normal() const//return a vector that is normalized
 {
-	return Vector(x,y,z) / len();
+	return Vector(x, y, z, 0) / len();
 }
 void Vector::normalize()//normalize this vector
 {
-	*this = Vector(x, y, z) / len();
+	*this = Vector(x, y, z, 0) / len();
 }
 Vector Vector::to(const Vector& other) const
 {
@@ -82,11 +82,11 @@ Vector Vector::operator+(const Vector& other) const
 }
 Vector Vector::operator*(float c) const
 {
-	return Vector(x*c, y*c, z*c);
+	return Vector(x*c, y*c, z*c, w*c);
 }
 Vector Vector::operator/(float c) const
 {
-	return Vector(x/c, y/c, z/c);
+	return Vector(x/c, y/c, z/c, w/c);
 }
 bool Vector::operator!=(const Vector& other) const
 {

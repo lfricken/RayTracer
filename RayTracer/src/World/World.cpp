@@ -111,7 +111,7 @@ void World::render(int resX, int resY, float perX, float perY, RenderMode mode, 
 
 	sf::RenderWindow& window = *spWindow;
 
-	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0));
+	Ray ray(Vector(0, 0, 0), Vector(1, 0, 0, 0));
 
 	image.create(resX, resY, backgroundColor);
 

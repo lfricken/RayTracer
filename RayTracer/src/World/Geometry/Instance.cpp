@@ -18,11 +18,14 @@ namespace leon
 	bool Instance::intersectsHook(Ray& ray, const World& world) const
 	{
 		Ray trans = ray;
-		trans.pos = back*ray.pos;//DOES NOT ACCOUNT FOR ANYTHING BUT TRANSLATION
+		trans.dir = back*trans.dir;
+		trans.dir.normalize();
+		trans.pos = back*ray.pos;
 		
 		bool intersected = m_pParent->intersectsHook(trans, world);
 		
 		trans.pos = ray.pos;
+		trans.dir = ray.dir;
 		ray = trans;
 		return intersected;
 	}
@@ -50,7 +53,21 @@ namespace leon
 	}
 	void Instance::scale(const Vector& s)
 	{
+		Matrix	inv_scaling_matrix;			// temporary inverse scaling matrix
 
+		inv_scaling_matrix.m[0][0] = 1.0 / s.x;
+		inv_scaling_matrix.m[1][1] = 1.0 / s.y;
+		inv_scaling_matrix.m[2][2] = 1.0 / s.z;
+
+		back = back * inv_scaling_matrix;
+
+		Matrix	scaling_matrix;				// temporary scaling matrix
+
+		scaling_matrix.m[0][0] = s.x;
+		scaling_matrix.m[1][1] = s.y;
+		scaling_matrix.m[2][2] = s.z;
+
+		forward = scaling_matrix * forward;
 	}
 	void Instance::shear(const Matrix& m)
 	{

@@ -51,15 +51,23 @@ int main()
 	s->material.color = sf::Color::Cyan;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	//s->material.reflection = 0.5;
+	s->material.reflection = 0.5;
 	world.add(s);
 
 	s = new Instance(s);
-	s->material.color = sf::Color::Cyan;
+	s->material.color = sf::Color::Blue;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	//s->material.reflection = 0.5;
+	s->material.reflection = 0.5;
 	s->translate(Vector(0, 30, 0));
+	world.add(s);
+
+	s = new Instance(s);
+	s->material.color = sf::Color::Green;
+	s->material.specular = 1;
+	s->material.diffuse = 1;
+	s->material.reflection = 0.5;
+	s->translate(Vector(0, 60, 0));
 	world.add(s);
 
 	//s = new Sphere(Vector(30, 100, 25), 25);
