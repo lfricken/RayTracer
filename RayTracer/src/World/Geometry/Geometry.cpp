@@ -57,10 +57,10 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 	}
 	if(glossLimit > 0)
 	{
-		Vector normal = ray.dir.reflect(norm);
-		Vector axisA = Vector(1, 0, 0).cross(normal).normal()*material.glossRootDimensions;
-		Vector axisB = axisA.cross(normal).normal()*material.glossRootDimensions;
-		Vector pos = point + normal - (axisA / 2) - (axisB / 2);
+		Vector reflectionDir = ray.dir.reflect(norm);
+		Vector axisA = Vector(1, 0, 0).cross(reflectionDir).normal()*material.glossRootDimensions;
+		Vector axisB = axisA.cross(reflectionDir).normal()*material.glossRootDimensions;
+		Vector pos = point + reflectionDir - (axisA / 2) - (axisB / 2);
 		Vector sample;
 		int m_rootSamples = material.glossRootSamples;
 		int r = 0, g = 0, b = 0;

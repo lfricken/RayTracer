@@ -62,7 +62,7 @@ int main()
 	s->material.glossRootSamples = 4;
 	world.add(s);
 
-	s = new Sphere(Vector(15,-20, 30), 10);
+	s = new Sphere(Vector(15, -20, 30), 10);
 	s->material.color = sf::Color::Yellow;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
@@ -86,7 +86,19 @@ int main()
 	s->material.reflection = 1;
 	world.add(s);
 
+	s = new Triangle(Vector(30, 0, 0), Vector(30, -15, 0), Vector(30, 0, 15));
+	s->material.color = sf::Color::Cyan;
+	s->material.diffuse = 1;
+	s->material.specular = 1;
+	s->material.reflection = 0;
+	world.add(s);
 
+	//s = new Rectangle(Vector(30, 0, 0), Vector(0, -5, 0), Vector(0, 0, -5));
+	//s->material.color = sf::Color::Cyan;
+	//s->material.diffuse = 1;
+	//s->material.specular = 1;
+	//s->material.reflection = 0;
+	//world.add(s);
 
 	//world.loadModel(100, "cow.obj", Vector(100, 20, -30));
 
@@ -109,10 +121,10 @@ int main()
 	time = clock.getElapsedTime();
 	float t2 = time.asSeconds();
 
-	cout << "\n\nUsed " << world.numRays << " rays in " << t2-t << " seconds.";
+	cout << "\n\nUsed " << world.numRays << " rays in " << t2 - t << " seconds.";
 
 	cout << "\nPress Enter to continue...";
 	cin.get();
-	
+
 	return 0;
 }
