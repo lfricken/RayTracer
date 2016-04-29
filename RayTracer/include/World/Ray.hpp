@@ -22,6 +22,8 @@ namespace leon
 		Vector pos;//start position
 		Vector dir;//direction
 
+		int recursion;
+
 		const Geometry* lastHit;
 		const Geometry* ignore;
 	};

@@ -26,7 +26,7 @@ int main()
 	float t = time.asSeconds();
 
 	int floorSize = 1000;
-	int floorHeight = -50;
+	int floorHeight = -40;
 	int lightHeight = 90;
 	int lightSize = 8;
 	int lightDist = 0;
@@ -57,7 +57,7 @@ int main()
 	s->material.color = sf::Color::Cyan;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	s->material.reflection = 0;
+	s->material.reflection = 0.9;
 	s->m_spTexture.reset(new sf::Image());
 	s->m_spTexture->loadFromFile(content + "textures/bad.png");
 	world.add(s);
@@ -66,14 +66,14 @@ int main()
 	s->material.color = sf::Color::Green;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	s->material.reflection = 0.5;
+	s->material.reflection = 0.9;
 	world.add(s);
 
 	s = new Plane(Vector(0, 0, floorHeight), Vector(0, 0, 1));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
-	s->material.reflection = 0.3;
+	s->material.reflection = 0.9;
 	world.add(s);
 
 

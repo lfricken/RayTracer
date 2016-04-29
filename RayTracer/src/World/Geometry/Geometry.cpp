@@ -16,12 +16,23 @@ Geometry::~Geometry()
 }
 sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const World& world) const
 {
+	const int recursionLimit = 1;
+
 	const Vector norm = getNormal(point);
 
-	const float sum = material.gloss + material.diffuse + material.specular + material.reflection;
+	float glossLimit = material.gloss;
+	float reflectLimit = material.reflection;
+	if(ray.recursion >= recursionLimit)
+	{
+		reflectLimit = 0;
+		glossLimit = 0;
+	}
+
+
+	const float sum = glossLimit + material.diffuse + material.specular + reflectLimit;
 	const float myFactor = (material.diffuse + material.specular) / sum;
-	const float reflectFactor = material.reflection / sum;
-	const float glossFactor = material.gloss / sum;
+	const float reflectFactor = reflectLimit / sum;
+	const float glossFactor = glossLimit / sum;
 
 	sf::Color myColor = sf::Color::Yellow;
 	sf::Color reflectColor = sf::Color::Magenta;
@@ -34,18 +45,18 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 			textureMod.color = getTextureColor(point);
 
 		myColor = world.lights[0]->getBrightness(ray, point, norm, world, textureMod);
-
 	}
-	if(material.reflection > 0)
+	if(reflectLimit > 0)
 	{
 		const Vector rayDir = ray.dir;
 		Ray reflectRay(point, rayDir.reflect(norm));
 		reflectRay.ignore = this;
+		reflectRay.recursion = ray.recursion + 1;
 		world.getFirstHit(reflectRay);
 		reflectColor = reflectRay.lastColor;
 
 	}
-	if(material.gloss > 0)
+	if(glossLimit > 0)
 	{
 
 
