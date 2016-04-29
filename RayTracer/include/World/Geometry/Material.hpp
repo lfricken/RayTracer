@@ -9,12 +9,20 @@ struct Material
 		specular = 1.f;
 		diffuse = 1.f;
 		reflection = 0.f;
+		gloss = 0.f;
+
+		glossRootDimensions = 1;
+		glossRootSamples = 2;
 	}
 
 	sf::Color color;
 	float specular;//between 0 and 1
 	float diffuse;//between 0 and 1
 	float reflection;//between 0 and 1
+	float gloss;//between 0 and 1
+
+	int glossRootDimensions;//recommended between 0.1 and 5
+	int glossRootSamples;//recommended between 1 and 3
 };
 
 

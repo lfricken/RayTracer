@@ -16,26 +16,56 @@ Geometry::~Geometry()
 }
 sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const World& world) const
 {
-	const Vector rayDir = ray.dir;
 	const Vector norm = getNormal(point);
 
-	Light& light = *world.lights[0];
+	const float sum = material.gloss + material.diffuse + material.specular + material.reflection;
+	const float myFactor = (material.diffuse + material.specular) / sum;
+	const float reflectFactor = material.reflection / sum;
+	const float glossFactor = material.gloss / sum;
 
-	const float m = 1 - material.reflection;
-	const float r = material.reflection;
+	sf::Color myColor = sf::Color::Yellow;
+	sf::Color reflectColor = sf::Color::Magenta;
+	sf::Color glossColor = sf::Color::White;
 
-	sf::Color reflectedColor = sf::Color::Magenta;
-	sf::Color myColor = light.getBrightness(ray, point, norm, world, material);
+	if(material.diffuse + material.specular > 0)
+	{
+		Material textureMod = material;
+		if(m_spTexture)
+			textureMod.color = getTextureColor(point);
 
+		myColor = world.lights[0]->getBrightness(ray, point, norm, world, textureMod);
+
+	}
 	if(material.reflection > 0)
 	{
+		const Vector rayDir = ray.dir;
 		Ray reflectRay(point, rayDir.reflect(norm));
 		reflectRay.ignore = this;
 		world.getFirstHit(reflectRay);
-		reflectedColor = reflectRay.lastColor;
-	}
-	auto my = sf::Color(myColor.r * m + reflectedColor.r * r, myColor.g * m + reflectedColor.g * r, myColor.b * m + reflectedColor.b * r);
+		reflectColor = reflectRay.lastColor;
 
+	}
+	if(material.gloss > 0)
+	{
+
+
+
+	}
+	{
+		myColor.r *= myFactor;
+		myColor.g *= myFactor;
+		myColor.b *= myFactor;
+
+		reflectColor.r *= reflectFactor;
+		reflectColor.g *= reflectFactor;
+		reflectColor.b *= reflectFactor;
+
+		glossColor.r *= glossFactor;
+		glossColor.g *= glossFactor;
+		glossColor.b *= glossFactor;
+	}
+
+	auto my = sf::Color(myColor.r + reflectColor.r + glossColor.r, myColor.g + reflectColor.g + glossColor.g, myColor.b + reflectColor.b + glossColor.b);
 
 	return my;
 }
@@ -55,4 +85,8 @@ const BoundingBox& Geometry::getBoundBox() const
 		m_boxCalculated = true;
 	}
 	return m_box;
+}
+sf::Color Geometry::getTextureColor(const Vector& hitPoint) const
+{
+	return m_spTexture->getPixel(400, 400);
 }

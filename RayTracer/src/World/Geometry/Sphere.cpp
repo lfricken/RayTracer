@@ -71,5 +71,22 @@ void Sphere::transform(const Matrix& rot)
 }
 void Sphere::calcBoundBox() const
 {
-	m_box = BoundingBox(pos, radius*2);
+	m_box = BoundingBox(pos, radius * 2);
 }
+sf::Color Sphere::getTextureColor(const Vector& hitPoint) const
+{
+	Vector uv;//no z
+
+	Vector unitHit = (hitPoint - pos) / radius;
+	float theta = std::acos(unitHit.y);
+	float phi = std::atan(unitHit.x / unitHit.z);
+
+	uv.x = ((phi / 6.28318f) + 1) / 2;
+	uv.y = ((1 - (theta / 3.14159f)) + 1) / 2;
+
+	uv.x *= m_spTexture->getSize().x - 1;
+	uv.y *= m_spTexture->getSize().y - 1;
+
+	return m_spTexture->getPixel(uv.x, uv.y);
+}
+

@@ -23,7 +23,10 @@ namespace leon
 
 		Material material;
 
+		virtual sf::Color getTextureColor(const Vector& hitPoint) const;
 		virtual Vector getNormal(const Vector& point) const = 0;
+
+		sptr<sf::Image> m_spTexture;
 
 		//TODO MAKE CAMERA ROTATION set this to FALSE
 		mutable bool m_boxCalculated;//has our bounding box been calculated already

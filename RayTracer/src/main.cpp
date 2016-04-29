@@ -58,6 +58,8 @@ int main()
 	s->material.specular = 1;
 	s->material.diffuse = 1;
 	s->material.reflection = 0;
+	s->m_spTexture.reset(new sf::Image());
+	s->m_spTexture->loadFromFile(content + "textures/bad.png");
 	world.add(s);
 
 	s = new Sphere(Vector(40, 25, 0), 25);

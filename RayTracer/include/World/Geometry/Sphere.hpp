@@ -15,6 +15,8 @@ namespace leon
 		virtual void translate(const Vector& dist);
 		virtual void transform(const Matrix& rot);
 
+		virtual sf::Color getTextureColor(const Vector& hitPoint) const;
+
 	protected:
 		virtual void calcBoundBox() const;
 		virtual bool intersectsHook(Ray& rRay, const World& world) const;
