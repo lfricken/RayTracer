@@ -93,6 +93,14 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 	}
 	if(material.transparency > 0)
 	{
+		//Vector dir = norm.inv();
+
+		//auto thetaI = norm.angle(dir);
+		//auto w0 = ray.dir.inv();
+		//auto snell = 1 / material.indexRefraction;
+
+		//Vector t = w0*snell - norm.dot(snell*std::cos(thetaI));
+
 		Ray reflectRay(point, norm.inv());
 		reflectRay.ignore = this;
 		reflectRay.recursion = ray.recursion;

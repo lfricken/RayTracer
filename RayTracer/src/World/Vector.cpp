@@ -42,6 +42,10 @@ float Vector::dot(const Vector& other) const
 {
 	return (x*other.x + y*other.y + z*other.z);
 }
+float Vector::angle(const Vector& other) const
+{
+	return std::acos(this->dot(other) / (this->len() * other.len()));
+}
 Vector Vector::cross(const Vector& other) const//cross product
 {
 	return Vector(y*other.z - z*other.y, z*other.x - x*other.z, x*other.y - y*other.x);

@@ -39,6 +39,7 @@ namespace leon
 		Vector inv() const;
 		float area(const Vector& b, const Vector& c) const;
 		float dot(const Vector& other) const;//dot product
+		float angle(const Vector& other) const;//angle between them
 		Vector cross(const Vector& other) const;//cross product
 		Vector reflect(const Vector& other) const;//reflect this across other
 		float dist(const Vector& other) const;//distance
