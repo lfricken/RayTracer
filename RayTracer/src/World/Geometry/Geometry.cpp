@@ -34,9 +34,11 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 	const float reflectFactor = reflectLimit / sum;
 	const float glossFactor = glossLimit / sum;
 
+
 	sf::Color myColor = sf::Color::Yellow;
 	sf::Color reflectColor = sf::Color::Magenta;
 	sf::Color glossColor = sf::Color::White;
+	sf::Color transColor = sf::Color::Green;
 
 	if(material.diffuse + material.specular > 0)
 	{
@@ -89,6 +91,14 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 		int totalSamples = (m_rootSamples + 1)*(m_rootSamples + 1);
 		glossColor = sf::Color(r / totalSamples, g / totalSamples, b / totalSamples);
 	}
+	if(material.transparency > 0)
+	{
+		Ray reflectRay(point, norm.inv());
+		reflectRay.ignore = this;
+		reflectRay.recursion = ray.recursion;
+		world.getFirstHit(reflectRay);
+		transColor = reflectRay.lastColor;
+	}
 	{
 		myColor.r *= myFactor;
 		myColor.g *= myFactor;
@@ -101,9 +111,25 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 		glossColor.r *= glossFactor;
 		glossColor.g *= glossFactor;
 		glossColor.b *= glossFactor;
+
+		transColor.r *= material.transparency;
+		transColor.g *= material.transparency;
+		transColor.b *= material.transparency;
 	}
 
-	auto my = sf::Color(myColor.r + reflectColor.r + glossColor.r, myColor.g + reflectColor.g + glossColor.g, myColor.b + reflectColor.b + glossColor.b);
+	//auto my = sf::Color(myColor.r + reflectColor.r + glossColor.r + transColor.r, myColor.g + reflectColor.g + glossColor.g + transColor.g, myColor.b + reflectColor.b + glossColor.b + transColor.b);
+	auto my = myColor + reflectColor + glossColor;
+
+	if(material.transparency > 0)
+	{
+		auto realFactor = 1 - material.transparency;
+
+		my.r *= realFactor;
+		my.g *= realFactor;
+		my.b *= realFactor;
+
+		my = transColor + my;
+	}
 
 	return my;
 }

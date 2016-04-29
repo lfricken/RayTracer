@@ -50,7 +50,7 @@ int main()
 
 	world.lights.push_back(sptr<Light>(l));
 
-	world.camera.eyedist = 60;
+	world.camera.eyedist = 80;
 
 
 	s = new Sphere(Vector(20, -20, 0), 15);
@@ -69,6 +69,17 @@ int main()
 	s->material.reflection = 0;
 	world.add(s);
 
+
+	s = new Sphere(Vector(12, 1, -5), 5);
+	s->material.color = sf::Color::White;
+	s->material.specular = 0.f;
+	s->material.diffuse = 0.f;
+	s->material.reflection = 0.f;
+	s->material.transparency = 0.9f;
+	s->material.indexRefraction = 1.5;
+	world.add(s);
+
+
 	s = new Sphere(Vector(40, 25, 0), 25);
 	s->material.color = sf::Color::Green;
 	s->material.specular = 1;
@@ -86,12 +97,12 @@ int main()
 	s->material.reflection = 1;
 	world.add(s);
 
-	s = new Triangle(Vector(30, 0, 0), Vector(30, -15, 0), Vector(30, 0, 15));
-	s->material.color = sf::Color::Cyan;
-	s->material.diffuse = 1;
-	s->material.specular = 1;
-	s->material.reflection = 0;
-	world.add(s);
+	//s = new Triangle(Vector(30, 0, 0), Vector(30, -15, 0), Vector(30, 0, 15));
+	//s->material.color = sf::Color::Cyan;
+	//s->material.diffuse = 1;
+	//s->material.specular = 1;
+	//s->material.reflection = 0;
+	//world.add(s);
 
 	//s = new Rectangle(Vector(30, 0, 0), Vector(0, -5, 0), Vector(0, 0, -5));
 	//s->material.color = sf::Color::Cyan;
