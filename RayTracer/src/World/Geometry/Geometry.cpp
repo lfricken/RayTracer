@@ -16,7 +16,7 @@ Geometry::~Geometry()
 }
 sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const World& world) const
 {
-	const int recursionLimit = 1;
+	const int recursionLimit = 5;
 
 	const Vector norm = getNormal(point);
 
@@ -48,8 +48,7 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 	}
 	if(reflectLimit > 0)
 	{
-		const Vector rayDir = ray.dir;
-		Ray reflectRay(point, rayDir.reflect(norm));
+		Ray reflectRay(point, ray.dir.reflect(norm));
 		reflectRay.ignore = this;
 		reflectRay.recursion = ray.recursion + 1;
 		world.getFirstHit(reflectRay);
@@ -58,9 +57,37 @@ sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const Wor
 	}
 	if(glossLimit > 0)
 	{
+		Vector normal = ray.dir.reflect(norm);
+		Vector axisA = Vector(1, 0, 0).cross(normal).normal()*material.glossRootDimensions;
+		Vector axisB = axisA.cross(normal).normal()*material.glossRootDimensions;
+		Vector pos = point + normal - (axisA / 2) - (axisB / 2);
+		Vector sample;
+		int m_rootSamples = material.glossRootSamples;
+		int r = 0, g = 0, b = 0;
 
+		for(int i = 0; i <= m_rootSamples; ++i)
+		{
+			float fracA = static_cast<float>(i) / static_cast<float>(m_rootSamples);//calculate fractions
+			for(int j = 0; j <= m_rootSamples; ++j)
+			{
+				float fracB = static_cast<float>(j) / static_cast<float>(m_rootSamples);//calculate fractions
 
+				sample = pos + (axisA*fracA) + (axisB*fracB);
 
+				Ray reflectRay(point, point.to(sample));
+				reflectRay.ignore = this;
+				reflectRay.recursion = ray.recursion + 1;
+				world.getFirstHit(reflectRay);
+				sf::Color singleHit = reflectRay.lastColor;
+
+				r += singleHit.r;
+				g += singleHit.g;
+				b += singleHit.b;
+			}
+		}
+
+		int totalSamples = (m_rootSamples + 1)*(m_rootSamples + 1);
+		glossColor = sf::Color(r / totalSamples, g / totalSamples, b / totalSamples);
 	}
 	{
 		myColor.r *= myFactor;

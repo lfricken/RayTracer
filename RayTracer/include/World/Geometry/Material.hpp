@@ -11,7 +11,7 @@ struct Material
 		reflection = 0.f;
 		gloss = 0.f;
 
-		glossRootDimensions = 1;
+		glossRootDimensions = 0.2;
 		glossRootSamples = 2;
 	}
 
@@ -21,7 +21,7 @@ struct Material
 	float reflection;//between 0 and 1
 	float gloss;//between 0 and 1
 
-	int glossRootDimensions;//recommended between 0.1 and 5
+	float glossRootDimensions;//recommended between 0.1 and 5
 	int glossRootSamples;//recommended between 1 and 3
 };
 

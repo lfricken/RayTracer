@@ -27,9 +27,9 @@ int main()
 
 	int floorSize = 1000;
 	int floorHeight = -40;
-	int lightHeight = 90;
+	int lightHeight = 0;
 	int lightSize = 8;
-	int lightDist = 0;
+	int lightDist = -70;
 
 	sptr<World> spWorld(new World());
 	World& world = *spWorld;
@@ -46,34 +46,44 @@ int main()
 	//world.add(s);
 	//l = new SquareLight(sf::Color::White, (Rectangle*)s, 3);
 
-	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
+	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 30, lightHeight));
 
 	world.lights.push_back(sptr<Light>(l));
 
 	world.camera.eyedist = 60;
 
 
-	s = new Sphere(Vector(45, -20, 0), 15);
+	s = new Sphere(Vector(20, -20, 0), 15);
 	s->material.color = sf::Color::Cyan;
+	s->material.specular = 0.0;
+	s->material.diffuse = 0.5;
+	s->material.reflection = 0;
+	s->material.gloss = 1;
+	s->material.glossRootSamples = 4;
+	world.add(s);
+
+	s = new Sphere(Vector(15,-20, 30), 10);
+	s->material.color = sf::Color::Yellow;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	s->material.reflection = 0.9;
-	s->m_spTexture.reset(new sf::Image());
-	s->m_spTexture->loadFromFile(content + "textures/bad.png");
+	s->material.reflection = 0;
 	world.add(s);
 
 	s = new Sphere(Vector(40, 25, 0), 25);
 	s->material.color = sf::Color::Green;
 	s->material.specular = 1;
 	s->material.diffuse = 1;
-	s->material.reflection = 0.9;
+	s->material.reflection = 0.5f;
+
+	s->m_spTexture.reset(new sf::Image());
+	s->m_spTexture->loadFromFile(content + "textures/bad.png");
 	world.add(s);
 
 	s = new Plane(Vector(0, 0, floorHeight), Vector(0, 0, 1));
 	s->material.color = sf::Color::Red;
 	s->material.diffuse = 1;
 	s->material.specular = 1;
-	s->material.reflection = 0.9;
+	s->material.reflection = 1;
 	world.add(s);
 
 
