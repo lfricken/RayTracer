@@ -60,7 +60,7 @@ int main()
 	s->material.reflection = 0;
 	s->material.gloss = 1;
 	s->material.glossRootSamples = 4;
-	s->material.glossRootDimensions = 0.5;
+	s->material.glossRootDimensions = 0.2;
 	world.add(s);
 
 	s = new Sphere(Vector(15, -20, 30), 10);
@@ -114,10 +114,10 @@ int main()
 
 	//world.loadModel(100, "cow.obj", Vector(100, 20, -30));
 
-	world.camera.move(Vector(-10, 0, 40), world);
-	////world.camera.roll(45 * 3.14 / 180, world);
-	//world.camera.yaw(35 * 3.14 / 180, world);
-	world.camera.pitch(25 * 3.14 / 180, world);
+	//world.camera.move(Vector(-10, 0, 40), world);
+	//////world.camera.roll(45 * 3.14 / 180, world);
+	////world.camera.yaw(35 * 3.14 / 180, world);
+	//world.camera.pitch(25 * 3.14 / 180, world);
 
 	//world.redoOctree();
 
