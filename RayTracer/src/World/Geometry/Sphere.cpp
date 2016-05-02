@@ -78,6 +78,12 @@ sf::Color Sphere::getTextureColor(const Vector& hitPoint) const
 	Vector uv;//no z
 
 	Vector unitHit = (hitPoint - pos) / radius;
+	
+	Matrix m;
+	m.setRotMat(Vector(0, 1, 0), 1.5);
+
+	unitHit = m*unitHit;
+
 	float theta = std::acos(unitHit.y);
 	float phi = std::atan(unitHit.x / unitHit.z);
 
