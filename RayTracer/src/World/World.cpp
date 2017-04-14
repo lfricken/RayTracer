@@ -11,8 +11,8 @@ using namespace leon;
 World::World()
 {
 	octree.reset(new OctTree(Vector(0, 0, 0), 2048, 2, 2));
-	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(512, 512), "Leon's Ray Tracer: 2016 Edition"));
-	image.create(512, 512, backgroundColor);
+	spWindow = sptr<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(1920, 1080), "Leon's Ray Tracer: 2016 Edition"));
+	image.create(1920, 1080, backgroundColor);
 	texture.loadFromImage(image);
 	sprite.setTexture(texture);
 }

@@ -43,7 +43,7 @@ int main()
 
 	world.lights.push_back(sptr<Light>(l));
 
-	world.camera.eyedist = 60;
+	world.camera.eyedist = 70;
 
 
 	s = new Sphere(Vector(45, -40, 35), 35);
@@ -85,17 +85,17 @@ int main()
 
 	//world.loadModel(100, "cow.obj", Vector(100, 20, -30));
 
-	world.camera.move(Vector(-60, -60, 90), world);
+	world.camera.move(Vector(-30, -50, 110), world);
 	//world.camera.roll(45 * 3.14 / 180, world);
 	world.camera.yaw(35 * 3.14 / 180, world);
 	world.camera.pitch(45 * 3.14 / 180, world);
 
 	//world.redoOctree();
 
-	int resX = 1000;
-	int resY = 1000;
+	int resX = 1920;
+	int resY = 1080;
 
-	world.render(resX, resY, 100, 100, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 4);//img5
+	world.render(resX, resY, 192, 108, RenderMode::PerspectivePlane, SampleMode::MultiJitter, 9);//img5
 	world.save(content + "frame_perspective3_Jitter.png");
 	cout << "Used: " << 
 	cin.get();
