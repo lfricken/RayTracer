@@ -26,10 +26,10 @@ int main()
 	float t = time.asSeconds();
 
 	int floorSize = 1000;
-	int floorHeight = -40;
-	int lightHeight = 0;
+	int floorHeight = 0;
+	int lightHeight = 40;
 	int lightSize = 8;
-	int lightDist = -70;
+	int lightDist = 0;
 
 	sptr<World> spWorld(new World());
 	World& world = *spWorld;
@@ -46,16 +46,16 @@ int main()
 	//world.add(s);
 	//l = new SquareLight(sf::Color::White, (Rectangle*)s, 3);
 
-	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 30, lightHeight));
+	l = new PointLight(sf::Color(255, 255, 255), Vector(lightDist, 0, lightHeight));
 
 	world.lights.push_back(sptr<Light>(l));
 
-	world.camera.eyedist = 80;
+	world.camera.eyedist = 70;
 
 
-	s = new Sphere(Vector(20, -20, 0), 15);
+	s = new Sphere(Vector(20, -20, 20), 20);
 	s->material.color = sf::Color::Cyan;
-	s->material.specular = 0.0;
+	s->material.specular = 0.1;
 	s->material.diffuse = 0.5;
 	s->material.reflection = 0;
 	s->material.gloss = 1;
@@ -63,11 +63,11 @@ int main()
 	s->material.glossRootDimensions = 0.2;
 	world.add(s);
 
-	s = new Sphere(Vector(15, -20, 30), 10);
+	s = new Sphere(Vector(0, 0, 5), 5);
 	s->material.color = sf::Color::Yellow;
-	s->material.specular = 1;
-	s->material.diffuse = 1;
-	s->material.reflection = 0;
+	s->material.specular = 0.5;
+	s->material.diffuse = 0.9;
+	s->material.reflection = 0.1;
 	world.add(s);
 
 
@@ -121,7 +121,8 @@ int main()
 
 	//world.loadModel(100, "cow.obj", Vector(100, 20, -30));
 
-	//world.camera.move(Vector(-10, 0, 40), world);
+	world.camera.move(Vector(-10, 0, 40), world);
+	world.camera.pitch(0.4,world);
 	//////world.camera.roll(45 * 3.14 / 180, world);
 	////world.camera.yaw(35 * 3.14 / 180, world);
 	//world.camera.pitch(25 * 3.14 / 180, world);

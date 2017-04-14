@@ -16,7 +16,7 @@ Geometry::~Geometry()
 }
 sf::Color Geometry::getColorPoint(const Ray& ray, const Vector& point, const World& world) const
 {
-	const int recursionLimit = 5;
+	const int recursionLimit = 1;
 
 	const Vector norm = getNormal(point);
 
