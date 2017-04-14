@@ -40,11 +40,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>include\World\Geometry;include\World\Lights;include\World;include;include\API;$(IncludePath)</IncludePath>
-    <TargetName>test</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>include\World\Geometry;include\World\Lights;include\World;include;include\API;$(IncludePath)</IncludePath>
-    <TargetName>test</TargetName>
+    <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
