@@ -1,12 +1,13 @@
 # RayTracer
 Wrote this ray tracer in C++ for a class project.
 Features:
+* Area and Point Lighting
 * Soft Shadows
+* Anti-aliasing
 * Diffuse shading
 * Gloss
 * Specular reflections
 * Infinite reflections
-* Lighting
 * 3D model loading
 * Fundamental shapes (Triangles, Spheres, Planes, etc.)
 
