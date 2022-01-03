@@ -2,6 +2,7 @@
 Wrote this ray tracer in C++ for a class project.
 Features:
 * Area and Point Lighting
+* [Binary Space Partitioning](https://en.wikipedia.org/wiki/Binary_space_partitioning)
 * Soft Shadows
 * Anti-aliasing
 * Diffuse shading
